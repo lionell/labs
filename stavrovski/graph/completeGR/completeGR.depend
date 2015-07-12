@@ -1,0 +1,16 @@
+# depslib dependency file v1.0
+1433077347 source:c:\users\user\desktop\completegr\main.cpp
+	<iostream>
+	<fstream>
+	<string.h>
+
+1433077348 source:c:\users\vlada\desktop\completegr\main.cpp
+	<iostream>
+	<fstream>
+	<string.h>
+
+1433970795 source:e:\codeblocks\completegr\main.cpp
+	<iostream>
+	<fstream>
+	<string.h>
+

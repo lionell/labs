@@ -1,0 +1,6 @@
+Input train:
+T 1(Tank) 2(Tank) 3(Fridge) 4(Tank) 5(Fridge) 6(Open) 7(Tank) 
+Output trains:
+T 7(Tank) 4(Tank) 2(Tank) 1(Tank) 
+T 5(Fridge) 3(Fridge) 
+T 6(Open) 

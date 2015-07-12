@@ -1,0 +1,11 @@
+# depslib dependency file v1.0
+1433086955 source:c:\users\user\desktop\chaingr\main.cpp
+	<iostream>
+	<fstream>
+	<string.h>
+
+1433087978 source:c:\users\vlada\desktop\chaingr\main.cpp
+	<iostream>
+	<fstream>
+	<string.h>
+

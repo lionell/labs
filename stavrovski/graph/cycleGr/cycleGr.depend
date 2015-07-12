@@ -1,0 +1,13 @@
+# depslib dependency file v1.0
+1433088086 source:c:\users\user\desktop\cyclegr\main.cpp
+	<iostream>
+	<fstream>
+	<string.h>
+	<cstdlib>
+
+1433088088 source:c:\users\vlada\desktop\cyclegr\main.cpp
+	<iostream>
+	<fstream>
+	<string.h>
+	<cstdlib>
+
