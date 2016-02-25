@@ -1,0 +1,7 @@
+mov R1,2,R3
+mov R2,-2,0
+mov M1,262144,0
+add R1,M1,R2
+add R3,1,R1
+shr R2,6,5
+shl R3,M1,1

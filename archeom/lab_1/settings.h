@@ -1,0 +1,149 @@
+//
+// Created by lionell on 21.02.16.
+// Copyright (c) 2016 Ruslan Sakevych. All rights reserved.
+//
+
+#ifndef LAB_1_SETTINGS_H
+#define LAB_1_SETTINGS_H
+
+#include <stdint.h>
+
+const uint64_t CPP_INT8_ADD = 10000000;
+const uint64_t CPP_INT8_SUB = 10000000;
+const uint64_t CPP_INT8_MUL = 10000000;
+const uint64_t CPP_INT8_DIV = 10000000;
+const uint64_t CPP_INT8_MOD = 10000000;
+const uint64_t CPP_INT8_NEG = 10000000;
+const uint64_t CPP_INT8_AND = 10000000;
+const uint64_t CPP_INT8_OR = 10000000;
+const uint64_t CPP_INT8_XOR = 10000000;
+const uint64_t CPP_INT8_LSH = 10000000;
+const uint64_t CPP_INT8_RSH = 10000000;
+
+const uint64_t CPP_UINT8_ADD = 10000000;
+const uint64_t CPP_UINT8_SUB = 10000000;
+const uint64_t CPP_UINT8_MUL = 10000000;
+const uint64_t CPP_UINT8_DIV = 10000000;
+const uint64_t CPP_UINT8_MOD = 10000000;
+const uint64_t CPP_UINT8_NEG = 10000000;
+const uint64_t CPP_UINT8_AND = 10000000;
+const uint64_t CPP_UINT8_OR = 10000000;
+const uint64_t CPP_UINT8_XOR = 10000000;
+const uint64_t CPP_UINT8_LSH = 10000000;
+const uint64_t CPP_UINT8_RSH = 10000000;
+
+const uint64_t CPP_INT16_ADD = 10000000;
+const uint64_t CPP_INT16_SUB = 10000000;
+const uint64_t CPP_INT16_MUL = 10000000;
+const uint64_t CPP_INT16_DIV = 10000000;
+const uint64_t CPP_INT16_MOD = 10000000;
+const uint64_t CPP_INT16_NEG = 10000000;
+const uint64_t CPP_INT16_AND = 10000000;
+const uint64_t CPP_INT16_OR = 10000000;
+const uint64_t CPP_INT16_XOR = 10000000;
+const uint64_t CPP_INT16_LSH = 10000000;
+const uint64_t CPP_INT16_RSH = 10000000;
+
+const uint64_t CPP_UINT16_ADD = 10000000;
+const uint64_t CPP_UINT16_SUB = 10000000;
+const uint64_t CPP_UINT16_MUL = 10000000;
+const uint64_t CPP_UINT16_DIV = 10000000;
+const uint64_t CPP_UINT16_MOD = 10000000;
+const uint64_t CPP_UINT16_NEG = 10000000;
+const uint64_t CPP_UINT16_AND = 10000000;
+const uint64_t CPP_UINT16_OR = 10000000;
+const uint64_t CPP_UINT16_XOR = 10000000;
+const uint64_t CPP_UINT16_LSH = 10000000;
+const uint64_t CPP_UINT16_RSH = 10000000;
+
+const uint64_t CPP_INT32_ADD = 10000000;
+const uint64_t CPP_INT32_SUB = 10000000;
+const uint64_t CPP_INT32_MUL = 10000000;
+const uint64_t CPP_INT32_DIV = 10000000;
+const uint64_t CPP_INT32_MOD = 10000000;
+const uint64_t CPP_INT32_NEG = 10000000;
+const uint64_t CPP_INT32_AND = 10000000;
+const uint64_t CPP_INT32_OR = 10000000;
+const uint64_t CPP_INT32_XOR = 10000000;
+const uint64_t CPP_INT32_LSH = 10000000;
+const uint64_t CPP_INT32_RSH = 10000000;
+
+const uint64_t CPP_UINT32_ADD = 10000000;
+const uint64_t CPP_UINT32_SUB = 10000000;
+const uint64_t CPP_UINT32_MUL = 10000000;
+const uint64_t CPP_UINT32_DIV = 10000000;
+const uint64_t CPP_UINT32_MOD = 10000000;
+const uint64_t CPP_UINT32_NEG = 10000000;
+const uint64_t CPP_UINT32_AND = 10000000;
+const uint64_t CPP_UINT32_OR = 10000000;
+const uint64_t CPP_UINT32_XOR = 10000000;
+const uint64_t CPP_UINT32_LSH = 10000000;
+const uint64_t CPP_UINT32_RSH = 10000000;
+
+const uint64_t CPP_INT64_ADD = 10000000;
+const uint64_t CPP_INT64_SUB = 10000000;
+const uint64_t CPP_INT64_MUL = 10000000;
+const uint64_t CPP_INT64_DIV = 10000000;
+const uint64_t CPP_INT64_MOD = 10000000;
+const uint64_t CPP_INT64_NEG = 10000000;
+const uint64_t CPP_INT64_AND = 10000000;
+const uint64_t CPP_INT64_OR = 10000000;
+const uint64_t CPP_INT64_XOR = 10000000;
+const uint64_t CPP_INT64_LSH = 10000000;
+const uint64_t CPP_INT64_RSH = 10000000;
+
+const uint64_t CPP_UINT64_ADD = 10000000;
+const uint64_t CPP_UINT64_SUB = 10000000;
+const uint64_t CPP_UINT64_MUL = 10000000;
+const uint64_t CPP_UINT64_DIV = 10000000;
+const uint64_t CPP_UINT64_MOD = 10000000;
+const uint64_t CPP_UINT64_NEG = 10000000;
+const uint64_t CPP_UINT64_AND = 10000000;
+const uint64_t CPP_UINT64_OR = 10000000;
+const uint64_t CPP_UINT64_XOR = 10000000;
+const uint64_t CPP_UINT64_LSH = 10000000;
+const uint64_t CPP_UINT64_RSH = 10000000;
+
+const uint64_t CPP_FLOAT_ADD = 100000000;
+const uint64_t CPP_FLOAT_SUB = 100000000;
+const uint64_t CPP_FLOAT_MUL = 100000000;
+const uint64_t CPP_FLOAT_DIV = 100000000;
+
+const uint64_t CPP_DOUBLE_ADD = 100000000;
+const uint64_t CPP_DOUBLE_SUB = 100000000;
+const uint64_t CPP_DOUBLE_MUL = 100000000;
+const uint64_t CPP_DOUBLE_DIV = 100000000;
+
+const uint64_t CPP_BOOL_ADD = 10000000;
+const uint64_t CPP_BOOL_SUB = 10000000;
+const uint64_t CPP_BOOL_MUL = 10000000;
+const uint64_t CPP_BOOL_DIV = 10000000;
+const uint64_t CPP_BOOL_MOD = 10000000;
+const uint64_t CPP_BOOL_NEG = 10000000;
+const uint64_t CPP_BOOL_AND = 10000000;
+const uint64_t CPP_BOOL_OR = 10000000;
+const uint64_t CPP_BOOL_XOR = 10000000;
+const uint64_t CPP_BOOL_LSH = 10000000;
+const uint64_t CPP_BOOL_RSH = 10000000;
+
+const uint64_t ASM_INT8_ADD = 100000000;
+const uint64_t ASM_INT8_SUB = 100000000;
+const uint64_t ASM_INT8_MUL = 100000000;
+const uint64_t ASM_INT8_DIV_MOD = 100000000;
+
+const uint64_t ASM_INT16_ADD = 100000000;
+const uint64_t ASM_INT16_SUB = 100000000;
+const uint64_t ASM_INT16_MUL = 100000000;
+const uint64_t ASM_INT16_DIV_MOD = 100000000;
+
+const uint64_t ASM_INT32_ADD = 100000000;
+const uint64_t ASM_INT32_SUB = 100000000;
+const uint64_t ASM_INT32_MUL = 100000000;
+const uint64_t ASM_INT32_DIV_MOD = 100000000;
+
+const uint64_t ASM_INT64_ADD = 100000000;
+const uint64_t ASM_INT64_SUB = 100000000;
+const uint64_t ASM_INT64_MUL = 100000000;
+const uint64_t ASM_INT64_DIV_MOD = 1000000000;
+
+#endif //LAB_1_SETTINGS_H

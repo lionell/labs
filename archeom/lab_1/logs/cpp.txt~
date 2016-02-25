@@ -1,0 +1,141 @@
++--------------------------+
+|      CPP BENCHMARK       |
++----------+---------------+
+|TYPE      |TIME           |
++----------+---------------+
+|      INT8|   138.767750s.|
+|     UINT8|   134.595296s.|
+|     INT16|   134.608183s.|
+|    UINT16|   137.449150s.|
+|     INT32|   137.956982s.|
+|    UINT32|   135.988058s.|
+|     INT64|   242.148418s.|
+|    UINT64|   207.925295s.|
+|     FLOAT|   493.868696s.|
+|    DOUBLE|   493.989307s.|
+|      BOOL|   145.130245s.|
++----------+---------------+
+
++--------------------------------------------------------------------------------------------------------------------------------------+
+|                                                              STATISTICS                                                              |
++---+--------+---------------+----------------------------------------------------------------------------------------------------+----+
+|OP |TYPE    |SPEED          |BAR                                                                                                 |%   |
++---+--------+---------------+----------------------------------------------------------------------------------------------------+----+
+|  +|    INT8|   1.395620e+09|XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX                                                |  52|
+|  -|    INT8|   2.641890e+09|XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX |  99|
+|  *|    INT8|   1.266730e+09|XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX                                                    |  48|
+|  /|    INT8|   2.676082e+08|XXXXXXXXXX                                                                                          |  10|
+|  %|    INT8|   2.253928e+08|XXXXXXXX                                                                                            |   8|
+|  ~|    INT8|   2.420849e+09|XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX         |  91|
+|  &|    INT8|   2.446898e+09|XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX        |  92|
+|  ||    INT8|   2.436482e+09|XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX         |  91|
+|  ^|    INT8|   2.629321e+09|XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX |  99|
+| <<|    INT8|   9.072072e+08|XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX                                                                  |  34|
+| >>|    INT8|   9.058078e+08|XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX                                                                  |  34|
++---+--------+---------------+----------------------------------------------------------------------------------------------------+----+
+|  +|   UINT8|   1.723563e+09|XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX                                   |  65|
+|  -|   UINT8|   2.650430e+09|XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX| 100|
+|  *|   UINT8|   1.725918e+09|XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX                                   |  65|
+|  /|   UINT8|   2.682264e+08|XXXXXXXXXX                                                                                          |  10|
+|  %|   UINT8|   2.253038e+08|XXXXXXXX                                                                                            |   8|
+|  ~|   UINT8|   2.428115e+09|XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX         |  91|
+|  &|   UINT8|   2.430595e+09|XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX         |  91|
+|  ||   UINT8|   2.430339e+09|XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX         |  91|
+|  ^|   UINT8|   2.652704e+09|XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX| 100|
+| <<|   UINT8|   9.456085e+08|XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX                                                                |  36|
+| >>|   UINT8|   9.201640e+08|XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX                                                                 |  35|
++---+--------+---------------+----------------------------------------------------------------------------------------------------+----+
+|  +|   INT16|   1.693929e+09|XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX                                    |  64|
+|  -|   INT16|   2.658002e+09|XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX| 100|
+|  *|   INT16|   1.704367e+09|XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX                                    |  64|
+|  /|   INT16|   2.676307e+08|XXXXXXXXXX                                                                                          |  10|
+|  %|   INT16|   2.247916e+08|XXXXXXXX                                                                                            |   8|
+|  ~|   INT16|   2.435953e+09|XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX         |  91|
+|  &|   INT16|   2.444062e+09|XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX        |  92|
+|  ||   INT16|   2.441772e+09|XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX        |  92|
+|  ^|   INT16|   2.655087e+09|XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX| 100|
+| <<|   INT16|   9.262179e+08|XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX                                                                 |  35|
+| >>|   INT16|   9.643620e+08|XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX                                                                |  36|
++---+--------+---------------+----------------------------------------------------------------------------------------------------+----+
+|  +|  UINT16|   1.720665e+09|XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX                                   |  65|
+|  -|  UINT16|   2.663533e+09|XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX| 100|
+|  *|  UINT16|   1.705394e+09|XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX                                    |  64|
+|  /|  UINT16|   2.673302e+08|XXXXXXXXXX                                                                                          |  10|
+|  %|  UINT16|   2.248241e+08|XXXXXXXX                                                                                            |   8|
+|  ~|  UINT16|   2.423539e+09|XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX         |  91|
+|  &|  UINT16|   2.006764e+09|XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX                         |  75|
+|  ||  UINT16|   2.004149e+09|XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX                         |  75|
+|  ^|  UINT16|   2.182971e+09|XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX                  |  82|
+| <<|  UINT16|   9.216957e+08|XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX                                                                 |  35|
+| >>|  UINT16|   9.430739e+08|XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX                                                                 |  35|
++---+--------+---------------+----------------------------------------------------------------------------------------------------+----+
+|  +|   INT32|   1.731826e+09|XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX                                   |  65|
+|  -|   INT32|   2.189619e+09|XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX                  |  82|
+|  *|   INT32|   1.616703e+09|XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX                                       |  61|
+|  /|   INT32|   2.684234e+08|XXXXXXXXXX                                                                                          |  10|
+|  %|   INT32|   2.257597e+08|XXXXXXXX                                                                                            |   8|
+|  ~|   INT32|   2.470195e+09|XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX       |  93|
+|  &|   INT32|   2.011234e+09|XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX                        |  76|
+|  ||   INT32|   2.012195e+09|XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX                        |  76|
+|  ^|   INT32|   2.187761e+09|XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX                  |  82|
+| <<|   INT32|   9.506841e+08|XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX                                                                |  36|
+| >>|   INT32|   9.258295e+08|XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX                                                                 |  35|
++---+--------+---------------+----------------------------------------------------------------------------------------------------+----+
+|  +|  UINT32|   1.746736e+09|XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX                                  |  66|
+|  -|  UINT32|   2.182074e+09|XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX                  |  82|
+|  *|  UINT32|   1.745823e+09|XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX                                  |  66|
+|  /|  UINT32|   2.693039e+08|XXXXXXXXXX                                                                                          |  10|
+|  %|  UINT32|   2.260357e+08|XXXXXXXX                                                                                            |   8|
+|  ~|  UINT32|   2.457724e+09|XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX        |  92|
+|  &|  UINT32|   2.001077e+09|XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX                         |  75|
+|  ||  UINT32|   2.014748e+09|XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX                        |  76|
+|  ^|  UINT32|   2.185708e+09|XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX                  |  82|
+| <<|  UINT32|   9.548485e+08|XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX                                                                |  36|
+| >>|  UINT32|   1.052503e+09|XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX                                                            |  40|
++---+--------+---------------+----------------------------------------------------------------------------------------------------+----+
+|  +|   INT64|   1.740812e+09|XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX                                   |  65|
+|  -|   INT64|   2.181423e+09|XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX                  |  82|
+|  *|   INT64|   1.743140e+09|XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX                                   |  65|
+|  /|   INT64|   1.054764e+08|XXXX                                                                                                |   4|
+|  %|   INT64|   1.027834e+08|XXXX                                                                                                |   4|
+|  ~|   INT64|   2.443009e+09|XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX        |  92|
+|  &|   INT64|   2.008250e+09|XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX                         |  75|
+|  ||   INT64|   2.005833e+09|XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX                         |  75|
+|  ^|   INT64|   2.189429e+09|XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX                  |  82|
+| <<|   INT64|   1.302480e+09|XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX                                                   |  49|
+| >>|   INT64|   1.302123e+09|XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX                                                   |  49|
++---+--------+---------------+----------------------------------------------------------------------------------------------------+----+
+|  +|  UINT64|   1.742625e+09|XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX                                   |  65|
+|  -|  UINT64|   2.187959e+09|XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX                  |  82|
+|  *|  UINT64|   1.745584e+09|XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX                                  |  66|
+|  /|  UINT64|   1.277741e+08|XXXXX                                                                                               |   5|
+|  %|  UINT64|   1.255673e+08|XXXXX                                                                                               |   5|
+|  ~|  UINT64|   2.464659e+09|XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX       |  93|
+|  &|  UINT64|   2.003341e+09|XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX                         |  75|
+|  ||  UINT64|   2.003662e+09|XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX                         |  75|
+|  ^|  UINT64|   2.187097e+09|XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX                  |  82|
+| <<|  UINT64|   1.297638e+09|XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX                                                   |  49|
+| >>|  UINT64|   1.304213e+09|XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX                                                   |  49|
++---+--------+---------------+----------------------------------------------------------------------------------------------------+----+
+|  +|   FLOAT|   2.435608e+09|XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX         |  91|
+|  -|   FLOAT|   1.746978e+09|XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX                                  |  66|
+|  *|   FLOAT|   1.741368e+09|XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX                                   |  65|
+|  /|   FLOAT|   2.957326e+08|XXXXXXXXXXX                                                                                         |  11|
++---+--------+---------------+----------------------------------------------------------------------------------------------------+----+
+|  +|  DOUBLE|   2.447468e+09|XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX        |  92|
+|  -|  DOUBLE|   1.746752e+09|XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX                                  |  66|
+|  *|  DOUBLE|   1.744483e+09|XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX                                   |  65|
+|  /|  DOUBLE|   2.953703e+08|XXXXXXXXXXX                                                                                         |  11|
++---+--------+---------------+----------------------------------------------------------------------------------------------------+----+
+|  +|    BOOL|   1.068624e+09|XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX                                                            |  40|
+|  -|    BOOL|   2.189725e+09|XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX                  |  82|
+|  *|    BOOL|   1.024521e+09|XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX                                                              |  38|
+|  /|    BOOL|   2.691090e+08|XXXXXXXXXX                                                                                          |  10|
+|  %|    BOOL|   2.688589e+08|XXXXXXXXXX                                                                                          |  10|
+|  ~|    BOOL|   1.669214e+09|XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX                                     |  63|
+|  &|    BOOL|   2.002443e+09|XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX                         |  75|
+|  ||    BOOL|   1.996974e+09|XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX                         |  75|
+|  ^|    BOOL|   2.191311e+09|XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX                  |  82|
+| <<|    BOOL|   7.542467e+08|XXXXXXXXXXXXXXXXXXXXXXXXXXXX                                                                        |  28|
+| >>|    BOOL|   7.531840e+08|XXXXXXXXXXXXXXXXXXXXXXXXXXXX                                                                        |  28|
++---+--------+---------------+----------------------------------------------------------------------------------------------------+----+

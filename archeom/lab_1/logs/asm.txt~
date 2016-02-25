@@ -1,0 +1,28 @@
++--------------------------+
+|      ASM BENCHMARK       |
++----------+---------------+
+|TYPE      |TIME           |
++----------+---------------+
+|      INT8|   169.073004s.|
+|     INT16|    67.452669s.|
+|     INT32|    67.455202s.|
+|     INT64|    67.076103s.|
++----------+---------------+
++--------------------------------------------------------------------------------------------------------------------------------------+
+|                                                              STATISTICS                                                              |
++---+--------+---------------+----------------------------------------------------------------------------------------------------+----+
+|OP |TYPE    |SPEED          |BAR                                                                                                 |%   |
++---+--------+---------------+----------------------------------------------------------------------------------------------------+----+
+|  +|    INT8|   2.934540e+09|XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX  |  98|
+|  -|    INT8|   2.963178e+09|XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX |  99|
+|  *|    INT8|   9.876686e+08|XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX                                                                   |  33|
++---+--------+---------------+----------------------------------------------------------------------------------------------------+----+
+|  +|   INT16|   2.965521e+09|XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX |  99|
+|  -|   INT16|   2.964564e+09|XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX |  99|
++---+--------+---------------+----------------------------------------------------------------------------------------------------+----+
+|  +|   INT32|   2.963267e+09|XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX |  99|
+|  -|   INT32|   2.966597e+09|XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX |  99|
++---+--------+---------------+----------------------------------------------------------------------------------------------------+----+
+|  +|   INT64|   2.981925e+09|XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX| 100|
+|  -|   INT64|   2.981452e+09|XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX| 100|
++---+--------+---------------+----------------------------------------------------------------------------------------------------+----+
