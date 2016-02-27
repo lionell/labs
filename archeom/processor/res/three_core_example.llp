@@ -1,3 +1,4 @@
-mov 11 R0
+mov -11 R0
 mov 4 R1
 add R1 R0 R2
+xor R1 R2 R0

@@ -28,8 +28,8 @@
 
 int main() {
 //    std::ofstream out("/home/lionell/dev/labs/archeos/lab_1/logs/asm.txt");
-//    Postprocessor::process(Benchmark::run_cpp(&std::cerr), &std::cerr);
-    Postprocessor::process(Benchmark::run_asm(&std::cerr), &std::cerr);
+    Postprocessor::process(Benchmark::run_cpp(&std::cerr), &std::cerr);
+//    Postprocessor::process(Benchmark::run_asm(&std::cerr), &std::cerr);
 //    out.close();
     return 0;
 }

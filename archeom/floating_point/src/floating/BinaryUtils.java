@@ -13,8 +13,8 @@ import java.util.Random;
 public class BinaryUtils {
     private static Random random = new Random();
 
-    public static ArrayList<Integer> fromFraction(double decimal, int size) {
-        ArrayList<Integer> bits = new ArrayList<>(size);
+    public static List<Integer> fromFraction(double decimal, int size) {
+        List<Integer> bits = new ArrayList<>(size);
         while (bits.size() < size) {
             decimal *= 2.;
             bits.add((int) decimal);
@@ -23,8 +23,8 @@ public class BinaryUtils {
         return bits;
     }
 
-    public static ArrayList<Integer> fromInteger(int decimal, int size) {
-        ArrayList<Integer> bits = new ArrayList<>(size);
+    public static List<Integer> fromInteger(int decimal, int size) {
+        List<Integer> bits = new ArrayList<>(size);
         while (bits.size() < size) {
             bits.add(decimal % 2);
             decimal /= 2;
@@ -33,8 +33,8 @@ public class BinaryUtils {
         return bits;
     }
 
-    public static ArrayList<Integer> fromInteger(int decimal) {
-        ArrayList<Integer> bits = new ArrayList<>();
+    public static List<Integer> fromInteger(int decimal) {
+        List<Integer> bits = new ArrayList<>();
         if (decimal == 0) {
             bits.add(0);
             return bits;
@@ -47,20 +47,30 @@ public class BinaryUtils {
         return bits;
     }
 
-    public static ArrayList<Integer> getFilled(int size, int pattern) {
+    public static int toDecimal(List<Integer> bits) {
+        int result = 0;
+        int p = 1;
+        for (int i = bits.size() - 1; i >= 0; i--) {
+            result += bits.get(i) * p;
+            p *= 2;
+        }
+        return result;
+    }
+
+    public static List<Integer> getFilled(int size, int pattern) {
         return new ArrayList<>(Collections.nCopies(size, pattern));
     }
 
-    public static ArrayList<Integer> getRandom(int size) {
-        ArrayList<Integer> result = new ArrayList<>(size);
+    public static List<Integer> getRandom(int size) {
+        List<Integer> result = new ArrayList<>(size);
         for (int i = 0; i < size; i++) {
             result.add(getRandomBit());
         }
         return result;
     }
 
-    public static ArrayList<Integer> getRandomNotNull(int size) {
-        ArrayList<Integer> result = getRandom(size);
+    public static List<Integer> getRandomNotNull(int size) {
+        List<Integer> result = getRandom(size);
         result.set(0, 1);
         return result;
     }
@@ -76,5 +86,22 @@ public class BinaryUtils {
             }
         }
         return true;
+    }
+
+    public static boolean isOne(List<Integer> bits) {
+        for (int bit : bits) {
+            if (bit != 1) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public static List<Integer> combine(int sign, List<Integer> exponentBits, List<Integer> mantissaBits) {
+        List<Integer> bits = new ArrayList<>();
+        bits.add(sign);
+        bits.addAll(exponentBits);
+        bits.addAll(mantissaBits);
+        return bits;
     }
 }

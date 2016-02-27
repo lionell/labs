@@ -1,6 +1,7 @@
 package floating;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by lionell on 25.02.16.
@@ -8,52 +9,52 @@ import java.util.ArrayList;
  * @author Ruslan Sakevych
  */
 public class FloatingPoint {
-    private ArrayList<Integer> bits;
-    public static final int BITS_PER_EXPONENT = 3;
+    private List<Integer> bits;
+    public static final int BITS_PER_EXPONENT = 4;
     public static final int BITS_PER_MANTISSA = 4;
     public static final int EXPONENT_SHIFT = (1 << (BITS_PER_EXPONENT - 1)) - 1;
 
     public static final FloatingPoint MIN_ABS_FLOAT = new FloatingPoint() {
         {
-            ArrayList<Integer> exponentBits = BinaryUtils.getFilled(BITS_PER_EXPONENT, 0);
-            ArrayList<Integer> mantissaBits = BinaryUtils.getFilled(BITS_PER_MANTISSA, 0);
+            List<Integer> exponentBits = BinaryUtils.getFilled(BITS_PER_EXPONENT, 0);
+            List<Integer> mantissaBits = BinaryUtils.getFilled(BITS_PER_MANTISSA, 0);
             mantissaBits.set(mantissaBits.size() - 1, 1);
-            setBits(combine(0, exponentBits, mantissaBits));
+            setBits(BinaryUtils.combine(0, exponentBits, mantissaBits));
         }
     };
     public static final FloatingPoint MIN_FLOAT = new FloatingPoint() {
         {
-            ArrayList<Integer> exponentBits = BinaryUtils.fromInteger((1 << BITS_PER_EXPONENT) - 2, BITS_PER_EXPONENT);
-            ArrayList<Integer> mantissaBits = BinaryUtils.getFilled(BITS_PER_MANTISSA, 1);
-            setBits(combine(1, exponentBits, mantissaBits));
+            List<Integer> exponentBits = BinaryUtils.fromInteger((1 << BITS_PER_EXPONENT) - 2, BITS_PER_EXPONENT);
+            List<Integer> mantissaBits = BinaryUtils.getFilled(BITS_PER_MANTISSA, 1);
+            setBits(BinaryUtils.combine(1, exponentBits, mantissaBits));
         }
     };
     public static final FloatingPoint MAX_FLOAT = new FloatingPoint() {
         {
-            ArrayList<Integer> exponentBits = BinaryUtils.fromInteger((1 << BITS_PER_EXPONENT) - 2, BITS_PER_EXPONENT);
-            ArrayList<Integer> mantissaBits = BinaryUtils.getFilled(BITS_PER_MANTISSA, 1);
-            setBits(combine(0, exponentBits, mantissaBits));
+            List<Integer> exponentBits = BinaryUtils.fromInteger((1 << BITS_PER_EXPONENT) - 2, BITS_PER_EXPONENT);
+            List<Integer> mantissaBits = BinaryUtils.getFilled(BITS_PER_MANTISSA, 1);
+            setBits(BinaryUtils.combine(0, exponentBits, mantissaBits));
         }
     };
     public static final FloatingPoint ONE = new FloatingPoint() {
         {
-            ArrayList<Integer> exponentBits = BinaryUtils.fromInteger(EXPONENT_SHIFT + 1, BITS_PER_EXPONENT);
-            ArrayList<Integer> mantissaBits = BinaryUtils.getFilled(BITS_PER_MANTISSA, 0);
-            setBits(combine(0, exponentBits, mantissaBits));
+            List<Integer> exponentBits = BinaryUtils.fromInteger(EXPONENT_SHIFT + 1, BITS_PER_EXPONENT);
+            List<Integer> mantissaBits = BinaryUtils.getFilled(BITS_PER_MANTISSA, 0);
+            setBits(BinaryUtils.combine(0, exponentBits, mantissaBits));
         }
     };
     public static final FloatingPoint POSITIVE_ZERO = new FloatingPoint() {
         {
-            ArrayList<Integer> exponentBits = BinaryUtils.getFilled(BITS_PER_EXPONENT, 0);
-            ArrayList<Integer> mantissaBits = BinaryUtils.getFilled(BITS_PER_MANTISSA, 0);
-            setBits(combine(0, exponentBits, mantissaBits));
+            List<Integer> exponentBits = BinaryUtils.getFilled(BITS_PER_EXPONENT, 0);
+            List<Integer> mantissaBits = BinaryUtils.getFilled(BITS_PER_MANTISSA, 0);
+            setBits(BinaryUtils.combine(0, exponentBits, mantissaBits));
         }
     };
     public static final FloatingPoint NEGATIVE_ZERO = new FloatingPoint() {
         {
-            ArrayList<Integer> exponentBits = BinaryUtils.getFilled(BITS_PER_EXPONENT, 0);
-            ArrayList<Integer> mantissaBits = BinaryUtils.getFilled(BITS_PER_MANTISSA, 0);
-            setBits(combine(1, exponentBits, mantissaBits));
+            List<Integer> exponentBits = BinaryUtils.getFilled(BITS_PER_EXPONENT, 0);
+            List<Integer> mantissaBits = BinaryUtils.getFilled(BITS_PER_MANTISSA, 0);
+            setBits(BinaryUtils.combine(1, exponentBits, mantissaBits));
         }
     };
     public static final FloatingPoint POSITIVE_INFINITY = new FloatingPoint(Double.POSITIVE_INFINITY);
@@ -65,8 +66,8 @@ public class FloatingPoint {
 
     public FloatingPoint(double decimal) {
         int sign = BinaryUtils.getRandomBit();
-        ArrayList<Integer> exponentBits = new ArrayList<>();
-        ArrayList<Integer> mantissaBits = new ArrayList<>();
+        List<Integer> exponentBits = new ArrayList<>();
+        List<Integer> mantissaBits = new ArrayList<>();
         if (Double.isNaN(decimal)) {
             exponentBits = BinaryUtils.getFilled(BITS_PER_EXPONENT, 1);
             mantissaBits = BinaryUtils.getRandomNotNull(BITS_PER_MANTISSA);
@@ -89,9 +90,9 @@ public class FloatingPoint {
             decimal = Math.abs(decimal);
             int integer = (int) decimal;
             double fraction = decimal - integer;
-            ArrayList<Integer> integerBits = BinaryUtils.fromInteger(integer);
+            List<Integer> integerBits = BinaryUtils.fromInteger(integer);
             int exponent = Math.max(integerBits.size() - 1, 0);
-            ArrayList<Integer> fractionBits = BinaryUtils.fromFraction(fraction, 2 * BITS_PER_MANTISSA);
+            List<Integer> fractionBits = BinaryUtils.fromFraction(fraction, 2 * BITS_PER_MANTISSA);
             // normalizing
             mantissaBits.addAll(integerBits);
             mantissaBits.addAll(fractionBits);
@@ -110,26 +111,18 @@ public class FloatingPoint {
             exponent += EXPONENT_SHIFT;
             exponentBits = BinaryUtils.fromInteger(exponent, BITS_PER_EXPONENT);
         }
-        bits = combine(sign, exponentBits, mantissaBits);
+        bits = BinaryUtils.combine(sign, exponentBits, mantissaBits);
     }
 
     public FloatingPoint(String decimalString) {
         this(Double.parseDouble(decimalString));
     }
 
-    private static ArrayList<Integer> combine(int sign, ArrayList<Integer> exponentBits, ArrayList<Integer> mantissaBits) {
-        ArrayList<Integer> bits = new ArrayList<>();
-        bits.add(sign);
-        bits.addAll(exponentBits);
-        bits.addAll(mantissaBits);
+    public List<Integer> getBits() {
         return bits;
     }
 
-    public ArrayList<Integer> getBits() {
-        return bits;
-    }
-
-    public void setBits(ArrayList<Integer> bits) {
+    public void setBits(List<Integer> bits) {
         this.bits = bits;
     }
 
@@ -148,5 +141,52 @@ public class FloatingPoint {
             builder.append(bits.get(i));
         }
         return builder.toString();
+    }
+
+    public double toDecimal() {
+        int sign = bits.get(0);
+        List<Integer> exponentBits = bits.subList(1, 1 + BITS_PER_EXPONENT);
+        List<Integer> mantissaBits = new ArrayList<>();
+        mantissaBits.addAll(bits.subList(1 + BITS_PER_EXPONENT, bits.size()));
+        if (BinaryUtils.isZero(exponentBits)) {
+            if (BinaryUtils.isZero(mantissaBits)) {
+                return 0.0;
+            } else {
+                // subnormal
+                double ans = 0.0;
+                double p = Math.pow(2.0, -(EXPONENT_SHIFT));
+                for (int bit : mantissaBits) {
+                    ans += bit * p;
+                    p /= 2;
+                }
+                if (sign == 1) {
+                    ans = -ans;
+                }
+                return ans;
+            }
+        } else if (BinaryUtils.isOne(exponentBits)) {
+            if (BinaryUtils.isZero(mantissaBits)) {
+                if (sign == 0) {
+                    return Double.POSITIVE_INFINITY;
+                } else {
+                    return Double.NEGATIVE_INFINITY;
+                }
+            } else {
+                return Double.NaN;
+            }
+        } else {
+            mantissaBits.add(0, 1);
+            int exponent = BinaryUtils.toDecimal(exponentBits) - EXPONENT_SHIFT;
+            double ans = 0.0;
+            double p = Math.pow(2.0, exponent);
+            for (int bit : mantissaBits) {
+                ans += bit * p;
+                p /= 2;
+            }
+            if (sign == 1) {
+                ans = -ans;
+            }
+            return ans;
+        }
     }
 }
