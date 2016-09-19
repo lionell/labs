@@ -1,0 +1,13 @@
+directories:
+  java/io/github/lionell/lab1
+  javatests/io/github/lionell/lab1
+  res/
+targets:
+  //java/io/github/lionell/lab1:all
+  //javatests/io/github/lionell/lab1:all
+
+test_sources:
+  javatests/*
+
+workspace_type: java
+java_language_level: 8
