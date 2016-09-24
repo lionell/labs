@@ -2,6 +2,10 @@ package io.github.lionell.lab1;
 
 import com.google.common.base.Joiner;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -15,7 +19,7 @@ import io.github.lionell.lab1.io.WordReader;
  * @author lionell
  */
 public class Runner {
-  public static void main(String[] args) {
+  public static void main(String[] args) throws IOException {
     WordReader reader = new WordReader(args[0]);
 
     List<String> words = new ArrayList<>();
