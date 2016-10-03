@@ -13,7 +13,7 @@ import java.util.Set;
 import io.github.lionell.lab1.io.WordReader;
 
 /**
- * Usage example: $ bazel run //java/io/github/lionell/lab1 --
+ * Usage example: $ bazel run //java/util/github/lionell/lab1 --
  * /home/lionell/dev/labs/volohov/res/in.txt
  * /home/lionell/dev/labs/volohov/res/out.txt
  *
