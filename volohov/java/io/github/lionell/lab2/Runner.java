@@ -33,6 +33,6 @@ public class Runner {
     b.bind("q4", "q3", '.');
     b.addFinals("q3");
 
-    System.out.println(Checker.equals(a.build(), b.build()));
+    System.out.println(a.build().equalsTo(b.build()));
   }
 }

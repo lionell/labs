@@ -5,8 +5,12 @@ import com.google.common.collect.Sets;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.Map;
+import java.util.Queue;
 import java.util.Set;
+
+import io.github.lionell.lab2.util.Pair;
 
 /** Created by lionell on 10/3/16. */
 public class NFA {
@@ -29,16 +33,36 @@ public class NFA {
     this.finals = finals;
   }
 
-  public Set<Character> getSigma() {
-    return sigma;
-  }
-
-  public char getEpsilon() {
-    return epsilon;
-  }
-
   public Set<String> getQ0() {
     return closure(Sets.newHashSet(q0));
+  }
+
+  public boolean equalsTo(NFA a) {
+    if (!sigma.equals(a.sigma) || epsilon != a.epsilon) {
+      return false;
+    }
+
+    Pair<Set<String>, Set<String>> q0 = Pair.of(getQ0(), a.getQ0());
+    Queue<Pair<Set<String>, Set<String>>> q = new LinkedList<>();
+    Set<Set<String>> v1 = new HashSet<>();
+    Set<Set<String>> v2 = new HashSet<>();
+    q.add(q0);
+    while (!q.isEmpty()) {
+      Pair<Set<String>, Set<String>> p = q.poll();
+      if (isTerminal(p.getFirst()) != a.isTerminal(p.getSecond())) {
+        return false;
+      }
+      v1.add(p.getFirst());
+      v2.add(p.getSecond());
+      for (char c : sigma) {
+        Set<String> n1 = next(p.getFirst(), c);
+        Set<String> n2 = a.next(p.getSecond(), c);
+        if (!v1.contains(n1) || !v2.contains(n2)) {
+          q.add(Pair.of(n1, n2));
+        }
+      }
+    }
+    return true;
   }
 
   private Set<String> closure(Set<String> states) {

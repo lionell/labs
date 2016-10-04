@@ -40,6 +40,6 @@ public class NFATest {
     b.bind("q4", "q3", '.');
     b.addFinals("q3");
 
-    assertThat(Checker.equals(a.build(), b.build())).isTrue();
+    assertThat(a.build().equalsTo(b.build())).isTrue();
   }
 }
