@@ -9,8 +9,9 @@ import java.io.IOException;
 public class Runner {
 
   public static void main(String[] args) throws IOException {
-    String text =
-        Files.toString(new File("/home/lionell/dev/labs/volohov/res/main.cpp"), Charsets.UTF_8);
-    System.out.println(Highlighter.highlight(text));
+    if (args.length > 0) {
+      String text = Files.toString(new File(args[0]), Charsets.UTF_8);
+      System.out.println(Highlighter.highlight(text));
+    }
   }
 }

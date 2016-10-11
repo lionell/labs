@@ -1,94 +1,172 @@
-// Copyright 2011 Google Inc. All Rights Reserved. \
-sdfsfsdf \
-sdfsdfsdsdf
+// Copyright 2015 the V8 project authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
-/* sdfs
-  fsdfs
-  fsd
-  fsdf
-  sdf
-*/
+#include "src/compiler/dead-code-elimination.h"
 
-/* sdfsdf */
+#include "src/compiler/common-operator.h"
+#include "src/compiler/graph.h"
+#include "src/compiler/node-properties.h"
+#include "src/compiler/operator-properties.h"
+
+namespace vEight {
+namespace external {
+namespace compiler {
+
+DeadCodeElimination::DeadCodeElimination(Editor* editor, Graph* graph,
+                                         CommonOperatorBuilder* common)
+    : AdvancedReducer(editor),
+      graph_(graph),
+      common_(common),
+      dead_(graph->NewNode(common->Dead())) {}
 
 
-#include "entropy_code_builder.h"
-
-#include <string.h>
-
-#include "stubs-internal.h"
-
-namespace util {
-namespace compression {
-namespace gipfeli {
-
-// Builds histogram and finds positions (limits), where to split symbols
-// to 32 most often used, 64 less used and other even less used.
-void EntropyCodeBuilder::FindLimits(uint8* symbols) {
-  uint16 histogram[32];
-  memset(&histogram[0], 0, sizeof(histogram));
-  for (int i = 0; i < 256; i++) {
-    histogram[symbols[i]]++;
+Reduction DeadCodeElimination::Reduce(Node* node) {
+  switch (node->opcode()) {
+    case IrOpcode::kEnd:
+      return ReduceEnd(node);
+    case IrOpcode::kLoop:
+    case IrOpcode::kMerge:
+      return ReduceLoopOrMerge(node);
+    case IrOpcode::kLoopExit:
+      return ReduceLoopExit(node);
+    default:
+      return ReduceNode(node);
   }
-  cout << 1e-8 << 1.2 << .2 << 3.f;
-  cout << "test";
-  limit_32_ = -1;
-  limit_96_ = -1;
-  choose_at_limit_32_ = 0;
-  choose_at_limit_96_ = 0;
-  int count = 0;
-  for (int i = 31; i >= 0; i--) {
-    count += histogram[i];
-    if (count >= 32 && limit_32_ == -1) {
-      limit_32_ = i;
-      choose_at_limit_32_ = histogram[i] - (count - 32);
-    }
-    if (count >=96 && limit_96_ == -1) {
-      limit_96_ = i;
-      if (limit_32_ != limit_96_) {
-        choose_at_limit_96_ = histogram[i] - (count - 96);
-      } else {
-        choose_at_limit_96_ = 64;
-      } 's'
-    }
-  }
+  UNREACHABLE();
+  return NoChange();
 }
 
-// Builds symbol order and the entropy code using the limits computed
-// by FindLimits method.
-void EntropyCodeBuilder::ProduceSymbolOrder(uint8* symbols,
-                        int* assign_value,
-                        int* assign_length) {
-  int best_index = 0;
-  int next_best_index = 0;
-  for (int i = 0; i < 256; i++) {
-    if (symbols[i] >= limit_32_) {
-      if (symbols[i] == limit_32_) {
-        if (--choose_at_limit_32_ == 0) {
-          limit_32_++;
-        }
-      }
-      assign_value[i] = best_index;
-      assign_length[i] = 6;
-      ++best_index;
-      continue;
-    }
-    if (symbols[i] >= limit_96_) {
-      if (symbols[i] == limit_96_) {
-        if (--choose_at_limit_96_ == 0) {
-          limit_96_++;
-        }
-      }
-      assign_value[i] = 0x80 | next_best_index;
-      assign_length[i] = 8;
-      ++next_best_index;
-      continue;
-    }
-    assign_value[i] = 0x300 | i;
-    assign_length[i] = 10;
+
+Reduction DeadCodeElimination::ReduceEnd(Node* node) {
+  DCHECK_EQ(IrOpcode::kEnd, node->opcode());
+  int const input_count = node->InputCount();
+  DCHECK_LE(1, input_count);
+  int live_input_count = 0;
+  for (int i = 0; i < input_count; ++i) {
+    Node* const input = node->InputAt(i);
+    // Skip dead inputs.
+    if (input->opcode() == IrOpcode::kDead) continue;
+    // Compact live inputs.
+    if (i != live_input_count) node->ReplaceInput(live_input_count, input);
+    ++live_input_count;
   }
+  if (live_input_count == 0) {
+    return Replace(dead());
+  } else if (live_input_count < input_count) {
+    node->TrimInputCount(live_input_count);
+    NodeProperties::ChangeOp(node, common()->End(live_input_count));
+    return Changed(node);
+  }
+  DCHECK_EQ(input_count, live_input_count);
+  return NoChange();
 }
 
-}  // namespace gipfeli
-}  // namespace compression
-} // namespace util
+
+Reduction DeadCodeElimination::ReduceLoopOrMerge(Node* node) {
+  DCHECK(IrOpcode::IsMergeOpcode(node->opcode()));
+  int const input_count = node->InputCount();
+  DCHECK_LE(1, input_count);
+  // Count the number of live inputs to {node} and compact them on the fly, also
+  // compacting the inputs of the associated {Phi} and {EffectPhi} uses at the
+  // same time.  We consider {Loop}s dead even if only the first control input
+  // is dead.
+  int live_input_count = 0;
+  if (node->opcode() != IrOpcode::kLoop ||
+      node->InputAt(0)->opcode() != IrOpcode::kDead) {
+    for (int i = 0; i < input_count; ++i) {
+      Node* const input = node->InputAt(i);
+      // Skip dead inputs.
+      if (input->opcode() == IrOpcode::kDead) continue;
+      // Compact live inputs.
+      if (live_input_count != i) {
+        node->ReplaceInput(live_input_count, input);
+        for (Node* const use : node->uses()) {
+          if (NodeProperties::IsPhi(use)) {
+            DCHECK_EQ(input_count + 1, use->InputCount());
+            use->ReplaceInput(live_input_count, use->InputAt(i));
+          }
+        }
+      }
+      ++live_input_count;
+    }
+  }
+  if (live_input_count == 0) {
+    return Replace(dead());
+  } else if (live_input_count == 1) {
+    // Due to compaction above, the live input is at offset 0.
+    for (Node* const use : node->uses()) {
+      if (NodeProperties::IsPhi(use)) {
+        Replace(use, use->InputAt(0));
+      } else if (use->opcode() == IrOpcode::kLoopExit &&
+                 use->InputAt(1) == node) {
+        RemoveLoopExit(use);
+      } else if (use->opcode() == IrOpcode::kTerminate) {
+        DCHECK_EQ(IrOpcode::kLoop, node->opcode());
+        Replace(use, dead());
+      }
+    }
+    return Replace(node->InputAt(0));
+  }
+  DCHECK_LE(2, live_input_count);
+  DCHECK_LE(live_input_count, input_count);
+  // Trim input count for the {Merge} or {Loop} node.
+  if (live_input_count < input_count) {
+    // Trim input counts for all phi uses and revisit them.
+    for (Node* const use : node->uses()) {
+      if (NodeProperties::IsPhi(use)) {
+        use->ReplaceInput(live_input_count, node);
+        TrimMergeOrPhi(use, live_input_count);
+        Revisit(use);
+      }
+    }
+    TrimMergeOrPhi(node, live_input_count);
+    return Changed(node);
+  }
+  return NoChange();
+}
+
+Reduction DeadCodeElimination::RemoveLoopExit(Node* node) {
+  DCHECK_EQ(IrOpcode::kLoopExit, node->opcode());
+  for (Node* const use : node->uses()) {
+    if (use->opcode() == IrOpcode::kLoopExitValue ||
+        use->opcode() == IrOpcode::kLoopExitEffect) {
+      Replace(use, use->InputAt(0));
+    }
+  }
+  Node* control = NodeProperties::GetControlInput(node, 0);
+  Replace(node, control);
+  return Replace(control);
+}
+
+Reduction DeadCodeElimination::ReduceNode(Node* node) {
+  // If {node} has exactly one control input and this is {Dead},
+  // replace {node} with {Dead}.
+  int const control_input_count = node->op()->ControlInputCount();
+  if (control_input_count == 0) return NoChange();
+  DCHECK_EQ(1, control_input_count);
+  Node* control = NodeProperties::GetControlInput(node);
+  if (control->opcode() == IrOpcode::kDead) return Replace(control);
+  return NoChange();
+}
+
+Reduction DeadCodeElimination::ReduceLoopExit(Node* node) {
+  Node* control = NodeProperties::GetControlInput(node, 0);
+  Node* loop = NodeProperties::GetControlInput(node, 1);
+  if (control->opcode() == IrOpcode::kDead ||
+      loop->opcode() == IrOpcode::kDead) {
+    return RemoveLoopExit(node);
+  }
+  return NoChange();
+}
+
+void DeadCodeElimination::TrimMergeOrPhi(Node* node, int size) {
+  const Operator* const op = common()->ResizeMergeOrPhi(node->op(), size);
+  node->TrimInputCount(OperatorProperties::GetTotalInputCount(op));
+  NodeProperties::ChangeOp(node, op);
+}
+
+}  // namespace compiler
+}  // namespace external
+} // namespace vEight
+

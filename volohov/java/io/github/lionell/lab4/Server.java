@@ -28,7 +28,7 @@ public class Server implements Runnable {
         logger.info("Connection successful.");
         Thread thread = new Thread(new Evaluator(client));
         thread.start();
-        thread.wait();
+//        thread.wait();
       }
     } catch (IOException e) {
       e.printStackTrace();

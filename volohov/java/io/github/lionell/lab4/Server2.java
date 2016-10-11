@@ -2,9 +2,9 @@ package io.github.lionell.lab4;
 
 import java.util.logging.Logger;
 
-public class Runner1 {
-  private static final Logger logger = Logger.getLogger(Runner1.class.getName());
-  private static final int PORT = 12345;
+public class Server2 {
+  private static final Logger logger = Logger.getLogger(Server2.class.getName());
+  private static final int PORT = 12346;
 
   public static void main(String[] args) {
     logger.info("Start listening at port " + PORT);
