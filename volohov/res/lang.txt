@@ -1,0 +1,8 @@
+1. Comments: single line + multiline
+2. Macroses
+3. Strings: string + char
+4. Keywords
+5. IDs
+6. Numbers: float(simple, scientific) + integer(hex, oct, dec)
+7. Operators: ~!%^&*+=|?:<>/-
+8. Punctuation: ()[]{},.;

@@ -102,6 +102,10 @@ public class NFA {
     private Map<String, Map<Character, Set<String>>> delta = new HashMap<>();
     private Set<String> finals = new HashSet<>();
 
+    public boolean equalsTo(Builder b) {
+      return build().equalsTo(b.build());
+    }
+
     public Builder setQ0(String q0) {
       this.q0 = q0;
       return this;

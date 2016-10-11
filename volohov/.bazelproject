@@ -1,14 +1,22 @@
 directories:
   java/io/github/lionell/lab1
   java/io/github/lionell/lab2
+  java/io/github/lionell/lab3
+  java/io/github/lionell/lab4
   javatests/io/github/lionell/lab1
   javatests/io/github/lionell/lab2
+  javatests/io/github/lionell/lab3
+  javatests/io/github/lionell/lab4
   res/
 targets:
   //java/io/github/lionell/lab1:all
   //java/io/github/lionell/lab2:all
+  //java/io/github/lionell/lab3:all
+  //java/io/github/lionell/lab4:all
   //javatests/io/github/lionell/lab1:all
   //javatests/io/github/lionell/lab2:all
+  //javatests/io/github/lionell/lab3:all
+  //javatests/io/github/lionell/lab4:all
 
 test_sources:
   javatests/*
