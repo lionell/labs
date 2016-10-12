@@ -5,10 +5,12 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.concurrent.CountDownLatch;
 import java.util.logging.Logger;
 
 /** Created by lionell on 10/10/16. */
 public class Main implements Runnable {
+  private final Logger logger = Logger.getLogger(RemoteEvaluator.class.getName());
   private static final String HOST = "127.0.0.1";
   private Boolean result;
 
@@ -16,7 +18,7 @@ public class Main implements Runnable {
     new Main().run();
   }
 
-  synchronized void setResult(boolean value) {
+  synchronized private void setResult(boolean value) {
     if (result == null) {
       result = value;
     } else {
@@ -27,23 +29,39 @@ public class Main implements Runnable {
   @Override
   public void run() {
     String arg = "arg";
-    RemoteEvaluator remoteEvaluator1 = new RemoteEvaluator(12345, arg);
-    RemoteEvaluator remoteEvaluator2 = new RemoteEvaluator(12346, arg);
-    while (result == null || result == true) {
-
-    }
+    CountDownLatch latch = new CountDownLatch(1);
+    RemoteEvaluator remoteEvaluator1 = new RemoteEvaluator(12345, arg, latch);
+    RemoteEvaluator remoteEvaluator2 = new RemoteEvaluator(12346, arg, latch);
     Thread thread1 = new Thread(remoteEvaluator1);
     Thread thread2 = new Thread(remoteEvaluator2);
+    thread1.start();
+    thread2.start();
+    try {
+      latch.await();
+    } catch (InterruptedException e) {
+      e.printStackTrace();
+    }
+    if (result) {
+      try {
+        thread1.join();
+        thread2.join();
+      } catch (InterruptedException e) {
+        e.printStackTrace();
+      }
+    }
+    logger.info("FINAL: " + result);
   }
 
   private class RemoteEvaluator implements Runnable {
     private final Logger logger = Logger.getLogger(RemoteEvaluator.class.getName());
     private final int port;
     private final String arg;
+    private final CountDownLatch latch;
 
-    public RemoteEvaluator(int port, String arg) {
+    public RemoteEvaluator(int port, String arg, CountDownLatch latch) {
       this.port = port;
       this.arg = arg;
+      this.latch = latch;
     }
 
     @Override
@@ -57,6 +75,8 @@ public class Main implements Runnable {
             out.println(arg);
             boolean res = Boolean.parseBoolean(in.readLine());
             logger.info("Received result " + Boolean.toString(res));
+            setResult(res);
+            latch.countDown();
           }
         }
       } catch (IOException e) {

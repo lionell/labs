@@ -10,7 +10,7 @@
 #include "src/compiler/operator-properties.h"
 
 namespace vEight {
-namespace external {
+namespace ternal {
 namespace compiler {
 
 DeadCodeElimination::DeadCodeElimination(Editor* editor, Graph* graph,
@@ -167,6 +167,6 @@ void DeadCodeElimination::TrimMergeOrPhi(Node* node, int size) {
 }
 
 }  // namespace compiler
-}  // namespace external
+}  // namespace ternall
 } // namespace vEight
 

@@ -44,9 +44,7 @@ public class Lexeme {
     CHAR("\'.*\'"),
     LITERALS(AsciiColor.PURPLE, STRING.pattern, CHAR.pattern),
 
-    FLOAT_SIMPLE("(\\d+\\.\\d*|\\.\\d+|\\d+[fF])[fF]?"),
-    FLOAT_SCIENTIFIC("(\\d+\\.\\d*|\\.\\d+|\\d+)[eE][+-]?\\d+[LlUu]*"),
-    FLOAT(FLOAT_SIMPLE.pattern, FLOAT_SCIENTIFIC.pattern),
+    FLOAT("(\\d+\\.\\d*|\\.\\d+|\\d+)([eE][+-]?\\d+)?"),
 
     HEX("0x[0-9a-fA-F]+[LlUu]*"),
     OCT("0[0-7]+[LlUu]*"),

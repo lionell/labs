@@ -2,19 +2,11 @@ package(default_visibility = ["//visibility:public"])
 
 java_binary(
     name = "lab3",
-    srcs = ["Runner.java"],
-    main_class = "io.github.lionell.lab3.Runner",
-    deps = [
-        ":highlighter",
-        "//third_party:guava",
-    ],
-)
-
-java_library(
-    name = "highlighter",
     srcs = ["Highlighter.java"],
+    main_class = "io.github.lionell.lab3.Highlighter",
     deps = [
         ":lexeme",
+        "//third_party:guava",
     ],
 )
 
