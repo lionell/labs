@@ -13,11 +13,11 @@ import java.util.logging.Logger;
 public class Server implements Runnable {
   private final Logger logger = Logger.getLogger(Server.class.getName());
   private final int port;
-  private final Predicate<String> fun;
+  private final Predicate<String> func;
 
-  public Server(int port, Predicate<String> fun) {
+  public Server(int port, Predicate<String> func) {
     this.port = port;
-    this.fun = fun;
+    this.func = func;
   }
 
   @Override
@@ -49,7 +49,7 @@ public class Server implements Runnable {
         try (PrintWriter out = new PrintWriter(socket.getOutputStream(), true)) {
           String arg = in.readLine();
           logger.info("Received: " + arg);
-          Boolean res = fun.test(arg);
+          Boolean res = func.test(arg);
           logger.info("Result: " + res);
           out.println(res);
         }
