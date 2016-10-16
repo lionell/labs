@@ -123,7 +123,7 @@ public class Server {
       private void putTask(Task task) {
         synchronized (finishedJobs) {
           finishedJobs.add(task);
-          finishedJobs.notifyAll();
+          finishedJobs.notify();
         }
       }
     }
@@ -182,7 +182,7 @@ public class Server {
                 Task task = Task.of(msg);
                 logger.info(task + " received.");
                 newJobs.add(task);
-                newJobs.notifyAll();
+                newJobs.notify();
               }
             }
           }
