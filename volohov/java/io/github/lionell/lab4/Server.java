@@ -120,9 +120,9 @@ public class Server {
         }
       }
 
-      private void putTask(Task t) {
+      private void putTask(Task task) {
         synchronized (finishedJobs) {
-          finishedJobs.add(t);
+          finishedJobs.add(task);
           finishedJobs.notifyAll();
         }
       }
