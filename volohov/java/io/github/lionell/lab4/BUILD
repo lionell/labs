@@ -5,6 +5,7 @@ java_binary(
     srcs = ["Main.java"],
     main_class = "io.github.lionell.lab4.Main",
     deps = [
+        "//java/io/github/lionell/lab4/logging",
     ],
 )
 
@@ -14,6 +15,7 @@ java_binary(
     main_class = "io.github.lionell.lab4.Server1",
     deps = [
         ":server",
+        "//java/io/github/lionell/lab4/logging",
     ],
 )
 
@@ -23,6 +25,7 @@ java_binary(
     main_class = "io.github.lionell.lab4.Server2",
     deps = [
         ":server",
+        "//java/io/github/lionell/lab4/logging",
     ],
 )
 
@@ -30,5 +33,6 @@ java_library(
     name = "server",
     srcs = ["Server.java"],
     deps = [
+        "//java/io/github/lionell/lab4/logging",
     ],
 )
