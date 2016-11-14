@@ -32,8 +32,8 @@ public class Main {
     try {
       Socket socket1 = new Socket(HOST, 12345);
       Socket socket2 = new Socket(HOST, 12346);
-      Thread thread1 = new Thread(new RemoteEvaluator(socket1, arg), "evaluator");
-      Thread thread2 = new Thread(new RemoteEvaluator(socket2, arg), "evaluator");
+      Thread thread1 = new Thread(new RemoteEvaluator(socket1, arg), "evaluator2");
+      Thread thread2 = new Thread(new RemoteEvaluator(socket2, arg), "evaluator3");
       thread1.start();
       thread2.start();
       synchronized (this) {

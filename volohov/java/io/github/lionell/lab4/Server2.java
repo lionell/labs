@@ -17,7 +17,7 @@ public class Server2 {
 
               @Override
               public Boolean apply(String s) {
-                int i = 12 - Integer.parseInt(s);
+                int i = 24 - Integer.parseInt(s);
                 try {
                   for (int j = 0; j < i; j++) {
                     Thread.sleep(1000);
