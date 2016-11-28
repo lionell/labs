@@ -1,0 +1,21 @@
+header em {
+	position: relative;
+	top: 5px;
+	left: -5px;
+}
+
+main {
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
+
+footer {
+	color: #666;
+	font-size: 12px;
+	background-color: #eee;
+	padding: 5px;
+}
+
+select #gender {
+	width: 100px;
+}
