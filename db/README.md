@@ -1,9 +1,11 @@
-# Run Docker LAMP container
-  docker run -p 8000:80 -p 2200:22 -p 3306:3306 -v $(pwd):/var/www/html:rw dockie/lamp
+# Run in Docker LAMP container
+```
+docker run -p 8000:80 -p 2200:22 -p 3306:3306 -v /path/to/project/root:/var/www/html:rw dockie/lamp
+```
 
-See https://github.com/RobLoach/Dockie/tree/master/lamp
+See Dockerfile here: https://github.com/RobLoach/Dockie/tree/master/lamp
 
-# SQL Example queries
+# Example queries
 1. Names of (men/women) with their average salaries.
 	SELECT first_name, last_name, average_salary
 	FROM employees
