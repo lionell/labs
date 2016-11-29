@@ -138,7 +138,7 @@ See Dockerfile here: https://github.com/RobLoach/Dockie/tree/master/lamp
 	LIMIT 20;
 	```
 
-9. Find employees managed by some of my managers.
+9. Find employees managed by some of managers of `{$emp_no}`.
 
 	```sql
 	SELECT dept_manager.emp_no, first_name, last_name, dept_manager.dept_no, from_date, to_date
