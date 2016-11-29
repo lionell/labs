@@ -47,7 +47,9 @@ Fortunatelly, **default values are good enough** to run this query, so let's try
 
 ![example query 5 result](readme/example_query_5_res.png)
 
-To get back to 'Queries' page you can always use top navigation bar. Good luck!
+To get back to 'Queries' page you can always use top navigation bar.
+
+That's it for now. Hope this example is useful :)
 
 ## Example queries
 
