@@ -217,7 +217,7 @@ That's it for now. Hope this example is useful :)
 	$ docker run -p 8000:80 -p 2200:22 -p 3306:3306 -v $(pwd)/labs/db:/var/www/html:rw dockie/lamp
 	```
 
-	Now it should be availabel at localhost:8000
+	Now it should be availabel at <a href="localhost:8000">localhost:8000</a>
 
 	See Dockerfile here: https://github.com/RobLoach/Dockie/tree/master/lamp
 
