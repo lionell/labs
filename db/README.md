@@ -58,7 +58,8 @@ See Dockerfile here: https://github.com/RobLoach/Dockie/tree/master/lamp
 	LIMIT 20;
 	```
 
-4. Minimal salary of employee with `{$emp_no}`
+4. Minimal salary of employee with `{$emp_no}`.
+
 	```sql
 	SELECT first_name, last_name, min_salary
 	FROM employees
@@ -69,5 +70,22 @@ See Dockerfile here: https://github.com/RobLoach/Dockie/tree/master/lamp
 			) AS emp_min_salary
 			ON employees.emp_no = emp_min_salary.emp_no
 	ORDER BY min_salary
+	LIMIT 20;
+	```
+
+5. Number of employees with `{$title}` per department.
+
+	```sql
+	SELECT dept_name, COUNT(dept_emp.emp_no) AS emp_number
+	FROM departments
+		JOIN dept_emp
+			ON departments.dept_no = dept_emp.dept_no
+		JOIN titles
+			ON titles.emp_no = dept_emp.emp_no
+	WHERE dept_emp.from_date >= '{$from_date}' AND dept_emp.to_date <= '{$to_date}'
+			AND titles.from_date >= '{$from_date}' AND titles.to_date <= '{$to_date}'
+			AND title = '{$title}'
+	GROUP BY dept_name
+	ORDER BY emp_number DESC
 	LIMIT 20;
 	```
