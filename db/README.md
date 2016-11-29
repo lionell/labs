@@ -9,6 +9,11 @@ Based on [test\_db](https://github.com/datacharmer/test_db).
 Site is divided into *two different parts* as tables, queries.
 
 ### Tables
+
+Here is DB scheme:
+
+![scheme](readme/scheme.png)
+
 You are able to view content of particular table, insert new data into it, update
 existing data or delete it.
 
@@ -212,7 +217,7 @@ That's it for now. Hope this example is useful :)
 	$ docker run -p 8000:80 -p 2200:22 -p 3306:3306 -v $(pwd)/labs/db:/var/www/html:rw dockie/lamp
 	```
 
-	Now it should be availabel at [localhost:8000](localhost:8000)
+	Now it should be availabel at localhost:8000
 
 	See Dockerfile here: https://github.com/RobLoach/Dockie/tree/master/lamp
 
