@@ -100,7 +100,7 @@
 							</form>
 						</div>
 						<div id="example5" class="tab-pane fade">
-							<h3>Number of coworkers with title</h3>
+							<h3>Number of employees with title</h3>
 							<form action="run.php" method="get">
 								<div class="form-group">
 									<label for="gender">Title:</label>

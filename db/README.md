@@ -12,14 +12,42 @@ See Dockerfile here: https://github.com/RobLoach/Dockie/tree/master/lamp
 
 ## How to use
 
-Site is divided into two different parts: tables, queries.
+Site is divided into *two different parts* as tables, queries.
 
 ### Tables
-You are able to view content of particular table, insert new data into it, modify
+You are able to view content of particular table, insert new data into it, update
 existing data or delete it.
 
 Here is how `departments` table looks like:
+
 ![departments table view](readme/dept_table.png)
+
+You can **delete** some rows from table by clicking on 'X' icon in 'trash' column.
+
+To **insert** or **update** rows you should go to tab called 'Modify' on the right side.
+You will be asked to enter some information neccessary to process queries.
+
+![dept\_manager table modification](readme/dept_manager_mod.png)
+
+**NOTE!** You need to fill all the fields with values to make modification.
+
+### Queries
+
+There are 6 simple queries and 3 set comparison queries provided as examples.
+To run query you need to go to tab called 'Queries' and select query you want to run.
+
+Let's have a look at example query 5.
+
+![example query 5](readme/example_query_5.png)
+
+As you can see queries are parametrized. In this particular case we need to provide
+title, start and end date to get number of coworkers with given title per department.
+
+Fortunatelly, **default values are good enough** to run this query, so let's try it.
+
+![example query 5 result](readme/example_query_5_res.png)
+
+To get back to 'Queries' page you can always use top navigation bar. Good luck!
 
 ## Example queries
 
