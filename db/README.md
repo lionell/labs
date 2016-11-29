@@ -10,6 +10,17 @@ $ docker run -p 8000:80 -p 2200:22 -p 3306:3306 -v /path/to/project/root:/var/ww
 
 See Dockerfile here: https://github.com/RobLoach/Dockie/tree/master/lamp
 
+## How to use
+
+Site is divided into two different parts: tables, queries.
+
+### Tables
+You are able to view content of particular table, insert new data into it, modify
+existing data or delete it.
+
+Here is how `departments` table looks like:
+![departments table view](readme/dept_table.png)
+
 ## Example queries
 
 **NOTE!** All the queries as parametrized with date window `[from_date, to_date]`.
