@@ -89,3 +89,69 @@ See Dockerfile here: https://github.com/RobLoach/Dockie/tree/master/lamp
 	ORDER BY emp_number DESC
 	LIMIT 20;
 	```
+6. List titles of particular employee with `{$emp_no}`.
+
+	```sql
+	SELECT title, from_date, to_date
+	FROM titles
+	WHERE from_date >= '{$from_date}' AND to_date <= '{$to_date}'
+		AND emp_no = '{$emp_no}'
+	ORDER BY from_date DESC
+	LIMIT 20;
+	```
+
+## Set comparisons
+
+7. Employees with some titles of `{$emp_no}`.
+
+	```sql
+	SELECT titles.emp_no, first_name, last_name, title, from_date, to_date
+	FROM employees
+		JOIN titles
+			ON employees.emp_no = titles.emp_no
+	WHERE from_date >= '{$from_date}' AND to_date <= '{$to_date}'
+		AND title
+		IN (SELECT title
+			FROM titles
+			WHERE from_date >= '{$from_date}' AND to_date <= '{$to_date}'
+				AND emp_no = '{$emp_no}'
+		)
+	ORDER BY titles.emp_no
+	LIMIT 20;
+	```
+
+8. Employees working at the same department as `{$emp_no}`.
+
+	```sql
+	SELECT dept_emp.emp_no, first_name, last_name, dept_emp.dept_no, from_date, to_date
+	FROM dept_emp
+		JOIN employees
+			ON dept_emp.emp_no = employees.emp_no
+	WHERE from_date >= '{$from_date}' AND to_date <= '{$to_date}'
+		AND dept_no 
+		IN (SELECT dept_no
+			FROM dept_emp
+			WHERE from_date >= '{$from_date}' AND to_date <= '{$to_date}'
+				AND emp_no = '{$emp_no}'
+		)
+	ORDER BY dept_emp.emp_no
+	LIMIT 20;
+	```
+
+9. Find employees managed by some of my managers.
+
+	```sql
+	SELECT dept_manager.emp_no, first_name, last_name, dept_manager.dept_no, from_date, to_date
+	FROM dept_manager
+		JOIN employees
+			ON dept_manager.emp_no = employees.emp_no
+	WHERE from_date >= '{$from_date}' AND to_date <= '{$to_date}'
+		AND dept_no 
+		IN (SELECT dept_no
+			FROM dept_manager
+			WHERE from_date >= '{$from_date}' AND to_date <= '{$to_date}'
+				AND emp_no = '{$emp_no}'
+		)
+	ORDER BY dept_manager.emp_no
+	LIMIT 20;
+	```

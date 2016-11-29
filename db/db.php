@@ -168,14 +168,15 @@
 					IN (SELECT dept_no
 						FROM dept_emp
 						WHERE from_date >= '{$from_date}' AND to_date <= '{$to_date}'
-							AND emp_no = '{$emp_no}')
+							AND emp_no = '{$emp_no}'
+					)
 				ORDER BY dept_emp.emp_no
 				LIMIT 20;";
 		$result = $db->query($sql);
 		return $result;
 	}
 
-	// Find people with the same department managers
+	// Find employees managed by some of my managers
 	function db_example9($db, $emp_no, $from_date, $to_date) {
 		$sql = "SELECT dept_manager.emp_no, first_name, last_name, dept_manager.dept_no, from_date, to_date
 				FROM dept_manager
@@ -186,7 +187,8 @@
 					IN (SELECT dept_no
 						FROM dept_manager
 						WHERE from_date >= '{$from_date}' AND to_date <= '{$to_date}'
-							AND emp_no = '{$emp_no}')
+							AND emp_no = '{$emp_no}'
+					)
 				ORDER BY dept_manager.emp_no
 				LIMIT 20;";
 		$result = $db->query($sql);
