@@ -13,6 +13,7 @@ See Dockerfile here: https://github.com/RobLoach/Dockie/tree/master/lamp
 **NOTE!** All the queries as parametrized with date window `[from_date, to_date]`
 
 1. Select (men/women) and their salaries
+
 	```
 	SELECT first_name, last_name, gender, average_salary
 	FROM employees
