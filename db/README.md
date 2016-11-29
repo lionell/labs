@@ -8,7 +8,8 @@ docker run -p 8000:80 -p 2200:22 -p 3306:3306 -v /path/to/project/root:/var/www/
 
 See Dockerfile here: https://github.com/RobLoach/Dockie/tree/master/lamp
 
-# Example queries
+## Example queries
+1. Select (men/women) and their salaries
 1. Names of (men/women) with their average salaries.
 	SELECT first_name, last_name, average_salary
 	FROM employees
