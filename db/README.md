@@ -4,12 +4,6 @@ This is site based on test DB, to run some example SQL queries.
 
 Based on [test\_db](https://github.com/datacharmer/test_db).
 
-## DISCLAIMER
-
-To the best of my knowledge, this data is fabricated, and
-it does not correspond to real people. 
-Any similarity to existing people is purely coincidental.
-
 ## How to use
 
 Site is divided into *two different parts* as tables, queries.
@@ -199,13 +193,34 @@ That's it for now. Hope this example is useful :)
 	LIMIT 20;
 	```
 
-## Run in Docker LAMP container
+## How to install
 
-```shell
-$ docker run -p 8000:80 -p 2200:22 -p 3306:3306 -v /path/to/project/root:/var/www/html:rw dockie/lamp
-```
+1. Clone the repo somewhere on your disk.
 
-See Dockerfile here: https://github.com/RobLoach/Dockie/tree/master/lamp
+	```shell
+	$ git clone https://github.com/lionell/labs.git
+	```
+2. If you have LAMP server running on you machine, just copy the site directory to your serving 
+	directory
+
+	```shell
+	$ cp labs/db /path/to/your/serving/directory
+	```
+3. Otherwise you can use Docker LAMP images to host site.
+
+	```shell
+	$ docker run -p 8000:80 -p 2200:22 -p 3306:3306 -v $(pwd)/labs/db:/var/www/html:rw dockie/lamp
+	```
+
+	Now it should be availabel at [localhost:8000](localhost:8000)
+
+	See Dockerfile here: https://github.com/RobLoach/Dockie/tree/master/lamp
+
+## DISCLAIMER
+
+To the best of my knowledge, this data is fabricated, and
+it does not correspond to real people. 
+Any similarity to existing people is purely coincidental.
 
 ## LICENSE
 This work is licensed under the 
