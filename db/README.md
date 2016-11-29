@@ -13,19 +13,19 @@ See Dockerfile here: https://github.com/RobLoach/Dockie/tree/master/lamp
 **NOTE!** All the queries as parametrized with date window `[from_date, to_date]`
 
 1. Select (men/women) and their salaries
-```
-SELECT first_name, last_name, gender, average_salary
-FROM employees
-	JOIN (SELECT emp_no, AVG(salary) AS average_salary
-			FROM salaries
-			WHERE from_date >= '{$from_date}' AND to_date <= '{$to_date}'
-			GROUP BY emp_no
-		) AS emp_salary
-		ON employees.emp_no = emp_salary.emp_no
-WHERE gender = '{$gender}'
-ORDER BY average_salary DESC
-LIMIT 20;";
-```
+	```
+	SELECT first_name, last_name, gender, average_salary
+	FROM employees
+		JOIN (SELECT emp_no, AVG(salary) AS average_salary
+				FROM salaries
+				WHERE from_date >= '{$from_date}' AND to_date <= '{$to_date}'
+				GROUP BY emp_no
+			) AS emp_salary
+			ON employees.emp_no = emp_salary.emp_no
+	WHERE gender = '{$gender}'
+	ORDER BY average_salary DESC
+	LIMIT 20;";
+	```
 2. Departments with their managers at particular date window.
 	SELECT dept_name, first_name, last_name
 	FROM departments
