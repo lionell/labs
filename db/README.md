@@ -2,7 +2,7 @@
 This is site based on test DB, to run some example SQL queries.
 
 ## Run in Docker LAMP container
-```sh
+```shell
 $ docker run -p 8000:80 -p 2200:22 -p 3306:3306 -v /path/to/project/root:/var/www/html:rw dockie/lamp
 ```
 
