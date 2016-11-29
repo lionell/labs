@@ -131,7 +131,7 @@
 							<form action="run.php" method="get">
 								<div class="form-group">
 									<label for="emp_no">Employee No: </label>
-									<input type="text" class="form-control" id="emp_no" name="emp_no" value="10009">
+									<input type="number" class="form-control" id="emp_no" name="emp_no" value="10009">
 								</div>
 								<div class="form-group">
 									<label for="from_date">From date: </label>
@@ -150,7 +150,7 @@
 							<form action="run.php" method="get">
 								<div class="form-group">
 									<label for="emp_no">Employee No: </label>
-									<input type="text" class="form-control" id="emp_no" name="emp_no" value="10009">
+									<input type="number" class="form-control" id="emp_no" name="emp_no" value="10009">
 								</div>
 								<div class="form-group">
 									<label for="from_date">From date: </label>
@@ -169,7 +169,7 @@
 							<form action="run.php" method="get">
 								<div class="form-group">
 									<label for="emp_no">Employee No: </label>
-									<input type="text" class="form-control" id="emp_no" name="emp_no" value="108044">
+									<input type="number" class="form-control" id="emp_no" name="emp_no" value="108044">
 								</div>
 								<div class="form-group">
 									<label for="from_date">From date: </label>
@@ -188,7 +188,7 @@
 							<form action="run.php" method="get">
 								<div class="form-group">
 									<label for="emp_no">Employee No: </label>
-									<input type="text" class="form-control" id="emp_no" name="emp_no" value="111692">
+									<input type="number" class="form-control" id="emp_no" name="emp_no" value="111692">
 								</div>
 								<div class="form-group">
 									<label for="from_date">From date: </label>
