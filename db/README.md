@@ -2,13 +2,7 @@
 
 This is site based on test DB, to run some example SQL queries.
 
-## Run in Docker LAMP container
-
-```shell
-$ docker run -p 8000:80 -p 2200:22 -p 3306:3306 -v /path/to/project/root:/var/www/html:rw dockie/lamp
-```
-
-See Dockerfile here: https://github.com/RobLoach/Dockie/tree/master/lamp
+Based on [Test DB](https://github.com/datacharmer/test_db).
 
 ## How to use
 
@@ -198,3 +192,12 @@ That's it for now. Hope this example is useful :)
 	ORDER BY dept_manager.emp_no
 	LIMIT 20;
 	```
+
+## Run in Docker LAMP container
+
+```shell
+$ docker run -p 8000:80 -p 2200:22 -p 3306:3306 -v /path/to/project/root:/var/www/html:rw dockie/lamp
+```
+
+See Dockerfile here: https://github.com/RobLoach/Dockie/tree/master/lamp
+
