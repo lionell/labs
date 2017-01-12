@@ -140,37 +140,48 @@
 
 	// Employees with some of my titles
 	function db_example7($db, $emp_no, $from_date, $to_date) {
-		$sql = "SELECT titles.emp_no, first_name, last_name, title, from_date, to_date
-				FROM employees
-					JOIN titles
-						ON employees.emp_no = titles.emp_no
-				WHERE from_date >= '{$from_date}' AND to_date <= '{$to_date}'
-					AND title
-					IN (SELECT title
-						FROM titles
-						WHERE from_date >= '{$from_date}' AND to_date <= '{$to_date}'
-							AND emp_no = '{$emp_no}'
-					)
-				ORDER BY titles.emp_no
-				LIMIT 20;";
+		$sql = "SELECT emp_no, first_name, last_name
+			FROM employees AS e
+			WHERE NOT EXISTS (
+				SELECT *
+				FROM titles
+				WHERE emp_no = e.emp_no AND from_date >= '{$from_date}' AND to_date <= '{$to_date}' AND title NOT IN (
+					SELECT title
+					FROM titles
+					WHERE emp_no = {$emp_no} AND from_date >= '{$from_date}' AND to_date <= '{$to_date}'
+				)
+			)
+			ORDER BY emp_no
+			LIMIT 20;";
 		$result = $db->query($sql);
 		return $result;
 	}
 
 	// Employees at the same department as me
 	function db_example8($db, $emp_no, $from_date, $to_date) {
-		$sql = "SELECT dept_emp.emp_no, first_name, last_name, dept_emp.dept_no, from_date, to_date
-				FROM dept_emp
+		$sql = "SELECT e.emp_no, first_name, last_name
+				FROM dept_emp as e
 					JOIN employees
-						ON dept_emp.emp_no = employees.emp_no
+						ON e.emp_no = employees.emp_no
 				WHERE from_date >= '{$from_date}' AND to_date <= '{$to_date}'
-					AND dept_no 
-					IN (SELECT dept_no
+					AND NOT EXISTS (
+						SELECT *
 						FROM dept_emp
-						WHERE from_date >= '{$from_date}' AND to_date <= '{$to_date}'
-							AND emp_no = '{$emp_no}'
+						WHERE emp_no = {$emp_no} AND from_date >= '{$from_date}' AND to_date <= '{$to_date}' AND dept_no NOT IN (
+							SELECT dept_no
+							FROM dept_emp
+							WHERE emp_no = e.emp_no AND from_date >= '{$from_date}' AND to_date <= '{$to_date}'
+						)
+					) AND NOT EXISTS (
+						SELECT *
+						FROM dept_emp
+						WHERE emp_no = e.emp_no AND from_date >= '{$from_date}' AND to_date <= '{$to_date}' AND dept_no NOT IN (
+							SELECT dept_no
+							FROM dept_emp
+							WHERE emp_no = {$emp_no} AND from_date >= '{$from_date}' AND to_date <= '{$to_date}'
+						)
 					)
-				ORDER BY dept_emp.emp_no
+				ORDER BY e.emp_no
 				LIMIT 20;";
 		$result = $db->query($sql);
 		return $result;
@@ -178,19 +189,40 @@
 
 	// Find employees managed by some of my managers
 	function db_example9($db, $emp_no, $from_date, $to_date) {
-		$sql = "SELECT dept_manager.emp_no, first_name, last_name, dept_manager.dept_no, from_date, to_date
+		$sql = "SELECT e.emp_no, first_name, last_name, dept_no
+			FROM dept_manager AS e
+				JOIN employees
+					ON e.emp_no = employees.emp_no
+			WHERE NOT EXISTS (
+				SELECT *
 				FROM dept_manager
-					JOIN employees
-						ON dept_manager.emp_no = employees.emp_no
-				WHERE from_date >= '{$from_date}' AND to_date <= '{$to_date}'
-					AND dept_no 
-					IN (SELECT dept_no
-						FROM dept_manager
-						WHERE from_date >= '{$from_date}' AND to_date <= '{$to_date}'
-							AND emp_no = '{$emp_no}'
-					)
-				ORDER BY dept_manager.emp_no
-				LIMIT 20;";
+				WHERE emp_no = '{$emp_no}' AND from_date >= '{$from_date}' AND to_date <= '{$to_date}' AND dept_no NOT IN (
+					SELECT dept_no
+					FROM dept_manager
+					WHERE emp_no = e.emp_no AND from_date >= '{$from_date}' AND to_date <= '{$to_date}'
+				)
+			)
+			ORDER BY emp_no
+			LIMIT 20;";
+		$result = $db->query($sql);
+		return $result;
+	}
+
+	// Find employees whose salaries are superset of mein
+	function db_example10($db, $emp_no, $from_date, $to_date) {
+		$sql = "SELECT emp_no, first_name, last_name
+			FROM employees AS e
+			WHERE NOT EXISTS (
+				SELECT *
+				FROM salaries
+				WHERE emp_no = '{$emp_no}' AND from_date >= '{$from_date}' AND to_date <= '{$to_date}' AND salary NOT IN (
+					SELECT salary
+					FROM salaries
+					WHERE emp_no = e.emp_no AND from_date >= '{$from_date}' AND to_date <= '{$to_date}'
+				)
+			)
+			ORDER BY emp_no
+			LIMIT 20;";
 		$result = $db->query($sql);
 		return $result;
 	}

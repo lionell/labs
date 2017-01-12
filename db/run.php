@@ -32,6 +32,9 @@
 	case 9:
 		$result = db_example9($db, $_GET["emp_no"], $_GET["from_date"], $_GET["to_date"]);
 		break;
+	case 10:
+		$result = db_example10($db, $_GET["emp_no"], $_GET["from_date"], $_GET["to_date"]);
+		break;
 	}
 	$active_menu_item = "none";
 ?>

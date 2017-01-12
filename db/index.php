@@ -27,6 +27,7 @@
 							<li><a data-toggle="pill" href="#example7">Example 7</a></li>
 							<li><a data-toggle="pill" href="#example8">Example 8</a></li>
 							<li><a data-toggle="pill" href="#example9">Example 9</a></li>
+							<li><a data-toggle="pill" href="#example10">Example 10</a></li>
 						</ul>
 					</nav>
 				</div>
@@ -199,6 +200,25 @@
 									<input type="date" class="form-control" id="to_date" name="to_date" value="2016-06-16">
 								</div>
 								<input type="hidden" name="example" value="9">
+								<button type="submit" class="btn btn-primary">Submit</button>
+							</form>
+						</div>
+						<div id="example10" class="tab-pane fade">
+							<h3>Managers as me</h3>
+							<form action="run.php" method="get">
+								<div class="form-group">
+									<label for="emp_no">Employee No: </label>
+									<input type="number" class="form-control" id="emp_no" name="emp_no" value="111692">
+								</div>
+								<div class="form-group">
+									<label for="from_date">From date: </label>
+									<input type="date" class="form-control" id="from_date" name="from_date" value="1985-01-01">
+								</div>
+								<div class="form-group">
+									<label for="to_date">To date: </label>
+									<input type="date" class="form-control" id="to_date" name="to_date" value="1986-01-01">
+								</div>
+								<input type="hidden" name="example" value="10">
 								<button type="submit" class="btn btn-primary">Submit</button>
 							</form>
 						</div>

@@ -147,54 +147,89 @@ That's it for now. Hope this example is useful :)
 7. Employees with some titles of `{$emp_no}`.
 
 	```sql
-	SELECT titles.emp_no, first_name, last_name, title, from_date, to_date
-	FROM employees
-		JOIN titles
-			ON employees.emp_no = titles.emp_no
-	WHERE from_date >= '{$from_date}' AND to_date <= '{$to_date}'
-		AND title
-		IN (SELECT title
+	SELECT emp_no, first_name, last_name
+	FROM employees AS e
+	WHERE NOT EXISTS (
+		SELECT *
+		FROM titles
+		WHERE emp_no = e.emp_no AND from_date >= '{$from_date}' AND to_date <= '{$to_date}' AND title NOT IN (
+			SELECT title
 			FROM titles
-			WHERE from_date >= '{$from_date}' AND to_date <= '{$to_date}'
-				AND emp_no = '{$emp_no}'
+			WHERE emp_no = {$emp_no} AND from_date >= '{$from_date}' AND to_date <= '{$to_date}'
 		)
-	ORDER BY titles.emp_no
+	)
+	ORDER BY emp_no
 	LIMIT 20;
 	```
 
 8. Employees working at the same department as `{$emp_no}`.
 
 	```sql
-	SELECT dept_emp.emp_no, first_name, last_name, dept_emp.dept_no, from_date, to_date
-	FROM dept_emp
+	SELECT e.emp_no, first_name, last_name
+	FROM dept_emp as e
 		JOIN employees
-			ON dept_emp.emp_no = employees.emp_no
+			ON e.emp_no = employees.emp_no
 	WHERE from_date >= '{$from_date}' AND to_date <= '{$to_date}'
-		AND dept_no 
-		IN (SELECT dept_no
+		AND NOT EXISTS (
+			SELECT *
 			FROM dept_emp
-			WHERE from_date >= '{$from_date}' AND to_date <= '{$to_date}'
-				AND emp_no = '{$emp_no}'
+			WHERE emp_no = {$emp_no} AND from_date >= '{$from_date}' AND to_date <= '{$to_date}'
+				AND dept_no NOT IN (
+					SELECT dept_no
+					FROM dept_emp
+					WHERE emp_no = e.emp_no AND from_date >= '{$from_date}' AND to_date <= '{$to_date}'
+				)
+		) AND NOT EXISTS (
+			SELECT *
+			FROM dept_emp
+			WHERE emp_no = e.emp_no AND from_date >= '{$from_date}' AND to_date <= '{$to_date}'
+			AND dept_no NOT IN (
+				SELECT dept_no
+				FROM dept_emp
+				WHERE emp_no = {$emp_no} AND from_date >= '{$from_date}' AND to_date <= '{$to_date}'
+			)
 		)
-	ORDER BY dept_emp.emp_no
+	ORDER BY e.emp_no
 	LIMIT 20;
 	```
 
 9. Find employees managed by some of managers of `{$emp_no}`.
 
 	```sql
-	SELECT dept_manager.emp_no, first_name, last_name, dept_manager.dept_no, from_date, to_date
-	FROM dept_manager
+	SELECT e.emp_no, first_name, last_name, dept_no
+	FROM dept_manager AS e
 		JOIN employees
-			ON dept_manager.emp_no = employees.emp_no
-	WHERE from_date >= '{$from_date}' AND to_date <= '{$to_date}'
-		AND dept_no 
-		IN (SELECT dept_no
+			ON e.emp_no = employees.emp_no
+	WHERE NOT EXISTS (
+		SELECT *
+		FROM dept_manager
+		WHERE emp_no = '{$emp_no}' AND from_date >= '{$from_date}' AND to_date <= '{$to_date}'
+		AND dept_no NOT IN (
+			SELECT dept_no
 			FROM dept_manager
-			WHERE from_date >= '{$from_date}' AND to_date <= '{$to_date}'
-				AND emp_no = '{$emp_no}'
+			WHERE emp_no = e.emp_no AND from_date >= '{$from_date}' AND to_date <= '{$to_date}'
 		)
-	ORDER BY dept_manager.emp_no
+	)
+	ORDER BY emp_no
+	LIMIT 20;
+	```
+
+10. Find employees whose salaries are superset of `{$emp_no}`.
+
+	```sql
+	SELECT emp_no, first_name, last_name
+	FROM employees AS e
+	WHERE NOT EXISTS (
+		SELECT *
+		FROM salaries
+		WHERE emp_no = '{$emp_no}' AND from_date >= '{$from_date}' AND to_date <= '{$to_date}'
+			AND salary NOT IN (
+				SELECT salary
+				FROM salaries
+				WHERE emp_no = e.emp_no AND from_date >= '{$from_date}' AND to_date <= '{$to_date}'
+			)
+	)
+	ORDER BY emp_no
 	LIMIT 20;
 	```
 
@@ -205,7 +240,7 @@ That's it for now. Hope this example is useful :)
 	```shell
 	$ git clone https://github.com/lionell/labs.git
 	```
-2. If you have LAMP server running on you machine, just copy the site directory to your serving 
+2. If you have LAMP server running on you machine, just copy the site directory to your serving
 	directory
 
 	```shell
@@ -224,14 +259,14 @@ That's it for now. Hope this example is useful :)
 ## DISCLAIMER
 
 To the best of my knowledge, this data is fabricated, and
-it does not correspond to real people. 
+it does not correspond to real people.
 Any similarity to existing people is purely coincidental.
 
 ## LICENSE
-This work is licensed under the 
-Creative Commons Attribution-Share Alike 3.0 Unported License. 
-To view a copy of this license, visit 
-http://creativecommons.org/licenses/by-sa/3.0/ or send a letter to 
-Creative Commons, 171 Second Street, Suite 300, San Francisco, 
+This work is licensed under the
+Creative Commons Attribution-Share Alike 3.0 Unported License.
+To view a copy of this license, visit
+http://creativecommons.org/licenses/by-sa/3.0/ or send a letter to
+Creative Commons, 171 Second Street, Suite 300, San Francisco,
 California, 94105, USA.
 
