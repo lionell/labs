@@ -59,11 +59,12 @@ That's it for now. Hope this example is useful :)
 	```sql
 	SELECT first_name, last_name, gender, average_salary
 	FROM employees
-		JOIN (SELECT emp_no, AVG(salary) AS average_salary
-				FROM salaries
-				WHERE from_date >= '{$from_date}' AND to_date <= '{$to_date}'
-				GROUP BY emp_no
-			) AS emp_salary
+		JOIN (
+			SELECT emp_no, AVG(salary) AS average_salary
+			FROM salaries
+			WHERE from_date >= '{$from_date}' AND to_date <= '{$to_date}'
+			GROUP BY emp_no
+		) AS emp_salary
 			ON employees.emp_no = emp_salary.emp_no
 	WHERE gender = '{$gender}'
 	ORDER BY average_salary DESC
@@ -89,11 +90,12 @@ That's it for now. Hope this example is useful :)
 	```sql
 	SELECT title, AVG(avg_salary) AS average_salary
 	FROM titles
-		JOIN (SELECT emp_no, AVG(salary) AS avg_salary
-				FROM salaries
-				WHERE from_date >= '{$from_date}' AND to_date <= '{$to_date}'
-				GROUP BY emp_no
-			) AS emp_avg
+		JOIN (
+			SELECT emp_no, AVG(salary) AS avg_salary
+			FROM salaries
+			WHERE from_date >= '{$from_date}' AND to_date <= '{$to_date}'
+			GROUP BY emp_no
+		) AS emp_avg
 			ON titles.emp_no = emp_avg.emp_no
 	GROUP BY title
 	ORDER BY average_salary DESC
@@ -105,11 +107,12 @@ That's it for now. Hope this example is useful :)
 	```sql
 	SELECT first_name, last_name, min_salary
 	FROM employees
-		JOIN (SELECT emp_no, MIN(salary) AS min_salary
+		JOIN (
+			SELECT emp_no, MIN(salary) AS min_salary
 				FROM salaries
 				WHERE from_date >= '{$from_date}' AND to_date <= '{$to_date}'
 				GROUP BY emp_no
-			) AS emp_min_salary
+		) AS emp_min_salary
 			ON employees.emp_no = emp_min_salary.emp_no
 	ORDER BY min_salary
 	LIMIT 20;
@@ -125,8 +128,8 @@ That's it for now. Hope this example is useful :)
 		JOIN titles
 			ON titles.emp_no = dept_emp.emp_no
 	WHERE dept_emp.from_date >= '{$from_date}' AND dept_emp.to_date <= '{$to_date}'
-			AND titles.from_date >= '{$from_date}' AND titles.to_date <= '{$to_date}'
-			AND title = '{$title}'
+		AND titles.from_date >= '{$from_date}' AND titles.to_date <= '{$to_date}'
+		AND title = '{$title}'
 	GROUP BY dept_name
 	ORDER BY emp_number DESC
 	LIMIT 20;
@@ -144,7 +147,7 @@ That's it for now. Hope this example is useful :)
 
 ## Set comparisons
 
-7. Employees with some titles of `{$emp_no}`.
+1. Employees with some titles of `{$emp_no}`.
 
 	```sql
 	SELECT emp_no, first_name, last_name
@@ -162,7 +165,7 @@ That's it for now. Hope this example is useful :)
 	LIMIT 20;
 	```
 
-8. Employees working at the same department as `{$emp_no}`.
+2. Employees working at the same department as `{$emp_no}`.
 
 	```sql
 	SELECT e.emp_no, first_name, last_name
@@ -193,7 +196,7 @@ That's it for now. Hope this example is useful :)
 	LIMIT 20;
 	```
 
-9. Find employees managed by some of managers of `{$emp_no}`.
+3. Find employees managed by some of managers of `{$emp_no}`.
 
 	```sql
 	SELECT e.emp_no, first_name, last_name, dept_no
@@ -214,7 +217,7 @@ That's it for now. Hope this example is useful :)
 	LIMIT 20;
 	```
 
-10. Find employees whose salaries are superset of `{$emp_no}`.
+4. Find employees whose salaries are superset of `{$emp_no}`.
 
 	```sql
 	SELECT emp_no, first_name, last_name
