@@ -1,14 +1,16 @@
-#ifndef LOG_H_
-#define LOG_H_
+#ifndef LOGGING_H_
+#define LOGGING_H_
 
 #include <iostream>
-#include "vars.h"
+#include <sstream>
+#include "decls.h"
 
-#define VLOG(x) VLog(#x, x)
 #define LOG(x) Log("[" + std::to_string(proc::rank) + "]:\t" + x)
+#define VLOG(x) VLog(#x, x)
 
-void Log(std::string s) {
-	std::cout << s << std::endl;
+template<typename T>
+void Log(T x) {
+	std::cout << x + "\n";
 }
 
 template<typename T>
@@ -16,7 +18,7 @@ void VLog(std::string s, T x) {
 	VLog(s, std::to_string(x));
 }
 
-template<>
+template<> inline // template specialization
 void VLog(std::string s, std::string x) {
 	LOG(s + "=" + x);
 }
@@ -32,4 +34,10 @@ std::string Join(T *a, int size) {
 	return ss.str();
 }
 
-#endif
+
+template<typename T>
+void VLog(std::string s, T *a, int size) {
+	VLog(s, Join(a, size));
+}
+
+#endif  // LOGGING_H_

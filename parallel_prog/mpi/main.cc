@@ -1,87 +1,47 @@
-#include <cstring>
 #include <cassert>
+#include <cstring>
 
 #include <mpi.h>
+#include <gflags/gflags.h>
 
 #include "page.h"
-#include "mpi_types.h"
 #include "io.h"
-#include "math.h"
-#include "vars.h"
 #include "logging.h"
+#include "root.h"
 
-const double kEps = 1e-7;
-const double kS = 0.85;
+DEFINE_string(dataset, "data/test", "Input dataset");
+DEFINE_int32(chunk_size, 2, "Number of pages per chunk");
+DEFINE_double(damping_factor, 0.85, "Param for PageRank");
+DEFINE_double(eps, 1e-7, "Computation precision");
 
+// Contains variables shared across processes. We need to sync them all the time.
+// That's why size of data here should be as minimal as possible.
+namespace world {
+int size;
+int page_cnt;
+int pages_per_proc;
+double *pr;
+int *out_link_cnts;
+bool go_on;
+}  // namespace world
+
+// Variables that are specific for each processor.
+namespace proc {
+int rank;
+int page_cnt;
+Page *pages;
+double *pr;
+}  // namespace proc
+
+// These data are only relevant to root processor. So there should not be general
+// code that tries to access root data. Use if (rank == 0) {...} guard everywhere.
 namespace root {
-void InitWorldPr() {
-	for (int i = 0; i < world::page_cnt; i++) {
-		world::pr[i] = 1.0 / world::page_cnt;
-	}
-}
-
-void FindDanglingPages() {
-	dangling_page_cnt = 0;
-	for (int i = 0; i < world::page_cnt; i++) {
-		dangling_page_cnt += world::out_link_cnts[i] == 0;
-	}
-	dangling_pages = new int[dangling_page_cnt];
-	int j = 0;
-	for (int i = 0; i < world::page_cnt; i++) {
-		if (world::out_link_cnts[i] == 0) {
-			dangling_pages[j++] = i;
-		}
-	}
-}
-
-void InitData(std::string db) {
-	ReadMetadata(db, &world::page_cnt, &world::out_link_cnts);
-	ReadPages(db, 0, world::page_cnt - 1, &pages);
-	FindDanglingPages();
-}
-
-void HandlePagesFromRemainder() {
-	int remainder = world::page_cnt % world::size;
-	if (remainder == 0) return;
-	// Let the root handle 'remainder' pages from the end
-	// of the root::pages list. Thus we need to extend
-	// root's proc::pages.
-	Page *temp = new Page[proc::page_cnt + remainder];
-	memcpy(temp, proc::pages, proc::page_cnt * sizeof(Page));
-	int shift = world::page_cnt - remainder;
-	memcpy(temp + proc::page_cnt, root::pages + shift,
-		remainder * sizeof(Page));
-	std::swap(proc::pages, temp);
-	delete[] temp;
-	proc::page_cnt += remainder;
-}
-
-void UpdatePrFromRemainder() {
-	int remainder = world::page_cnt % world::size;
-	int shift = world::page_cnt - remainder;
-	memcpy(world::pr + shift, proc::pr + world::pages_per_proc,
-		remainder * sizeof(double));
-}
-
-void UpdatePrWithDanglingPages(double *old_pr) {
-	double sum = 0;
-	for (int i = 0; i < root::dangling_page_cnt; i++) {
-		sum += old_pr[root::dangling_pages[i]];
-	}
-	for (int i = 0; i < world::page_cnt; i++) {
-		world::pr[i] += kS * sum / world::page_cnt;
-	}
-}
-
-void UpdatePrWithRandomJumps() {
-	for (int i = 0; i < world::page_cnt; i++) {
-		world::pr[i] += (1 - kS) / world::page_cnt;
-	}
-}
+int dangling_page_cnt;
+int *dangling_pages;
+double *old_pr;
 }  // namespace root
 
-namespace world {
-void EvalPr() {
+void EvaluatePr() {
 	for (int i = 0; i < proc::page_cnt; i++) {
 		Page &page = proc::pages[i];
 		double pr = 0;
@@ -89,20 +49,15 @@ void EvalPr() {
 			int from_page = page.in_links[j];
 			pr += world::pr[from_page] / world::out_link_cnts[from_page];
 		}
-		proc::pr[i] = kS * pr;
+		proc::pr[i] = pr;
 	}
 }
-}  // namespace world
 
 int main(int argc, char *argv[]) {
 	using proc::rank;
-
-	assert(argc >= 2);
-	std::string db = argv[1];
+	gflags::ParseCommandLineFlags(&argc, &argv, true /* remove_flags */);
 
 	MPI_Init(nullptr, nullptr);
-	RegisterMpiDatatypes();
-
 	MPI_Comm_size(MPI_COMM_WORLD, &world::size);
 	MPI_Comm_rank(MPI_COMM_WORLD, &rank);
 	if (rank == 0) {
@@ -110,7 +65,7 @@ int main(int argc, char *argv[]) {
 	}
 
 	if (rank == 0) {
-		root::InitData(db);
+		InitMetadata();
 	}
 	MPI_Bcast(&world::page_cnt, 1, MPI_INT, 0, MPI_COMM_WORLD);
 
@@ -121,14 +76,15 @@ int main(int argc, char *argv[]) {
 
 	world::pages_per_proc = world::page_cnt / world::size;
 	proc::pages = new Page[world::pages_per_proc];
-	MPI_Scatter(root::pages, world::pages_per_proc, MPI_Page,
-		proc::pages, world::pages_per_proc, MPI_Page,
-		0, MPI_COMM_WORLD);
+	int begin = world::pages_per_proc * rank;
+	int end = begin + world::pages_per_proc - 1;
+	ReadPages(begin, end, proc::pages);
 
-	// There can be some pages remainded.
 	proc::page_cnt = world::pages_per_proc;
+	// If world::page_cnt % world::size != 0 then there are some pages remaining.
+	// We are going to process them at root processor.
 	if (rank == 0) {
-		root::HandlePagesFromRemainder();
+		ReadReminderPages();
 	}
 
 	for (int i = 0; i < proc::page_cnt; i++) {
@@ -137,22 +93,21 @@ int main(int argc, char *argv[]) {
 
 	world::pr = new double[world::page_cnt];
 	if (rank == 0) {
-		root::InitWorldPr();
+		InitWorldPr();
 	}
 	proc::pr = new double[proc::page_cnt];
-	double *old_pr;
 	if (rank == 0) {
-		old_pr = new double[world::page_cnt];
+		root::old_pr = new double[world::page_cnt];
 	}
 	world::go_on = true;
 	int step = 0;
 	while (world::go_on) {
 		MPI_Bcast(world::pr, world::page_cnt, MPI_DOUBLE, 0, MPI_COMM_WORLD);
 		if (rank == 0) {
-			memcpy(old_pr, world::pr, world::page_cnt * sizeof(double));
+			memcpy(root::old_pr, world::pr, world::page_cnt * sizeof(double));
 		}
 
-		world::EvalPr();
+		EvaluatePr();
 		// NOTE! We use world::pages_per_proc instead of proc::page_cnt
 		// to gather PRs. It's because size should remaind the same for
 		// all the processes. Some part of PRs evaluated at root are not
@@ -162,14 +117,12 @@ int main(int argc, char *argv[]) {
 				world::pr, world::pages_per_proc, MPI_DOUBLE, 0, MPI_COMM_WORLD);
 
 		if (rank == 0) {
-			root::UpdatePrFromRemainder();
-			root::UpdatePrWithDanglingPages(old_pr);
-			root::UpdatePrWithRandomJumps();
-			VLog("world::PR", Join(world::pr, world::page_cnt));
+			AddRemainderPr();
+			AddDanglingPagesPr();
+			AddRandomJumpsPr();
 
-			double err = L2Norm(world::pr, old_pr, world::page_cnt);
-			VLOG(err);
-			world::go_on = err > kEps;
+			double err = EvaluateError();
+			world::go_on = err > FLAGS_eps;
 		}
 
 		MPI_Bcast(&world::go_on, 1, MPI_CHAR, 0, MPI_COMM_WORLD);
@@ -177,6 +130,7 @@ int main(int argc, char *argv[]) {
 	}
 	if (rank == 0) {
 		VLOG(step);
+		VLog("PageRank", world::pr, world::page_cnt);
 	}
 
 	delete[] proc::pr;
@@ -184,11 +138,11 @@ int main(int argc, char *argv[]) {
 	delete[] world::pr;
 	delete[] world::out_link_cnts;
 	if (rank == 0) {
-		delete[] root::pages;
+		delete[] root::old_pr;
 		delete[] root::dangling_pages;
 	}
 
-	FreeMpiDatatypes();
 	MPI_Finalize();
+	gflags::ShutDownCommandLineFlags();
 	return 0;
 }

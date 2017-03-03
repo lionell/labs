@@ -1,18 +1,7 @@
 #ifndef MATH_H_
 #define MATH_H_
 
-#include <cmath>
+double Sqr(double x);
+double L2Norm(double *a, double *b, int size);
 
-double Sqr(double x) {
-	return x * x;
-}
-
-double L2Norm(double *a, double *b, int size) {
-	double sum = 0;
-	for (int i = 0; i < size; i++) {
-		sum += Sqr(a[i] - b[i]);
-	}
-	return sqrt(sum);
-}
-
-#endif
+#endif  // MATH_H_
