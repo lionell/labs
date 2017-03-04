@@ -2,11 +2,15 @@
 #define LOGGING_H_
 
 #include <iostream>
-#include <sstream>
-#include "decls.h"
+
+#include "utils.h"
 
 #define LOG(x) Log("[" + std::to_string(proc::rank) + "]:\t" + x)
 #define VLOG(x) VLog(#x, x)
+
+namespace proc {
+extern int rank;
+}
 
 template<typename T>
 void Log(T x) {
@@ -22,18 +26,6 @@ template<> inline // template specialization
 void VLog(std::string s, std::string x) {
 	LOG(s + "=" + x);
 }
-
-template<typename T>
-std::string Join(T *a, int size) {
-	std::stringstream ss;
-	ss << "[";
-	for (int i = 0; i < size - 1; i++) {
-		ss << a[i] << ", ";
-	}
-	ss << a[size - 1] << "]";
-	return ss.str();
-}
-
 
 template<typename T>
 void VLog(std::string s, T *a, int size) {

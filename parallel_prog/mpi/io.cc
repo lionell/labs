@@ -19,8 +19,8 @@ void ReadPagesFromStream(std::ifstream &in, int cnt, Page pages[]) {
 }
 
 /*
- * NOTE! It's not necessary that begin >= chunk_begin, or end < chunk_end.
- * Bounds are going to be truncated anyway.
+ * NOTE! It's possible that begin >= chunk_begin, or end < chunk_end.
+ * Bounds are going to be truncated.
  */
 int ReadPagesFromChunk(int chunk, int begin, int end, Page pages[]) {
 	std::ifstream in(FLAGS_dataset + std::to_string(chunk) + ".chnk");
