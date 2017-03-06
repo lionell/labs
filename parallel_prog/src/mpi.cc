@@ -1,20 +1,21 @@
-#include <cassert>
-#include <cstring>
+#include <cstring> // memset
 
 #include <mpi.h>
 #include <gflags/gflags.h>
 
-#include "page.h"
-#include "io.h"
-#include "logging.h"
-#include "pagerank.h"
-#include "math.h"
-#include "utils.h"
+#include "lib/page.h"
+#include "lib/io.h"
+#include "lib/logging.h"
+#include "lib/pagerank.h"
+#include "lib/math.h"
+#include "lib/utils.h"
 
-DEFINE_string(dataset, "data/test", "Input dataset");
+DEFINE_string(dataset, "data/generated/test", "Input dataset");
 DEFINE_int32(chunk_size, 2, "Number of pages per chunk");
 DEFINE_double(damping_factor, 0.85, "Param for PageRank");
 DEFINE_double(eps, 1e-7, "Computation precision");
+DEFINE_string(output, "/home/lionell/dev/labs/parallel_prog/out/mpi.out",
+		"Where to put results");
 
 // Contains variables shared across processes. We need to sync them all the time.
 // That's why size of data here should be as minimal as possible.
@@ -43,9 +44,14 @@ int *dangling_pages;
 double *old_pr;
 }  // namespace root
 
+std::string Decorator(std::string s) {
+	return "[" + std::to_string(proc::rank) + "]:" + s;
+}
+
 int main(int argc, char *argv[]) {
 	using proc::rank;
 	gflags::ParseCommandLineFlags(&argc, &argv, true /* remove_flags */);
+	RegisterDecorator(Decorator);
 
 	MPI_Init(nullptr, nullptr);
 	MPI_Comm_size(MPI_COMM_WORLD, &world::size);
@@ -137,6 +143,7 @@ int main(int argc, char *argv[]) {
 	if (rank == 0) {
 		VLOG(step);
 		VLog("PageRank", world::pr, world::page_cnt);
+		WritePrToFile(world::pr, world::page_cnt);
 	}
 
 	delete[] proc::pr;

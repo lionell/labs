@@ -7,6 +7,7 @@
 
 DECLARE_string(dataset);
 DECLARE_int32(chunk_size);
+DECLARE_string(output);
 
 void ReadPagesFromStream(std::ifstream &in, int cnt, Page pages[]) {
 	for (int i = 0; i < cnt; i++) {
@@ -59,5 +60,12 @@ void ReadOutLinkCounts(int page_cnt, int out_link_cnts[]) {
 	in >> ignore;
 	for (int i = 0; i < page_cnt; i++) {
 		in >> out_link_cnts[i];
+	}
+}
+
+void WritePrToFile(double pr[], int page_cnt) {
+	std::ofstream out(FLAGS_output);
+	for (int i = 0; i < page_cnt; i++) {
+		out << pr[i] << " ";
 	}
 }

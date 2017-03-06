@@ -2,20 +2,14 @@
 #define LOGGING_H_
 
 #include <iostream>
+#include <functional>
 
 #include "utils.h"
 
-#define LOG(x) Log("[" + std::to_string(proc::rank) + "]:\t" + x)
 #define VLOG(x) VLog(#x, x)
 
-namespace proc {
-extern int rank;
-}
-
-template<typename T>
-void Log(T x) {
-	std::cout << x + "\n";
-}
+void RegisterDecorator(std::function<std::string(std::string)> decorator);
+void Log(std::string x);
 
 template<typename T>
 void VLog(std::string s, T x) {
@@ -24,7 +18,7 @@ void VLog(std::string s, T x) {
 
 template<> inline // template specialization
 void VLog(std::string s, std::string x) {
-	LOG(s + "=" + x);
+	Log(s + "=" + x);
 }
 
 template<typename T>
