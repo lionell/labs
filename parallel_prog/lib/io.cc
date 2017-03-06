@@ -3,12 +3,6 @@
 #include <limits>
 #include <sstream>
 
-#include <gflags/gflags.h>
-
-DECLARE_string(dataset);
-DECLARE_int32(chunk_size);
-DECLARE_string(output);
-
 void ReadPagesFromStream(std::ifstream &in, int cnt, Page pages[]) {
 	for (int i = 0; i < cnt; i++) {
 		Page &page = pages[i];
@@ -23,10 +17,11 @@ void ReadPagesFromStream(std::ifstream &in, int cnt, Page pages[]) {
  * NOTE! It's possible that begin >= chunk_begin, or end < chunk_end.
  * Bounds are going to be truncated.
  */
-int ReadPagesFromChunk(int chunk, int begin, int end, Page pages[]) {
-	std::ifstream in(FLAGS_dataset + std::to_string(chunk) + ".chnk");
-	int chunk_begin = chunk * FLAGS_chunk_size;
-	int chunk_end = chunk_begin + FLAGS_chunk_size;
+int ReadPagesFromChunk(std::string dataset, int chunk_size, int chunk,
+		int begin, int end, Page pages[]) {
+	std::ifstream in(dataset + std::to_string(chunk) + ".chnk");
+	int chunk_begin = chunk * chunk_size;
+	int chunk_end = chunk_begin + chunk_size;
 	if (begin < chunk_begin) begin = chunk_begin;
 	if (end >= chunk_end) end = chunk_end - 1;
 	int shift = begin - chunk_begin;
@@ -38,34 +33,34 @@ int ReadPagesFromChunk(int chunk, int begin, int end, Page pages[]) {
 	return cnt;
 }
 
-void ReadPages(int begin, int end, Page pages[]) {
-	int begin_chunk = begin / FLAGS_chunk_size;
-	int end_chunk = end / FLAGS_chunk_size;
+void ReadPages(std::string dataset, int chunk_size, int begin, int end,
+		Page pages[]) {
+	int begin_chunk = begin / chunk_size;
+	int end_chunk = end / chunk_size;
 	int index = 0;
 	for (int chunk = begin_chunk; chunk <= end_chunk; chunk++) {
-		index += ReadPagesFromChunk(chunk, begin, end, pages + index);
+		index += ReadPagesFromChunk(dataset, chunk_size, chunk, begin, end,
+				pages + index);
 	}
 }
 
-void ReadPageCount(int *page_cnt_ptr) {
-	std::ifstream in(FLAGS_dataset + ".meta");
-	int page_cnt;
-	in >> page_cnt;
-	*page_cnt_ptr = page_cnt;
+void ReadPageCount(std::string dataset, int *page_cnt_ptr) {
+	std::ifstream in(dataset + ".meta");
+	in >> *page_cnt_ptr;
 }
 
-void ReadOutLinkCounts(int page_cnt, int out_link_cnts[]) {
-	std::ifstream in(FLAGS_dataset + ".meta");
+void ReadChunkSize(std::string dataset, int *chunk_size_ptr) {
+	std::ifstream in(dataset + ".meta");
 	int ignore;
-	in >> ignore;
+	in >> ignore >> *chunk_size_ptr;
+}
+
+void ReadOutLinkCounts(std::string dataset, int page_cnt,
+		int out_link_cnts[]) {
+	std::ifstream in(dataset + ".meta");
+	int ignore;
+	in >> ignore >> ignore;
 	for (int i = 0; i < page_cnt; i++) {
 		in >> out_link_cnts[i];
-	}
-}
-
-void WritePrToFile(double pr[], int page_cnt) {
-	std::ofstream out(FLAGS_output);
-	for (int i = 0; i < page_cnt; i++) {
-		out << pr[i] << " ";
 	}
 }

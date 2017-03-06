@@ -1,20 +1,23 @@
 #!/usr/bin/env python3
+
 import argparse
 import random
 import math
 
 parser = argparse.ArgumentParser()
 parser.add_argument("name", help="Name of generated dataset", type=str)
-parser.add_argument("--page_cnt", help="Number of pages", type=int, default=10)
+parser.add_argument("--page_cnt", help="Number of pages", type=int, default=100)
 parser.add_argument("--max_in_link_cnt",
-        help="Hard limit of in-links per page", type=int, default=100)
+        help="Hard limit of in-links per page", type=int, default=1000)
 parser.add_argument("--sort_links", help="If it's true than in-links are \
         going to appear in a sorted order", action="store_true")
 parser.add_argument("--output_path", help="Path to store generated dataset",
         type=str, default="/home/lionell/dev/labs/parallel_prog/data/generated/"
         )
 parser.add_argument("--chunk_size", help="Maximum of links per chunk",
-        type=int, default=2)
+        type=int, default=1000)
+parser.add_argument("--verbose", help="Print additional information",
+        action="store_true")
 args = parser.parse_args()
 
 if args.max_in_link_cnt > args.page_cnt - 1:
@@ -29,7 +32,8 @@ def generate_graph(page_cnt, max_in_link_cnt):
         if (args.sort_links):
             links.sort()
         links_per_page.append(links);
-        print(links_cnt, links)
+        if args.verbose:
+            print(links_cnt, links)
     return links_per_page
 
 def calculate_out_link_cnts(links):
@@ -43,6 +47,7 @@ def calculate_out_link_cnts(links):
 def write_metadata(path, out_link_cnts):
     with open(path + ".meta", "w") as f:
         f.write(str(len(out_link_cnts)) + "\n")
+        f.write(str(args.chunk_size) + "\n")
         f.write(" ".join(map(str, out_link_cnts)))
 
 def write_links(path, links, chunk_size):

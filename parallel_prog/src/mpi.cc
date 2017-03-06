@@ -11,17 +11,16 @@
 #include "lib/utils.h"
 
 DEFINE_string(dataset, "data/generated/test", "Input dataset");
-DEFINE_int32(chunk_size, 2, "Number of pages per chunk");
 DEFINE_double(damping_factor, 0.85, "Param for PageRank");
 DEFINE_double(eps, 1e-7, "Computation precision");
-DEFINE_string(output, "/home/lionell/dev/labs/parallel_prog/out/mpi.out",
-		"Where to put results");
+DEFINE_bool(verbose, false, "Print additional information");
 
 // Contains variables shared across processes. We need to sync them all the time.
 // That's why size of data here should be as minimal as possible.
 namespace world {
 int size;
 int page_cnt;
+int chunk_size;
 int pages_per_proc;
 double *pr;
 int *out_link_cnts;
@@ -61,13 +60,15 @@ int main(int argc, char *argv[]) {
 	}
 
 	if (rank == 0) {
-		ReadPageCount(&world::page_cnt);
+		ReadPageCount(FLAGS_dataset, &world::page_cnt);
+		ReadChunkSize(FLAGS_dataset, &world::chunk_size);
 		world::out_link_cnts = new int[world::page_cnt];
-		ReadOutLinkCounts(world::page_cnt, world::out_link_cnts);
+		ReadOutLinkCounts(FLAGS_dataset, world::page_cnt, world::out_link_cnts);
 		ExploreDanglingPages(world::out_link_cnts, world::page_cnt,
 				&root::dangling_page_cnt, &root::dangling_pages);
 	}
 	MPI_Bcast(&world::page_cnt, 1, MPI_INT, 0, MPI_COMM_WORLD);
+	MPI_Bcast(&world::chunk_size, 1, MPI_INT, 0, MPI_COMM_WORLD);
 
 	if (rank > 0) { // Already initialized on root.
 		world::out_link_cnts = new int[world::page_cnt];
@@ -80,7 +81,7 @@ int main(int argc, char *argv[]) {
 	proc::pages = new Page[world::pages_per_proc];
 	int begin = world::pages_per_proc * rank;
 	int end = begin + world::pages_per_proc - 1;
-	ReadPages(begin, end, proc::pages);
+	ReadPages(FLAGS_dataset, world::chunk_size, begin, end, proc::pages);
 
 	// If world::page_cnt % world::size != 0 then there are some pages remaining.
 	// We are going to process them at root processor.
@@ -91,7 +92,8 @@ int main(int argc, char *argv[]) {
 		if (reminder_cnt > 0) {
 			proc::page_cnt += reminder_cnt;
 			proc::pages = ExtendArray(proc::pages, world::pages_per_proc, proc::page_cnt);
-			ReadPages(reminder_begin, reminder_end, proc::pages + world::pages_per_proc);
+			ReadPages(FLAGS_dataset, world::chunk_size, reminder_begin, reminder_end,
+					proc::pages + world::pages_per_proc);
 		}
 	}
 
@@ -134,6 +136,7 @@ int main(int argc, char *argv[]) {
 			AddRandomJumpsPr(world::pr, world::page_cnt);
 
 			double err = L2Norm(world::pr, root::old_pr, world::page_cnt);
+			VLOG(err);
 			world::go_on = err > FLAGS_eps;
 		}
 
@@ -142,8 +145,7 @@ int main(int argc, char *argv[]) {
 	}
 	if (rank == 0) {
 		VLOG(step);
-		VLog("PageRank", world::pr, world::page_cnt);
-		WritePrToFile(world::pr, world::page_cnt);
+		VPrint("PageRank", world::pr, world::page_cnt);
 	}
 
 	delete[] proc::pr;

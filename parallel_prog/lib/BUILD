@@ -36,10 +36,12 @@ cc_library(
 
 cc_library(
 		name = "utils",
+		srcs = ["utils.cc"],
 		hdrs = ["utils.h"],
 )
 
 cc_library(
 		name = "page",
+		srcs = ["page.cc"],
 		hdrs = ["page.h"],
 )

@@ -4,11 +4,13 @@ genrule(
 		outs = ["mpi.a"],
 		cmd = "mpic++ -L/usr/lib -lgflags -I/home/lionell/dev/labs/parallel_prog \
 				-o $@ $< $(locations //lib:pagerank) $(locations //lib:io) $(locations //lib:math) \
-				$(locations //lib:logging)",
+				$(locations //lib:page) $(locations //lib:utils) $(locations //lib:logging)",
 		tools = [
 				"//lib:pagerank",
 				"//lib:io",
 				"//lib:math",
+				"//lib:page",
+				"//lib:utils",
 				"//lib:logging",
 				"//data",
 		],
@@ -20,7 +22,7 @@ genrule(
 		name = "mpi",
 		outs = ["mpi.sh"],
 		cmd = "echo '#!/usr/bin/env sh' > $@; \
-				echo 'mpirun -np 3 $(location :mpi_compile) $$@' >> $@",
+				echo 'mpirun -np 1 $(location :mpi_compile) $$@' >> $@",
 		tools = [
 				":mpi_compile",
 		],

@@ -10,21 +10,20 @@
 #include "lib/logging.h"
 
 DEFINE_string(dataset, "data/test", "Input dataset");
-DEFINE_int32(chunk_size, 2, "Number of pages per chunk");
 DEFINE_double(damping_factor, 0.85, "Param for PageRank");
 DEFINE_double(eps, 1e-7, "Computation precision");
-DEFINE_string(output, "/home/lionell/dev/labs/parallel_prog/out/serial.out",
-		"Where to put results");
+DEFINE_bool(verbose, false, "Print additional information");
 
 int main(int argc, char *argv[]) {
 	gflags::ParseCommandLineFlags(&argc, &argv, true /* remove_flags */);
 
-	int page_cnt;
-	ReadPageCount(&page_cnt);
+	int page_cnt, chunk_size;
+	ReadPageCount(FLAGS_dataset, &page_cnt);
+	ReadChunkSize(FLAGS_dataset, &chunk_size);
 	int *out_link_cnts = new int[page_cnt];
-	ReadOutLinkCounts(page_cnt, out_link_cnts);
+	ReadOutLinkCounts(FLAGS_dataset, page_cnt, out_link_cnts);
 	Page *pages = new Page[page_cnt];
-	ReadPages(0, page_cnt, pages);
+	ReadPages(FLAGS_dataset, chunk_size, 0, page_cnt, pages);
 	int dangling_page_cnt, *dangling_pages;
 	ExploreDanglingPages(out_link_cnts, page_cnt,
 			&dangling_page_cnt, &dangling_pages);
@@ -41,12 +40,12 @@ int main(int argc, char *argv[]) {
 		AddRandomJumpsPr(pr, page_cnt);
 
 		double err = L2Norm(pr, old_pr, page_cnt);
+		VLOG(err);
 		go_on = err > FLAGS_eps;
 		step++;
 	}
 	VLOG(step);
-	VLog("PageRank", pr, page_cnt);
-	WritePrToFile(pr, page_cnt);
+	VPrint("PageRank", pr, page_cnt);
 
 	delete[] old_pr;
 	delete[] pr;
