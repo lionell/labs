@@ -22,7 +22,7 @@ genrule(
 		name = "mpi",
 		outs = ["mpi.sh"],
 		cmd = "echo '#!/usr/bin/env sh' > $@; \
-				echo 'mpirun -np 1 $(location :mpi_compile) $$@' >> $@",
+				echo 'mpirun -np 4 $(location :mpi_compile) $$@' >> $@",
 		tools = [
 				":mpi_compile",
 		],

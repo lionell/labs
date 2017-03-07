@@ -42,4 +42,9 @@ void VPrint(std::string s, T *a, int size) {
 	VPrint(s, Join(a, size));
 }
 
+template<typename T>
+void Print(T *a, int size) {
+	Print(Join(a, size));
+}
+
 #endif  // LOGGING_H_

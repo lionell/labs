@@ -1,0 +1,4 @@
+          gen_time    mpi(4 proc)     mpi(1 proc)    serial
+100k_1k   56s         3.3s                           6.4s
+100k_10k  50s         3.1s                           5.8s
+1m_10k    9m 45s      1m 15s                         2m

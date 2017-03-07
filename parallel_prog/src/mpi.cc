@@ -10,7 +10,7 @@
 #include "lib/math.h"
 #include "lib/utils.h"
 
-DEFINE_string(dataset, "data/generated/test", "Input dataset");
+DEFINE_string(dataset, "data/generated/ten_thousand", "Input dataset");
 DEFINE_double(damping_factor, 0.85, "Param for PageRank");
 DEFINE_double(eps, 1e-7, "Computation precision");
 DEFINE_bool(verbose, false, "Print additional information");
@@ -81,6 +81,8 @@ int main(int argc, char *argv[]) {
 	proc::pages = new Page[world::pages_per_proc];
 	int begin = world::pages_per_proc * rank;
 	int end = begin + world::pages_per_proc - 1;
+	VLOG(begin);
+	VLOG(end);
 	ReadPages(FLAGS_dataset, world::chunk_size, begin, end, proc::pages);
 
 	// If world::page_cnt % world::size != 0 then there are some pages remaining.
@@ -91,14 +93,12 @@ int main(int argc, char *argv[]) {
 	if (rank == 0) {
 		if (reminder_cnt > 0) {
 			proc::page_cnt += reminder_cnt;
-			proc::pages = ExtendArray(proc::pages, world::pages_per_proc, proc::page_cnt);
+			proc::pages = ExtendAndCopyArray(proc::pages, world::pages_per_proc, proc::page_cnt);
 			ReadPages(FLAGS_dataset, world::chunk_size, reminder_begin, reminder_end,
 					proc::pages + world::pages_per_proc);
+			VLOG(reminder_begin);
+			VLOG(reminder_end);
 		}
-	}
-
-	for (int i = 0; i < proc::page_cnt; i++) {
-		VLog("id", proc::pages[i].id);
 	}
 
 	world::pr = new double[world::page_cnt];
@@ -130,13 +130,11 @@ int main(int argc, char *argv[]) {
 			// Copy PR from reminder to world::pr.
 			memcpy(world::pr + reminder_begin, proc::pr + world::pages_per_proc,
 					reminder_cnt * sizeof(double));
-
 			AddDanglingPagesPr(root::old_pr, world::page_cnt,
 					root::dangling_pages, root::dangling_page_cnt, world::pr);
 			AddRandomJumpsPr(world::pr, world::page_cnt);
 
-			double err = L2Norm(world::pr, root::old_pr, world::page_cnt);
-			VLOG(err);
+			double err = L1Norm(world::pr, root::old_pr, world::page_cnt);
 			world::go_on = err > FLAGS_eps;
 		}
 
@@ -145,7 +143,7 @@ int main(int argc, char *argv[]) {
 	}
 	if (rank == 0) {
 		VLOG(step);
-		VPrint("PageRank", world::pr, world::page_cnt);
+		Print(world::pr, world::page_cnt);
 	}
 
 	delete[] proc::pr;

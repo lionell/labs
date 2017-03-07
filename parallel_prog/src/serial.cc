@@ -9,7 +9,7 @@
 #include "lib/utils.h"
 #include "lib/logging.h"
 
-DEFINE_string(dataset, "data/test", "Input dataset");
+DEFINE_string(dataset, "data/generated/ten_thousand", "Input dataset");
 DEFINE_double(damping_factor, 0.85, "Param for PageRank");
 DEFINE_double(eps, 1e-7, "Computation precision");
 DEFINE_bool(verbose, false, "Print additional information");
@@ -23,7 +23,7 @@ int main(int argc, char *argv[]) {
 	int *out_link_cnts = new int[page_cnt];
 	ReadOutLinkCounts(FLAGS_dataset, page_cnt, out_link_cnts);
 	Page *pages = new Page[page_cnt];
-	ReadPages(FLAGS_dataset, chunk_size, 0, page_cnt, pages);
+	ReadPages(FLAGS_dataset, chunk_size, 0, page_cnt - 1, pages);
 	int dangling_page_cnt, *dangling_pages;
 	ExploreDanglingPages(out_link_cnts, page_cnt,
 			&dangling_page_cnt, &dangling_pages);
@@ -39,13 +39,12 @@ int main(int argc, char *argv[]) {
 		AddDanglingPagesPr(old_pr, page_cnt, dangling_pages, dangling_page_cnt, pr);
 		AddRandomJumpsPr(pr, page_cnt);
 
-		double err = L2Norm(pr, old_pr, page_cnt);
-		VLOG(err);
+		double err = L1Norm(pr, old_pr, page_cnt);
 		go_on = err > FLAGS_eps;
 		step++;
 	}
 	VLOG(step);
-	VPrint("PageRank", pr, page_cnt);
+	Print(pr, page_cnt);
 
 	delete[] old_pr;
 	delete[] pr;

@@ -19,7 +19,7 @@ void ReadPagesFromStream(std::ifstream &in, int cnt, Page pages[]) {
  */
 int ReadPagesFromChunk(std::string dataset, int chunk_size, int chunk,
 		int begin, int end, Page pages[]) {
-	std::ifstream in(dataset + std::to_string(chunk) + ".chnk");
+	std::ifstream in(dataset + "_" + std::to_string(chunk) + ".chnk");
 	int chunk_begin = chunk * chunk_size;
 	int chunk_end = chunk_begin + chunk_size;
 	if (begin < chunk_begin) begin = chunk_begin;

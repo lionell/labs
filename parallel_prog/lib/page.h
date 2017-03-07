@@ -1,7 +1,7 @@
 #ifndef PAGE_H_
 #define PAGE_H_
 
-const int kPageMaxLinkCnt = 100;
+const int kPageMaxLinkCnt = 1000;
 
 struct Page {
 	int id;
