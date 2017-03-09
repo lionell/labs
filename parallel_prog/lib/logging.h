@@ -8,7 +8,7 @@
 
 #define VLOG(x) VLog(#x, x)
 
-void RegisterDecorator(std::function<std::string(std::string)> decorator);
+void RegisterLoggingDecorator(std::function<std::string(std::string)> decorator);
 void Log(std::string s);
 void Print(std::string s);
 

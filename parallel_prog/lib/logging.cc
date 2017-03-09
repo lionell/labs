@@ -9,7 +9,7 @@ std::string DefaultDecorator(std::string s) {
 
 std::function<std::string(std::string)> DECORATOR = DefaultDecorator;
 
-void RegisterDecorator(std::function<std::string(std::string)> decorator) {
+void RegisterLoggingDecorator(std::function<std::string(std::string)> decorator) {
 	DECORATOR = decorator;
 }
 

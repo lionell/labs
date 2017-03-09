@@ -2,16 +2,16 @@ genrule(
 		name = "mpi_compile",
 		srcs = ["src/mpi.cc"],
 		outs = ["mpi.a"],
-		cmd = "mpic++ -L/usr/lib -lgflags -I/home/lionell/dev/labs/parallel_prog \
+		cmd = "mpic++ -L/usr/lib -lgflags -lglog -I/home/lionell/dev/labs/parallel_prog \
 				-o $@ $< $(locations //lib:pagerank) $(locations //lib:io) $(locations //lib:math) \
-				$(locations //lib:page) $(locations //lib:utils) $(locations //lib:logging)",
+				$(locations //lib:page) $(locations //lib:utils) $(locations //lib:benchmark)",
 		tools = [
 				"//lib:pagerank",
 				"//lib:io",
 				"//lib:math",
 				"//lib:page",
 				"//lib:utils",
-				"//lib:logging",
+				"//lib:benchmark",
 				"//data",
 		],
 		executable = 1,
@@ -39,13 +39,37 @@ cc_binary(
 				"//lib:math",
 				"//lib:page",
 				"//lib:utils",
-				"//lib:logging",
+				"//lib:benchmark",
 		],
 		data = [
 				"//data",
 		],
 		linkopts = [
-				"-L/usr/lib",
-				"-lgflags"
+				"-lgflags",
+				"-lglog",
+		],
+)
+
+cc_binary(
+		name = "omp",
+		srcs = ["src/omp.cc"],
+		deps = [
+				"//lib:pagerank",
+				"//lib:io",
+				"//lib:math",
+				"//lib:page",
+				"//lib:utils",
+				"//lib:benchmark",
+		],
+		data = [
+				"//data",
+		],
+		copts = [
+				"-fopenmp",
+		],
+		linkopts = [
+				"-lgflags",
+				"-lglog",
+				"-fopenmp",
 		],
 )

@@ -64,3 +64,11 @@ void ReadOutLinkCounts(std::string dataset, int page_cnt,
 		in >> out_link_cnts[i];
 	}
 }
+
+void WritePrToFile(std::string filepath, double pr[], int page_cnt) {
+	std::ofstream out(filepath);
+	out.precision(10);
+	for (int i = 0; i < page_cnt; i++) {
+		out << std::fixed << pr[i] << std::endl;
+	}
+}

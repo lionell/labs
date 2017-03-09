@@ -14,5 +14,6 @@ void ReadPageCount(std::string dataset, int *page_cnt_ptr);
 void ReadChunkSize(std::string dataset, int *chunk_size_ptr);
 void ReadOutLinkCounts(std::string dataset, int page_cnt,
 		int out_link_cnts[]);
+void WritePrToFile(std::string filepath, double pr[], int page_cnt);
 
 #endif  // IO_H_
