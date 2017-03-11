@@ -2,15 +2,17 @@ genrule(
 		name = "mpi_compile",
 		srcs = ["src/mpi.cc"],
 		outs = ["mpi.a"],
-		cmd = "mpic++ -L/usr/lib -lgflags -lglog -I/home/lionell/dev/labs/parallel_prog \
-				-o $@ $< $(locations //lib:pagerank) $(locations //lib:io) $(locations //lib:math) \
-				$(locations //lib:page) $(locations //lib:utils) $(locations //lib:benchmark)",
+		cmd = "mpic++ -L/usr/lib -lgflags -lglog -lprotobuf -I/home/lionell/dev/labs/parallel_prog -I$(GENDIR) \
+				-o $@ $< $(locations //lib:pagerank) $(BINDIR)/lib/libio.a $(locations //lib:math) \
+				$(BINDIR)/proto/libpage_proto.a $(BINDIR)/proto/libchunk_proto.a $(BINDIR)/proto/libmetadata_proto.a \
+				$(locations //lib:benchmark)",
 		tools = [
+				"//proto:page_cc_proto",
+				"//proto:chunk_cc_proto",
+				"//proto:metadata_cc_proto",
 				"//lib:pagerank",
 				"//lib:io",
 				"//lib:math",
-				"//lib:page",
-				"//lib:utils",
 				"//lib:benchmark",
 				"//data",
 		],
@@ -31,39 +33,15 @@ genrule(
 )
 
 cc_binary(
-		name = "serial",
-		srcs = ["src/serial.cc"],
-		deps = [
-				"//lib:pagerank",
-				"//lib:io",
-				"//lib:math",
-				"//lib:page",
-				"//lib:utils",
-				"//lib:benchmark",
-		],
-		data = [
-				"//data",
-		],
-		linkopts = [
-				"-lgflags",
-				"-lglog",
-		],
-)
-
-cc_binary(
 		name = "omp",
 		srcs = ["src/omp.cc"],
 		deps = [
 				"//lib:pagerank",
 				"//lib:io",
 				"//lib:math",
-				"//lib:page",
-				"//lib:utils",
 				"//lib:benchmark",
 		],
-		data = [
-				"//data",
-		],
+		data = ["//data"],
 		copts = [
 				"-fopenmp",
 		],
@@ -71,5 +49,32 @@ cc_binary(
 				"-lgflags",
 				"-lglog",
 				"-fopenmp",
+		],
+)
+
+cc_binary(
+		name = "serial",
+		srcs = ["src/serial.cc"],
+		deps = [
+				"//lib:pagerank",
+				"//lib:io",
+				"//lib:math",
+				"//lib:benchmark",
+		],
+		data = ["//data"],
+		linkopts = [
+				"-lgflags",
+				"-lglog",
+		],
+)
+
+cc_binary(
+		name = "test",
+		srcs = ["src/test.cc"],
+		deps = [
+				"//lib:io",
+		],
+		linkopts = [
+				"-lgflags",
 		],
 )

@@ -16,7 +16,7 @@ class Timer {
 	size_t ticks;
 
 public:
-	Timer() {}
+	Timer() : ticks(0) {}
 
 	void Start() {
 		wall_start = high_resolution_clock::now();
@@ -28,6 +28,7 @@ public:
 		cpu_finish = clock();
 		overall_wall_time += GetWallDuration();
 		overall_cpu_time += GetCpuDuration();
+		ticks++;
 	}
 
 	double GetWallDuration() {
@@ -52,9 +53,9 @@ public:
 	void ReportStats(string event) {
 		double average_wall_time = overall_wall_time / ticks;
 		double average_cpu_time = overall_cpu_time / ticks;
-		LOG(INFO) << "Overall " + event + " took " + to_string(overall_wall_time)
-			+ "s wall, " + to_string(overall_cpu_time) + "s cpu.";
-		LOG(INFO) << "Average " + event + " took " + to_string(average_wall_time)
-			+ "s wall, " + to_string(average_cpu_time) + "s cpu.";
+		LOG(INFO) << "Overall " + event + " took " + to_string(overall_cpu_time)
+			+ "s cpu, " + to_string(overall_wall_time) + "s wall.";
+		LOG(INFO) << "Average " + event + " took " + to_string(average_cpu_time)
+			+ "s cpu, " + to_string(average_wall_time) + "s wall.";
 	}
 };

@@ -6,14 +6,14 @@ import random
 
 parser = argparse.ArgumentParser()
 parser.add_argument('name', help='Name of generated dataset', type=str)
-parser.add_argument('--page_cnt', help='Number of pages in graph', type=int, default=100)
+parser.add_argument('--page_cnt', help='Number of pages in graph', type=int)
 parser.add_argument('--max_in_link_cnt',
         help='Upper bound of in-links per page', type=int, default=1000)
 parser.add_argument('--output',
         help='Path to store generated dataset', type=str,
         default='/home/lionell/dev/labs/parallel_prog/data/generated/')
 parser.add_argument('--chunk_size', help='Maximum of links per chunk',
-        type=int, default=1000)
+        type=int, default=10000)
 parser.add_argument('--log', help='Logging level', type=str, default='INFO',
         choices=['DEBUG', 'INFO', 'WARNING', 'ERROR', 'CRITICAL'])
 args = parser.parse_args()

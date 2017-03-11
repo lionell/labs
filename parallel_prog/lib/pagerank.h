@@ -2,15 +2,22 @@
 #define PAGERANK_H_
 
 #include <string>
-#include "page.h"
+#include <vector>
 
-void ExploreDanglingPages(int out_link_cnts[], int page_cnt,
-		int *dangling_page_cnt_ptr, int *dangling_pages_ptr[]);
-void InitPr(double pr[], int page_cnt);
-void EvaluatePr(Page pages[], int page_cnt, double world_pr[],
-		int out_link_cnts[], double new_pr[]);
-void AddDanglingPagesPr(double old_pr[], int page_cnt, int dangling_pages[],
-		int dangling_page_cnt, double pr[]);
-void AddRandomJumpsPr(double pr[], int page_cnt);
+#include "proto/page.pb.h"
+
+std::vector<int> ExploreDanglingPages(const std::vector<int> &out_link_cnts);
+std::vector<double> InitPr(int page_cnt);
+void AddPagesPr(
+		const std::vector<pr::Page> &pages,
+		const std::vector<int> &out_link_cnts,
+		const std::vector<double> &old_pr,
+		std::vector<double> &new_pr);
+void AddDanglingPagesPr(
+		double damping_factor,
+		const std::vector<int> &dangling_pages, 
+		const std::vector<double> &old_pr,
+		std::vector<double> &new_pr);
+void AddRandomJumpsPr(double damping_factor, std::vector<double> &new_pr);
 
 #endif  // PAGERANK_H_

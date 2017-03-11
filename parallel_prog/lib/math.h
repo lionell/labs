@@ -1,6 +1,8 @@
 #ifndef MATH_H_
 #define MATH_H_
 
-double L1Norm(double *a, double *b, int size);
+#include <vector>
+
+double L1Norm(const std::vector<double> a, const std::vector<double> b);
 
 #endif  // MATH_H_

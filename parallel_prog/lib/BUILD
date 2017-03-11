@@ -5,8 +5,8 @@ cc_library(
 		srcs = ["pagerank.cc"],
 		hdrs = ["pagerank.h"],
 		deps = [
-				":page",
 				":math",
+				"//proto:page_cc_proto",
 		],
 )
 
@@ -15,35 +15,15 @@ cc_library(
 		srcs = ["io.cc"],
 		hdrs = ["io.h"],
 		deps = [
-				":page",
+				"//proto:chunk_cc_proto",
+				"//proto:metadata_cc_proto",
 		],
-)
-
-cc_library(
-		name = "logging",
-		srcs = ["logging.cc"],
-		hdrs = ["logging.h"],
-		deps = [
-				":utils",
-		]
 )
 
 cc_library(
 		name = "math",
 		srcs = ["math.cc"],
 		hdrs = ["math.h"],
-)
-
-cc_library(
-		name = "utils",
-		srcs = ["utils.cc"],
-		hdrs = ["utils.h"],
-)
-
-cc_library(
-		name = "page",
-		srcs = ["page.cc"],
-		hdrs = ["page.h"],
 )
 
 cc_library(
