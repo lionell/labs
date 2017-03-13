@@ -1,20 +1,26 @@
+/*
+ * Usage: bazel run //tools:generate_dataset -- \
+ *          --output '/home/lionell/dev/labs/parallel_prog/data/generated/' \
+ *          --page_cnt 100000 \
+ *          --name 'test'
+ */
+
 #include <bits/stdc++.h>
 
 #include <gflags/gflags.h>
 #include <glog/logging.h>
 
-#include "lib/benchmark.h"
 #include "proto/chunk.pb.h"
 #include "proto/metadata.pb.h"
+#include "lib/benchmark.h"
 
 using namespace std;
 
-DEFINE_string(name, "test", "Dataset name");
+DEFINE_string(name, "", "Dataset name");
 DEFINE_int32(page_cnt, 10000, "Amount of pages in dataset");
 DEFINE_int32(max_in_link_cnt, 1000, "Max in-links per page");
 DEFINE_int32(chunk_size, 10000, "Max amount of pages per chunk");
-DEFINE_string(output, "/home/lionell/dev/labs/parallel_prog/data/generated/",
-		"Where to store dataset");
+DEFINE_string(output, "", "Where to store dataset");
 
 vector<int> pages;
 vector<int> out_link_cnts;
