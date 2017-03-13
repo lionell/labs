@@ -5,6 +5,7 @@
 #include <iomanip>
 
 #include <gflags/gflags.h>
+#include <glog/logging.h>
 
 #include "proto/metadata.pb.h"
 #include "proto/chunk.pb.h"
@@ -24,11 +25,15 @@ void ReadPagesFromChunk(int chunk_size, int chunk_id,
 	if (end >= chunk_end) end = chunk_end - 1;
 
 	pr::Chunk chunk;
-	std::ifstream in(FLAGS_dataset + "_" + std::to_string(chunk_id) + ".chnk");
-	chunk.ParseFromIstream(&in);
+	std::string filename = FLAGS_dataset  + "_" + std::to_string(chunk_id) +
+		".chnk";
+	std::ifstream in(filename);
+	if (!in)
+		LOG(FATAL) << "Error opening chunk file " + filename + " for reading.";
+	if (!chunk.ParseFromIstream(&in))
+		LOG(FATAL) << "Error parsing chunk from file " + filename + ".";
 
 	int shift = begin - chunk_begin;
-	int cnt = end - begin + 1;
 	std::move(chunk.mutable_pages()->begin() + shift,
 			chunk.mutable_pages()->end(),
 			std::back_inserter(pages));
@@ -51,8 +56,12 @@ void ReadMetadata(int *page_cnt_ptr, int *chunk_size_ptr,
 		std::vector<int> &out_link_cnts) {
 	pr::Metadata meta;
 
-	std::ifstream in(FLAGS_dataset + ".meta", std::ios::in | std::ios::binary);
-	meta.ParseFromIstream(&in);
+	std::string filename = FLAGS_dataset + ".meta";
+	std::ifstream in(filename, std::ios::in | std::ios::binary);
+	if (!in)
+		LOG(FATAL) << "Error opening metadata file " + filename + " for reading.";
+	if (!meta.ParseFromIstream(&in))
+		LOG(FATAL) << "Error parsing metadata from file " + filename + ".";
 
 	*page_cnt_ptr = meta.page_cnt();
 	*chunk_size_ptr = meta.chunk_size();
@@ -66,6 +75,9 @@ void ReadMetadata(int *page_cnt_ptr, int *chunk_size_ptr,
 
 void WritePr(const std::vector<double> pr) {
 	std::ofstream out(FLAGS_output);
+	if (!out)
+		LOG(FATAL) << "Error opening output file " + FLAGS_output +
+			" for writing.";
 	for (double x : pr) {
 		out << std::setprecision(10) << std::fixed << x << std::endl;
 	}
