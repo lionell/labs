@@ -3,6 +3,8 @@
 
 #include <vector>
 
-double L1Norm(const std::vector<double> a, const std::vector<double> b);
+long double L1Norm(
+		const std::vector<long double> a,
+		const std::vector<long double> b);
 
 #endif  // MATH_H_

@@ -34,8 +34,8 @@ int main(int argc, char *argv[]) {
 	timer.StopAndReport("Reading pages");
 
 	std::vector<int> dangling_pages = ExploreDanglingPages(out_link_cnts);
-	std::vector<double> pr = InitPr(page_cnt);
-	std::vector<double> old_pr(page_cnt);
+	std::vector<long double> pr = InitPr(page_cnt);
+	std::vector<long double> old_pr(page_cnt);
 
 	timer.Start();
 	bool go_on = true;
@@ -47,7 +47,7 @@ int main(int argc, char *argv[]) {
 		AddDanglingPagesPr(FLAGS_damping_factor, dangling_pages, old_pr, pr);
 		AddRandomJumpsPr(FLAGS_damping_factor, pr);
 
-		double err = L1Norm(pr, old_pr);
+		long double err = L1Norm(pr, old_pr);
 		LOG(INFO) << "Error " << std::setprecision(10) << std::fixed << err
 			<< " at step " << step + 1;
 		go_on = err > FLAGS_eps;

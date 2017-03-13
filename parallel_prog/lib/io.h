@@ -12,6 +12,6 @@ void ReadPages(int chunk_size, int begin, int end,
 		std::vector<pr::Page> &pages);
 void ReadMetadata(int *page_cnt_ptr, int *chunk_size_ptr,
 		std::vector<int> &out_link_cnts);
-void WritePr(const std::vector<double> pr);
+void WritePr(const std::vector<long double> pr);
 
 #endif  // IO_H_

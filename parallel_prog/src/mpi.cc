@@ -79,9 +79,9 @@ int main(int argc, char *argv[]) {
 		}
 	}
 
-	std::vector<double> global_pr(global_page_cnt);
-	std::vector<double> pr(pages.size());
-	std::vector<double> old_pr;
+	std::vector<long double> global_pr(global_page_cnt);
+	std::vector<long double> pr(pages.size());
+	std::vector<long double> old_pr;
 	if (world_rank == 0) {
 		global_pr = InitPr(global_page_cnt);
 		old_pr.resize(global_page_cnt);
@@ -92,7 +92,7 @@ int main(int argc, char *argv[]) {
 	bool go_on = true;
 	int step = 0;
 	while (go_on) {
-		MPI_Bcast(global_pr.data(), global_page_cnt, MPI_DOUBLE, 0, MPI_COMM_WORLD);
+		MPI_Bcast(global_pr.data(), global_page_cnt, MPI_LONG_DOUBLE, 0, MPI_COMM_WORLD);
 		if (world_rank == 0) {
 			std::copy(global_pr.begin(), global_pr.end(), old_pr.begin());
 		}
@@ -103,8 +103,8 @@ int main(int argc, char *argv[]) {
 		// all the processes. Some part of PRs evaluated at root are not
 		// going to be visible for MPI_Gather. But, it's OK until they
 		// remain on host. We will take them into account.
-		MPI_Gather(pr.data(), pages_per_proc, MPI_DOUBLE,
-				global_pr.data(), pages_per_proc, MPI_DOUBLE, 0, MPI_COMM_WORLD);
+		MPI_Gather(pr.data(), pages_per_proc, MPI_LONG_DOUBLE,
+				global_pr.data(), pages_per_proc, MPI_LONG_DOUBLE, 0, MPI_COMM_WORLD);
 
 		if (world_rank == 0) {
 			std::copy(pr.begin() + pages_per_proc, pr.end(),
@@ -113,7 +113,7 @@ int main(int argc, char *argv[]) {
 			AddDanglingPagesPr(FLAGS_damping_factor, dangling_pages, old_pr, global_pr);
 			AddRandomJumpsPr(FLAGS_damping_factor, global_pr);
 
-			double err = L1Norm(global_pr, old_pr);
+			long double err = L1Norm(global_pr, old_pr);
 			LOG(INFO) << "Error " << std::setprecision(10) << std::fixed << err
 				<< " at step " << step + 1;
 			go_on = err > FLAGS_eps;

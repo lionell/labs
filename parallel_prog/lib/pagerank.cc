@@ -18,8 +18,8 @@ std::vector<int> ExploreDanglingPages(const std::vector<int> &out_link_cnts) {
 	return dangling_pages;
 }
 
-std::vector<double> InitPr(int page_cnt) {
-	std::vector<double> pr;
+std::vector<long double> InitPr(int page_cnt) {
+	std::vector<long double> pr;
 	pr.reserve(page_cnt);
 	for (int i = 0; i < page_cnt; i++) {
 		pr.push_back(1.0 / page_cnt);
@@ -35,10 +35,10 @@ std::vector<double> InitPr(int page_cnt) {
 void AddPagesPr(
 		const std::vector<pr::Page> &pages,
 		const std::vector<int> &out_link_cnts,
-		const std::vector<double> &old_pr,
-		std::vector<double> &new_pr) {
+		const std::vector<long double> &old_pr,
+		std::vector<long double> &new_pr) {
 	for (int i = 0; i < pages.size(); i++) {
-		double sum = 0;
+		long double sum = 0;
 		for (int from_page : pages[i].in_links()) {
 			sum += old_pr[from_page] / out_link_cnts[from_page];
 		}
@@ -47,22 +47,24 @@ void AddPagesPr(
 }
 
 void AddDanglingPagesPr(
-		double damping_factor,
+		long double damping_factor,
 		const std::vector<int> &dangling_pages,
-		const std::vector<double> &old_pr,
-		std::vector<double> &new_pr) {
-	double sum = 0;
+		const std::vector<long double> &old_pr,
+		std::vector<long double> &new_pr) {
+	long double sum = 0;
 	for (int page : dangling_pages) {
 		sum += old_pr[page];
 	}
-	for (double &pr : new_pr) {
+	for (long double &pr : new_pr) {
 		pr += sum / new_pr.size();
 		pr *= damping_factor;
 	}
 }
 
-void AddRandomJumpsPr(double damping_factor, std::vector<double> &new_pr) {
-	for (double &pr : new_pr) {
+void AddRandomJumpsPr(
+		long double damping_factor,
+		std::vector<long double> &new_pr) {
+	for (long double &pr : new_pr) {
 		pr += (1 - damping_factor) / new_pr.size();
 	}
 }
