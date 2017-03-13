@@ -1,1 +1,1 @@
-# MPI PageRank
+# Parallel PageRank

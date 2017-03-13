@@ -1,11 +1,13 @@
 genrule(
 		name = "mpi_compile",
 		srcs = ["src/mpi.cc"],
-		outs = ["mpi.a"],
-		cmd = "mpic++ -L/usr/lib -lgflags -lglog -lprotobuf -I/home/lionell/dev/labs/parallel_prog -I$(GENDIR) \
-				-o $@ $< $(locations //lib:pagerank) $(BINDIR)/lib/libio.a $(locations //lib:math) \
-				$(BINDIR)/proto/libpage_proto.a $(BINDIR)/proto/libchunk_proto.a $(BINDIR)/proto/libmetadata_proto.a \
-				$(locations //lib:benchmark)",
+		outs = ["mpi"],
+		cmd = "mpic++ -L/usr/lib -lgflags -lglog -lprotobuf \
+				-I/home/lionell/dev/labs/parallel_prog -Ibazel-out/host/genfiles -o $@ $< \
+				bazel-out/host/bin/lib/libpagerank.a bazel-out/host/bin/lib/libio.a \
+				bazel-out/host/bin/lib/libmath.a bazel-out/host/bin/lib/libbenchmark.a \
+				bazel-out/host/bin/proto/libpage_proto.a bazel-out/host/bin/proto/libchunk_proto.a \
+				bazel-out/host/bin/proto/libmetadata_proto.a",
 		tools = [
 				"//proto:page_cc_proto",
 				"//proto:chunk_cc_proto",
@@ -21,7 +23,7 @@ genrule(
 )
 
 genrule(
-		name = "mpi",
+		name = "mpi_run",
 		outs = ["mpi.sh"],
 		cmd = "echo '#!/usr/bin/env sh' > $@; \
 				echo 'mpirun -np 4 $(location :mpi_compile) $$@' >> $@",
@@ -46,9 +48,9 @@ cc_binary(
 				"-fopenmp",
 		],
 		linkopts = [
+				"-fopenmp",
 				"-lgflags",
 				"-lglog",
-				"-fopenmp",
 		],
 )
 
@@ -65,16 +67,5 @@ cc_binary(
 		linkopts = [
 				"-lgflags",
 				"-lglog",
-		],
-)
-
-cc_binary(
-		name = "test",
-		srcs = ["src/test.cc"],
-		deps = [
-				"//lib:io",
-		],
-		linkopts = [
-				"-lgflags",
 		],
 )

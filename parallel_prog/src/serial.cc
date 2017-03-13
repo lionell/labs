@@ -1,4 +1,9 @@
-#include <cstring>
+/*
+ * Usage: bazel run :serial -- \
+ *          --dataset 'data/generated/100k_10k' \
+ *          --output '/home/lionell/dev/labs/parallel_prog/out/serial'
+ */
+
 #include <iomanip>
 
 #include <gflags/gflags.h>
@@ -14,7 +19,6 @@ DEFINE_double(eps, 1e-7, "Computation precision");
 
 int main(int argc, char *argv[]) {
 	FLAGS_logtostderr = 1;
-	FLAGS_output = "/home/lionell/dev/labs/parallel_prog/out/serial";
 	google::ParseCommandLineFlags(&argc, &argv, true /* remove_flags */);
 	google::InitGoogleLogging(argv[0]);
 	Timer timer;
@@ -30,7 +34,6 @@ int main(int argc, char *argv[]) {
 	timer.StopAndReport("Reading pages");
 
 	std::vector<int> dangling_pages = ExploreDanglingPages(out_link_cnts);
-
 	std::vector<double> pr = InitPr(page_cnt);
 	std::vector<double> old_pr(page_cnt);
 

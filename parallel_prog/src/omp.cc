@@ -1,4 +1,9 @@
-#include <cstring>
+/*
+ * Usage: bazel run :omp -- \
+ *          --dataset 'data/generated/100k_10k' \
+ *          --output '/home/lionell/dev/labs/parallel_prog/out/omp'
+ */
+
 #include <iomanip>
 
 #include <omp.h>
@@ -13,6 +18,10 @@
 DEFINE_double(damping_factor, 0.85, "PageRank main parameter");
 DEFINE_double(eps, 1e-7, "Computation precision");
 
+/*
+ * It's the most time consuming part of PR evaluation so it's enough to
+ * parallelize only this part.
+ */
 void ParallelAddPagesPr(
 		const std::vector<pr::Page> &pages,
 		const std::vector<int> &out_link_cnts,
@@ -31,7 +40,6 @@ void ParallelAddPagesPr(
 
 int main(int argc, char *argv[]) {
 	FLAGS_logtostderr = 1;
-	FLAGS_output = "/home/lionell/dev/labs/parallel_prog/out/omp";
 	google::ParseCommandLineFlags(&argc, &argv, true /* remove_flags */);
 	google::InitGoogleLogging(argv[0]);
 	Timer timer;
@@ -47,7 +55,6 @@ int main(int argc, char *argv[]) {
 	timer.StopAndReport("Reading pages");
 
 	std::vector<int> dangling_pages = ExploreDanglingPages(out_link_cnts);
-
 	std::vector<double> pr = InitPr(page_cnt);
 	std::vector<double> old_pr(page_cnt);
 

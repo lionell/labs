@@ -1,4 +1,9 @@
-#include <cstring> // memset
+/*
+ * Usage: bazel run :mpi -- \
+ *          --dataset 'data/generated/100k_10k' \
+ *          --output '/home/lionell/dev/labs/parallel_prog/out/mpi'
+ */
+
 #include <iomanip>
 
 #include <mpi.h>
@@ -21,7 +26,6 @@ std::string GetProc() {
 
 int main(int argc, char *argv[]) {
 	FLAGS_logtostderr = 1;
-	FLAGS_output = "/home/lionell/dev/labs/parallel_prog/out/mpi";
 	google::ParseCommandLineFlags(&argc, &argv, true /* remove_flags */);
 	google::InitGoogleLogging(argv[0]);
 	Timer timer;
@@ -47,7 +51,7 @@ int main(int argc, char *argv[]) {
 	}
 	MPI_Bcast(out_link_cnts.data(), global_page_cnt, MPI_INT, 0, MPI_COMM_WORLD);
 
-	// Calculate data range to process on specific processor.
+	// Calculate data range to process on particular processor.
 	int pages_per_proc = global_page_cnt / world_size;
 	int begin = pages_per_proc * world_rank;
 	int end = begin + pages_per_proc - 1;
@@ -59,8 +63,8 @@ int main(int argc, char *argv[]) {
 	ReadPages(chunk_size, begin, end, pages);
 	timer.StopAndReport(GetProc() + "Reading pages");
 
-	// If global_page_cnt % world::size != 0 then there are some pages remaining.
-	// We are going to process them at root processor.
+	// If global_page_cnt % world_size != 0 then there are some pages remaining.
+	// We are going to process them at root.
 	int reminder_cnt = global_page_cnt % world_size;
 	int reminder_begin = global_page_cnt - reminder_cnt;
 	int reminder_end = global_page_cnt - 1;
@@ -94,11 +98,11 @@ int main(int argc, char *argv[]) {
 		}
 
 		AddPagesPr(pages, out_link_cnts, global_pr, pr);
-		// NOTE! We use world::pages_per_proc instead of page_cnt
-		// to gather PRs. It's because size should remaind the same for
+		// NOTE! We use pages_per_proc instead of page.size()
+		// to gather PRs, because size should remaind the same for
 		// all the processes. Some part of PRs evaluated at root are not
 		// going to be visible for MPI_Gather. But, it's OK until they
-		// remain on host. We will account them later.
+		// remain on host. We will take them into account.
 		MPI_Gather(pr.data(), pages_per_proc, MPI_DOUBLE,
 				global_pr.data(), pages_per_proc, MPI_DOUBLE, 0, MPI_COMM_WORLD);
 
@@ -127,5 +131,6 @@ int main(int argc, char *argv[]) {
 
 	MPI_Finalize();
 	google::ShutDownCommandLineFlags();
+	google::protobuf::ShutdownProtobufLibrary();
 	return 0;
 }

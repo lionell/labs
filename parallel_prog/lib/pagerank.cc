@@ -2,6 +2,12 @@
 
 #include "math.h"
 
+/*
+ * Dangling pages - are pages with no out-links. So their PR is divided equally
+ * between all pages in graph. It's not efficiently to handle them as ordinary
+ * page and add in-links to all pages. We are going to process them differently
+ * so we need information about all of them.
+ */
 std::vector<int> ExploreDanglingPages(const std::vector<int> &out_link_cnts) {
 	std::vector<int> dangling_pages;
 	for (int i = 0; i < out_link_cnts.size(); i++) {
@@ -21,6 +27,11 @@ std::vector<double> InitPr(int page_cnt) {
 	return pr;
 }
 
+/*
+ * Sum PR from all in-links. This is the botleneck part of PR evaluation.
+ *
+ * We are going to multiply sum by damping_factor in AddDanglingPages.
+ */
 void AddPagesPr(
 		const std::vector<pr::Page> &pages,
 		const std::vector<int> &out_link_cnts,

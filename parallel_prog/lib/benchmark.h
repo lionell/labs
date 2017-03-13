@@ -6,7 +6,6 @@ using namespace std::chrono;
 using namespace std;
 
 class Timer {
-
 	high_resolution_clock::time_point wall_start;
 	high_resolution_clock::time_point wall_finish;
 	clock_t cpu_start;

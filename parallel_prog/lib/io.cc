@@ -9,15 +9,14 @@
 #include "proto/metadata.pb.h"
 #include "proto/chunk.pb.h"
 
-DEFINE_string(dataset, "data/generated/test", "Input dataset");
-DEFINE_string(output, "/home/lionell/dev/labs/parallel_prog/out/serial",
-		"Path to file where to store calculated PageRank");
+DEFINE_string(dataset, "", "Input dataset");
+DEFINE_string(output, "", "Path to file where to store calculated PageRank");
 
 /*
  * NOTE! It's possible that begin >= chunk_begin, or end < chunk_end.
- * Bounds are going to be truncated.
+ * The real bounds are intersection of [begin; end] and [chunk_begin; chunk_end].
  */
-int ReadPagesFromChunk(int chunk_size, int chunk_id,
+void ReadPagesFromChunk(int chunk_size, int chunk_id,
 		int begin, int end, std::vector<pr::Page> &pages) {
 	int chunk_begin = chunk_id * chunk_size;
 	int chunk_end = chunk_begin + chunk_size;
@@ -33,21 +32,18 @@ int ReadPagesFromChunk(int chunk_size, int chunk_id,
 	std::move(chunk.mutable_pages()->begin() + shift,
 			chunk.mutable_pages()->end(),
 			std::back_inserter(pages));
-	// std::move(chunk.mutable_pages(
-	// for (int i = 0; i < cnt; i++) {
-	// 	pages.push_back(std::move(*chunk.mutable_pages(shift + i)));
-	// }
-	return cnt;
 }
 
+/*
+ * Read pages and push them to the back of output vector.
+ */
 void ReadPages(int chunk_size, int begin, int end,
 		std::vector<pr::Page> &pages) {
 	int begin_chunk = begin / chunk_size;
 	int end_chunk = end / chunk_size;
 
-	int index = 0;
 	for (int chunk = begin_chunk; chunk <= end_chunk; chunk++) {
-		index += ReadPagesFromChunk(chunk_size, chunk, begin, end, pages);
+		ReadPagesFromChunk(chunk_size, chunk, begin, end, pages);
 	}
 }
 
