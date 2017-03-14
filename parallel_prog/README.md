@@ -78,13 +78,15 @@ built-in help(to call just add `-help`).
 Let's run `omp` binary on some dataset:
 
 ```(shell)
-$ omp --dataset /path/to/dataset --output /path/to/output
+$ omp
+    --dataset /path/to/dataset
+    --output /path/to/output
 ```
 
 ### Toolset
 
 There are also `generate_dataset` tool provided to create random graph. It's able to create pretty huge
-graphs, because it's using only O(n) amount of RAM memory. This is how to use it.
+graphs, because it's using only O(n) amount of RAM memory. This is how to use it:
 
 ```(shell)
 $ generate_dataset \
@@ -106,14 +108,14 @@ $ docker run --rm -it -v /path/to/data/on/host:/data lionell/parallel-pagerank b
 
 [Bazel](https://bazel.build) is used as a main build system. To build the whole project just run `bazel build :all`.
 
-**NOTE!** You need to use Bazel version that supports protobufs. As for now bazel-0.4.4 is the latest
+**NOTE!** You need to use Bazel version that **supports protobufs**. As for now bazel-0.4.4 is the latest
 release and there is support for protobufs. Use version based on
 [2046bb4](https://github.com/bazelbuild/bazel/commit/2046bb480075a8f412cb51882e64e31324fc57de) commit.
 
 ## Runtime dependencies
 
 * [OpenMP](http://www.openmp.org)
-* [OpenMPI](https://www.open-mpi.org) / [MPICH](https://www.mpich.org)
+* [OpenMPI](https://www.open-mpi.org) or [MPICH](https://www.mpich.org)
 * [Protocol Buffers](https://developers.google.com/protocol-buffers) (serialization)
 * [gflags](https://gflags.github.io/gflags) (cli flags)
 * [glog](https://github.com/google/glog) (logging)
