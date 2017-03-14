@@ -76,8 +76,8 @@ void ReadMetadata(int *page_cnt_ptr, int *chunk_size_ptr,
 void WritePr(const std::vector<long double> pr) {
 	std::ofstream out(FLAGS_output);
 	if (!out) {
-		LOG(WARNING) << "Error opening output file " + FLAGS_output +
-			" for writing. Results are not saved";
+		LOG(WARNING) << "Error opening output file '" + FLAGS_output +
+			"' for writing. Results are not saved.";
 		return;
 	}
 	for (int i = 0; i < pr.size(); i++) {

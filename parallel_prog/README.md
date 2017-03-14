@@ -2,10 +2,10 @@
   <img src="https://github.com/lionell/labs/blob/master/parallel_prog/docs/img/googlepagerank.jpg" />
 </div>
 
-Implementation of PageRank algorithm, using different parallelization approaches.
-For now there are three of them available: Serial(no parallelization),
-OpenMP(shared memory), MPI(communication via network). We are going to benchmark
-them on different datasets.
+Implementation of [PageRank](https://en.wikipedia.org/wiki/PageRank) algorithm, using
+different parallelization approaches. For now there are three of them available:
+Serial(no parallelization), OpenMP(shared memory), MPI(communication via network).
+We are going to benchmark them on different datasets.
 
 ## PageRank
 
@@ -104,6 +104,28 @@ PageRank in Docker container.
 
 ```(shell)
 $ docker run --rm -it -v /path/to/data/on/host:/data lionell/parallel-pagerank bash
+```
+
+## Output example
+
+Here is output from running `omp` version of PageRank with `1m_10k` dataset on my laptop.
+
+```
+$ bazel run :omp -- --dataset data/generated/1m_10k
+INFO: Found 1 target...
+Target //:omp up-to-date:
+  bazel-bin/omp
+INFO: Elapsed time: 0.137s, Critical Path: 0.00s
+
+INFO: Running command line: bazel-bin/omp --dataset data/generated/1m_10k
+I0314 15:38:47.344501 28376 benchmark.h:43] Reading pages took 5.072125s cpu, 5.072000s wall.
+I0314 15:38:56.033025 28376 omp.cc:72] Error 0.4260529474 at step 1
+I0314 15:39:04.574093 28376 omp.cc:72] Error 0.0140949892 at step 2
+I0314 15:39:13.116282 28376 omp.cc:72] Error 0.0005367169 at step 3
+I0314 15:39:21.657510 28376 omp.cc:72] Error 0.0000204198 at step 4
+I0314 15:39:30.199393 28376 omp.cc:72] Error 0.0000007763 at step 5
+I0314 15:39:38.791136 28376 omp.cc:72] Error 0.0000000295 at step 6
+I0314 15:39:38.792577 28376 benchmark.h:43] PageRank took 158.656886s cpu, 51.434000s wall.
 ```
 
 ## Building from source
