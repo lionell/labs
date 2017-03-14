@@ -1,5 +1,5 @@
 <div align="center">
-  ![PageRank](https://github.com/lionell/labs/blob/master/parallel_prog/docs/img/googlepagerank.jpg)
+  <img src="https://github.com/lionell/labs/blob/master/parallel_prog/docs/img/googlepagerank.jpg" />
 </div>
 
 Implementation of PageRank algorithm, using different parallelization approaches.
