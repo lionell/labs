@@ -1,6 +1,6 @@
 # Parallel PageRank
 
-![PageRank](https://github.com/lionll/labs)
+![PageRank](https://github.com/lionell/labs/blob/master/parallel_prog/docs/img/googlepagerank.jpg)
 
 Implementation of PageRank algorithm, using different parallelization approaches.
 For now there are three of them available: Serial(no parallelization),
