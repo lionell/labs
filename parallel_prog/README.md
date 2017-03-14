@@ -72,7 +72,7 @@ web-surfing, otherwise go to random page with probability of 0.15.
 PR[i] = PR2[i] * damping_factor + (1 - damping_factor) / page_cnt
 ```
 
-## Usage example
+## How to use
 
 To run the binaries correctly you should supply some command line parameters. Every binary has it's
 built-in help(to call just add `-help`).
