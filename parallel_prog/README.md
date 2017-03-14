@@ -33,7 +33,7 @@ look how we can compute PageRank efficiently.
 Basically all approaches to computed PageRank are **iterative**. Let's divide one iteration
 into three parts: PR from pages, PR from dangling pages and PR from random jumps.
 
-### Pages PR
+### Pages
 
 To compute PR from pages, we need to spread old PR(from previous iteration) across all the
 pages linked with current. For example, if there are links from page 1 to pages 0, 2, 4, then
@@ -46,7 +46,7 @@ some particular page, we can sum PRs of all in-pages divided by out link count f
 PR1[i] = PR[in_links[0]] / out_link_cnts[in_links[0]] + ... + PR[in_links[k]] / out_link_cnts[in_links[k]]
 ```
 
-### Dangling pages PR
+### Dangling pages
 
 Dangling pages - are pages with no out-links. It's obvious that one will leave this page at some point
 of time, and go to some random page. That's why we need to count these pages as they have out-links to
@@ -109,7 +109,7 @@ $ docker run --rm -it -v /path/to/data/on/host:/data lionell/parallel-pagerank b
 [Bazel](https://bazel.build) is used as a main build system. To build the whole project just run `bazel build :all`.
 
 **NOTE!** You need to use Bazel version that **supports protobufs**. As for now bazel-0.4.4 is the latest
-release and there is support for protobufs. Use version based on
+release and there is no support for protobufs. Use version based on
 [2046bb4](https://github.com/bazelbuild/bazel/commit/2046bb480075a8f412cb51882e64e31324fc57de) commit.
 
 ## Runtime dependencies
@@ -121,6 +121,8 @@ release and there is support for protobufs. Use version based on
 * [glog](https://github.com/google/glog) (logging)
 
 ## License
+
+MIT
 
 Copyright © 2017 Ruslan Sakevych
 
