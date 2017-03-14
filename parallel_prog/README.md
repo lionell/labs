@@ -100,7 +100,7 @@ $ generate_dataset \
 ### Docker
 
 It's super easy to distribute binaries via Docker. Here is an example how to run
-PageRank in Docker container.
+PageRank in Docker container:
 
 ```(shell)
 $ docker run --rm -it -v /path/to/data/on/host:/data lionell/parallel-pagerank bash
@@ -108,7 +108,7 @@ $ docker run --rm -it -v /path/to/data/on/host:/data lionell/parallel-pagerank b
 
 ## Output example
 
-Here is output from running `omp` version of PageRank with `1m_10k` dataset on my laptop.
+Here is output from running `omp` version of PageRank with `1m_10k` dataset on my laptop:
 
 ```
 $ bazel run :omp -- --dataset data/generated/1m_10k
