@@ -73,23 +73,15 @@ PR[i] = PR2[i] * damping_factor + (1 - damping_factor) / page_cnt
 ## How to use
 
 ```
-{serial/mpi/omp} --dataset /path/to/dataset --output /path/to/output
+serial/mpi/omp --dataset /path/to/dataset --output /path/to/output
 ```
 
-### Docker
-
-```
-docker pull lionell/parallel-pagerank
-docker run --rm -it -v /path/to/data/on/host:/data lionell/parallel-pagerank bash
-```
-
-## How to build
+## Building
 
 Bazel
 
 ```
-bazel build :{serial/omp/mpi}
-bazel run :{seria/omp/mpi} -- --dataset /path/to/dataset --output /path/to/output
+bazel build :all
 ```
 
 ## Dependencies
