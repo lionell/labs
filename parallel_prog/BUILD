@@ -16,7 +16,6 @@ genrule(
 				"//lib:io",
 				"//lib:math",
 				"//lib:benchmark",
-				"//data",
 		],
 		executable = 1,
 		output_to_bindir = 1,
@@ -43,7 +42,6 @@ cc_binary(
 				"//lib:math",
 				"//lib:benchmark",
 		],
-		data = ["//data"],
 		copts = [
 				"-fopenmp",
 		],
@@ -63,7 +61,6 @@ cc_binary(
 				"//lib:math",
 				"//lib:benchmark",
 		],
-		data = ["//data"],
 		linkopts = [
 				"-lgflags",
 				"-lglog",

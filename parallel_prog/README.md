@@ -111,7 +111,7 @@ $ docker run --rm -it -v /path/to/data/on/host:/data lionell/parallel-pagerank b
 Here is output from running `omp` version of PageRank with `1m_10k` dataset on my laptop:
 
 ```
-$ bazel run :omp -- --dataset data/generated/1m_10k
+$ bazel run :omp -- --dataset $(pwd)/data/generated/1m_10k
 INFO: Found 1 target...
 Target //:omp up-to-date:
   bazel-bin/omp
