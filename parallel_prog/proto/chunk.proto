@@ -1,9 +1,0 @@
-syntax = "proto3";
-
-package pr;
-
-import "proto/page.proto";
-
-message Chunk {
-  repeated Page pages = 1;
-}
