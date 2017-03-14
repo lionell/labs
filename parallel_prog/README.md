@@ -1,4 +1,6 @@
-![PageRank](https://github.com/lionell/labs/blob/master/parallel_prog/docs/img/googlepagerank.jpg)
+<div align="center">
+  ![PageRank](https://github.com/lionell/labs/blob/master/parallel_prog/docs/img/googlepagerank.jpg)
+</div>
 
 Implementation of PageRank algorithm, using different parallelization approaches.
 For now there are three of them available: Serial(no parallelization),
@@ -61,7 +63,7 @@ PR2[i] = PR1[i] + Dangling_pages_PR / page_cnt
 
 ### Damping factor and random jumps
 
-In original page from Lary Page and Sergey Brin, they use some factor called damping factor to model
+In original page from Larry Page and Sergey Brin, they use some factor called damping factor to model
 situation when user just stop web-surfing and go to random page. We will call this situation random jump.
 To deal with this, we need damping factor(near 0.85), to say that with probability 0.85 user will continue
 web-surfing, otherwise go to random page with probability of 0.15.
@@ -121,8 +123,6 @@ release and there is no support for protobufs. Use version based on
 * [glog](https://github.com/google/glog) (logging)
 
 ## License
-
-MIT
 
 Copyright © 2017 Ruslan Sakevych
 
