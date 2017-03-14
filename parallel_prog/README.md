@@ -1,4 +1,4 @@
-# Parallel PageRank
+# Parallel
 
 ![PageRank](https://github.com/lionell/labs/blob/master/parallel_prog/docs/img/googlepagerank.jpg)
 
