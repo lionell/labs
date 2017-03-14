@@ -75,10 +75,13 @@ void ReadMetadata(int *page_cnt_ptr, int *chunk_size_ptr,
 
 void WritePr(const std::vector<long double> pr) {
 	std::ofstream out(FLAGS_output);
-	if (!out)
-		LOG(FATAL) << "Error opening output file " + FLAGS_output +
-			" for writing.";
-	for (long double x : pr) {
-		out << std::setprecision(10) << std::fixed << x << std::endl;
+	if (!out) {
+		LOG(WARNING) << "Error opening output file " + FLAGS_output +
+			" for writing. Results are not saved";
+		return;
+	}
+	for (int i = 0; i < pr.size(); i++) {
+		out << i << " " << std::setprecision(10) << std::fixed << pr[i]
+			<< std::endl;
 	}
 }

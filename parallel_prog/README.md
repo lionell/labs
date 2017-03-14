@@ -70,27 +70,32 @@ web-surfing, otherwise go to random page with probability of 0.15.
 PR[i] = PR2[i] * damping_factor + (1 - damping_factor) / page_cnt
 ```
 
-## How to use
+## Usage example
 
-```
-{serial/mpi/omp} --dataset /path/to/dataset --output /path/to/output
+To run the binaries correctly you should supply some command line parameters. Every binary has it's
+built-in help(to call just add `-help`).
+
+Here is example how to run `omp` binary on some dataset:
+
+```(shell)
+$ omp --dataset /path/to/dataset --output /path/to/output
 ```
 
 ### Docker
 
-```
-docker pull lionell/parallel-pagerank
-docker run --rm -it -v /path/to/data/on/host:/data lionell/parallel-pagerank bash
+```(shell)
+$ docker run --rm -it -v /path/to/data/on/host:/data lionell/parallel-pagerank bash
+# generate_dataset --output /path/to/data/ --page_cnt 1000000 --chunk_size 100000 --name 1m_100k
+# omp --dataset /path/to/data/1m_100k --output /path/to/output
 ```
 
-## How to build
+## Building from source
 
-Bazel
+[Bazel](https://bazel.build) is used as a main build system. To build the whole project just run `bazel build :all`.
 
-```
-bazel build :{serial/omp/mpi}
-bazel run :{seria/omp/mpi} -- --dataset /path/to/dataset --output /path/to/output
-```
+**NOTE!** You need to use Bazel version that supports protobufs. As for now bazel-0.4.4 is the latest
+release and there is support for protobufs. Use version based on
+[2046bb4](https://github.com/bazelbuild/bazel/commit/2046bb480075a8f412cb51882e64e31324fc57de) commit.
 
 ## Dependencies
 
@@ -98,9 +103,16 @@ Runtime:
 
 * OpenMP
 * OpenMPI
-* gflags (flags library)
-* glog (logging library)
+* protobuf (serialization)
+* gflags (cli flags)
+* glog (logging)
 
 ## License
 
-MIT
+Copyright © 2017 Ruslan Sakevych
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the “Software”), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
