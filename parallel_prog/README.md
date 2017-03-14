@@ -1,5 +1,7 @@
 # Parallel PageRank
 
+![PageRank](https://github.com/lionll/labs)
+
 Implementation of PageRank algorithm, using different parallelization approaches.
 For now there are three of them available: Serial(no parallelization),
 OpenMP(shared memory), MPI(communication via network). We are going to benchmark
