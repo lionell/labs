@@ -75,18 +75,31 @@ PR[i] = PR2[i] * damping_factor + (1 - damping_factor) / page_cnt
 To run the binaries correctly you should supply some command line parameters. Every binary has it's
 built-in help(to call just add `-help`).
 
-Here is example how to run `omp` binary on some dataset:
+Let's run `omp` binary on some dataset:
 
 ```(shell)
 $ omp --dataset /path/to/dataset --output /path/to/output
 ```
 
+### Toolset
+
+There are also `generate_dataset` tool provided to create random graph. It's able to create pretty huge
+graphs, because it's using only O(n) amount of RAM memory. This is how to use it.
+
+```(shell)
+$ generate_dataset \
+    --output /path/to/output/ \
+    --page_cnt 1000000 \
+    --name dataset-name
+```
+
 ### Docker
+
+It's super easy to distribute binaries via Docker. Here is an example how to run
+PageRank in Docker container.
 
 ```(shell)
 $ docker run --rm -it -v /path/to/data/on/host:/data lionell/parallel-pagerank bash
-# generate_dataset --output /path/to/data/ --page_cnt 1000000 --chunk_size 100000 --name 1m_100k
-# omp --dataset /path/to/data/1m_100k --output /path/to/output
 ```
 
 ## Building from source
@@ -100,7 +113,7 @@ release and there is support for protobufs. Use version based on
 ## Runtime dependencies
 
 * [OpenMP](http://www.openmp.org)
-* [OpenMPI](https://www.open-mpi.org)/[MPICH](https://www.mpich.org)
+* [OpenMPI](https://www.open-mpi.org) / [MPICH](https://www.mpich.org)
 * [Protocol Buffers](https://developers.google.com/protocol-buffers) (serialization)
 * [gflags](https://gflags.github.io/gflags) (cli flags)
 * [glog](https://github.com/google/glog) (logging)
