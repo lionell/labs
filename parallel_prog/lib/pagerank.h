@@ -14,7 +14,6 @@ void AddPagesPr(
 		const std::vector<long double> &old_pr,
 		std::vector<long double> &new_pr);
 void AddDanglingPagesPr(
-		long double damping_factor,
 		const std::vector<int> &dangling_pages,
 		const std::vector<long double> &old_pr,
 		std::vector<long double> &new_pr);

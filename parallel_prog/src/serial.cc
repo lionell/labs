@@ -44,7 +44,7 @@ int main(int argc, char *argv[]) {
 		std::copy(pr.begin(), pr.end(), old_pr.begin());
 
 		AddPagesPr(pages, out_link_cnts, old_pr, pr);
-		AddDanglingPagesPr(FLAGS_damping_factor, dangling_pages, old_pr, pr);
+		AddDanglingPagesPr(dangling_pages, old_pr, pr);
 		AddRandomJumpsPr(FLAGS_damping_factor, pr);
 
 		long double err = L1Norm(pr, old_pr);

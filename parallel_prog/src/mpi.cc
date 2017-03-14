@@ -110,7 +110,7 @@ int main(int argc, char *argv[]) {
 			std::copy(pr.begin() + pages_per_proc, pr.end(),
 					global_pr.begin() + reminder_begin);
 
-			AddDanglingPagesPr(FLAGS_damping_factor, dangling_pages, old_pr, global_pr);
+			AddDanglingPagesPr(dangling_pages, old_pr, global_pr);
 			AddRandomJumpsPr(FLAGS_damping_factor, global_pr);
 
 			long double err = L1Norm(global_pr, old_pr);

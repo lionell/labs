@@ -33,6 +33,8 @@ look how we can compute PageRank efficiently.
 Basically all approaches to computed PageRank are **iterative**. Let's divide one iteration
 into three parts: PR from pages, PR from dangling pages and PR from random jumps.
 
+### Pages PR
+
 To compute PR from pages, we need to spread old PR(from previous iteration) across all the
 pages linked with current. For example, if there are links from page 1 to pages 0, 2, 4, then
 each of these pages will receive additional `PR[0] / 3` PageRank.
@@ -42,4 +44,28 @@ some particular page, we can sum PRs of all in-pages divided by out link count f
 
 ```
 PR1[i] = PR[in_links[0]] / out_link_cnts[in_links[0]] + ... + PR[in_links[k]] / out_link_cnts[in_links[k]]
+```
+
+### Dangling pages PR
+
+Dangling pages - are pages with no out-links. It's obvious that one will leave this page at some point
+of time, and go to some random page. That's why we need to count these pages as they have out-links to
+every single page in graph. But this will **significantly** increase size of in-links for every page.
+
+It's pretty obvious that addtitional PR from dangling pages, is the same for all pages. So we can evaluate
+it only once, and then add it to every page.
+
+```
+PR2[i] = PR1[i] + Dangling_pages_PR / page_cnt
+```
+
+### Damping factor and random jumps
+
+In original page from Lary Page and Sergey Brin, they use some factor called damping factor to model
+situation when user just stop web-surfing and go to random page. We will call this situation random jump.
+To deal with this, we need damping factor(near 0.85), to say that with probability 0.85 user will continue
+web-surfing, otherwise go to random page with probability of 0.15.
+
+```
+PR[i] = PR2[i] * damping_factor + (1 - damping_factor) / page_cnt
 ```

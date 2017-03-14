@@ -47,7 +47,6 @@ void AddPagesPr(
 }
 
 void AddDanglingPagesPr(
-		long double damping_factor,
 		const std::vector<int> &dangling_pages,
 		const std::vector<long double> &old_pr,
 		std::vector<long double> &new_pr) {
@@ -57,7 +56,6 @@ void AddDanglingPagesPr(
 	}
 	for (long double &pr : new_pr) {
 		pr += sum / new_pr.size();
-		pr *= damping_factor;
 	}
 }
 
@@ -65,6 +63,6 @@ void AddRandomJumpsPr(
 		long double damping_factor,
 		std::vector<long double> &new_pr) {
 	for (long double &pr : new_pr) {
-		pr += (1 - damping_factor) / new_pr.size();
+		pr = pr * damping_factor + (1 - damping_factor) / new_pr.size();
 	}
 }
