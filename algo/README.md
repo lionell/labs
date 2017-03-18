@@ -31,7 +31,7 @@ total 103M
 -rw-r--r-- 1 lionell lionell 26M бер 18 13:39 10m_4t.3
 ```
 
-Let's concatenate them into one huge file containing 1B random numbers.
+Let's concatenate them into one huge file containing 10M random numbers.
 
 ```
 $ bazel run :concat $(pwd)/out/10m_4t 4
@@ -70,4 +70,4 @@ I0318 13:46:10.093595 13557 random.cc:31] [0]: u0=1234
 I0318 13:46:10.783151 13557 benchmark.h:37] Generation took 0.689168s cpu, 0.689000s wall.
 ```
 
-Finally, let's make sure that files are the same. We can just run `diff out/10m_4t out/10m_1t'.
+Finally, let's make sure that files are the same. We can just run `diff out/10m_4t out/10m_1t`.
