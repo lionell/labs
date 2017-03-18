@@ -1,6 +1,6 @@
 # Parallel RNG
 
-All examples are using Bazel as a main build system.
+All examples are using [Bazel](https://bazel.build) as a main build system.
 
 Let's generate 10,000,000 random numbers.
 
