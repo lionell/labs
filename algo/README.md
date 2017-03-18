@@ -101,3 +101,13 @@ W0318 21:07:38.086269 13116 io.h:15] Switching to dummy mode.
 I0318 21:07:38.086273 13116 random.cc:31] [2]: u0=3610281214
 I0318 21:07:41.660795 13114 benchmark.h:37] Generation took 12.589956s cpu, 3.582000s wall.
 ```
+
+## Runtime dependencies
+
+* [OpenMP](http://www.openmp.org)
+* [gflags](https://gflags.github.io/gflags) (cli flags)
+* [glog](https://github.com/google/glog) (logging)
+
+## License
+
+MIT
