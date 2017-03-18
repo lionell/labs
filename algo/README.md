@@ -31,6 +31,8 @@ total 103M
 -rw-r--r-- 1 lionell lionell 26M бер 18 13:39 10m_4t.3
 ```
 
+## Concatenating results
+
 Let's concatenate them into one huge file containing 10M random numbers.
 
 ```
@@ -71,3 +73,31 @@ I0318 13:46:10.783151 13557 benchmark.h:37] Generation took 0.689168s cpu, 0.689
 ```
 
 Finally, let's make sure that files are the same. We can just run `diff out/10m_4t out/10m_1t`.
+
+## Dummy mode
+
+Sometimes we wan't to check acceleration of algorithm on some pretty huge amount of data, but it
+can overuse some resources available on machine it's running. Eg. this algorithm uses filesystem to
+store generated data. Having n = 10,000,000,000 we are going to generate 10B 32-bit random numbers.
+It's about 37GB of disk space. Fortunatelly there is a dummy mode, where we can tell program not to
+store generated data. To get into dummy mode, just run it without `--output` parameter.
+
+```
+$ bazel run :random -- --n 250000000 --k 4
+INFO: Found 1 target...
+Target //:random up-to-date:
+  bazel-bin/random
+INFO: Elapsed time: 0.196s, Critical Path: 0.01s
+
+INFO: Running command line: bazel-bin/random --n 250000000 --k 4
+I0318 21:07:38.078176 13114 random.cc:58] R=4294967295, M=10019, M^k=262120981
+W0318 21:07:38.085633 13114 io.h:15] Switching to dummy mode.
+I0318 21:07:38.085650 13114 random.cc:31] [0]: u0=1234
+W0318 21:07:38.085674 13117 io.h:15] Switching to dummy mode.
+I0318 21:07:38.085685 13117 random.cc:31] [3]: u0=3487891871
+W0318 21:07:38.085703 13115 io.h:15] Switching to dummy mode.
+I0318 21:07:38.085710 13115 random.cc:31] [1]: u0=12363446
+W0318 21:07:38.086269 13116 io.h:15] Switching to dummy mode.
+I0318 21:07:38.086273 13116 random.cc:31] [2]: u0=3610281214
+I0318 21:07:41.660795 13114 benchmark.h:37] Generation took 12.589956s cpu, 3.582000s wall.
+```
