@@ -2,9 +2,6 @@
 	path = db/test_db
 	url = https://github.com/datacharmer/test_db.git
 	ignore = dirty
-[submodule "parallel_prog/pagerank"]
-	path = parallel_prog/pagerank
-	url = git@github.com:lionell/pagerank.git
 [submodule "crypto/pollard"]
 	path = crypto/pollard
 	url = git@github.com:lionell/pollard.git
