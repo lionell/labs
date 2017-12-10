@@ -11,3 +11,6 @@
 [submodule "crypto/pollard"]
 	path = crypto/pollard
 	url = git@github.com:lionell/pollard.git
+[submodule "it"]
+	path = it
+	url = git@github.com:lionell/pgapps.git
