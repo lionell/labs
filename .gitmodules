@@ -11,3 +11,6 @@
 [submodule "sys_prog/monkey-in-java"]
 	path = sys_prog/monkey-in-java
 	url = git@github.com:lionell/monkey-in-java.git
+[submodule "parallel_prog"]
+	path = parallel_prog
+	url = git@github.com:lionell/pagerank.git
