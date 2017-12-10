@@ -8,3 +8,6 @@
 [submodule "sys_prog/syntax-analyzer"]
 	path = sys_prog/syntax-analyzer
 	url = git@github.com:lionell/syntax-analyzer.git
+[submodule "crypto/pollard"]
+	path = crypto/pollard
+	url = git@github.com:lionell/pollard.git
