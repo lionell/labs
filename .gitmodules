@@ -17,3 +17,6 @@
 [submodule "crypto"]
 	path = crypto
 	url = git@github.com:lionell/pollard.git
+[submodule "math_logic"]
+	path = math_logic
+	url = git@github.com:lionell/sequential-method.git
