@@ -5,12 +5,12 @@
 [submodule "parallel_prog/pagerank"]
 	path = parallel_prog/pagerank
 	url = git@github.com:lionell/pagerank.git
-[submodule "sys_prog/syntax-analyzer"]
-	path = sys_prog/syntax-analyzer
-	url = git@github.com:lionell/syntax-analyzer.git
 [submodule "crypto/pollard"]
 	path = crypto/pollard
 	url = git@github.com:lionell/pollard.git
 [submodule "it"]
 	path = it
 	url = git@github.com:lionell/pgapps.git
+[submodule "sys_prog/monkey-in-java"]
+	path = sys_prog/monkey-in-java
+	url = git@github.com:lionell/monkey-in-java.git
