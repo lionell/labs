@@ -1,41 +1,26 @@
 # Exploiting bank smart-contract
 
+Bank smart-contract is based on the **PirateCoin** task on [RuCTFE 2017][ructfe].
 We'll be exploiting vulnerable bank smart-contract running on Ethereum.
-Here is the code of the bank
+You can find a full source code of the bank here `contracts/Bank.sol`.
+Let's look at the most interesting part
 
 ```
-pragma solidity ^0.4.15;
+function withdrawBalance() public {
+  var amountToWithdraw = userBalances[msg.sender];
+  if (amountToWithdraw == 0) return;
 
-contract Bank {
-  mapping(address => uint) userBalances;
-  uint public totalBankBalance;
-
-  function Bank() public {
-    totalBankBalance = 0;
-  }
-
-  function getUserBalance(address user) public view returns(uint) {
-    return userBalances[user];
-  }
-
-  function addToBalance() public payable {
-    userBalances[msg.sender] += msg.value;
-    totalBankBalance += msg.value;
-  }
-
-  function withdrawBalance() public {
-    var amountToWithdraw = userBalances[msg.sender];
-    if (amountToWithdraw == 0) return;
-
-    require(msg.sender.call.value(amountToWithdraw)());
-    totalBankBalance -= userBalances[msg.sender];
-    userBalances[msg.sender] = 0;
-  }
+  require(msg.sender.call.value(amountToWithdraw)());
+  totalBankBalance -= userBalances[msg.sender];
+  userBalances[msg.sender] = 0;
 }
-
 ```
 
-And here is exploit that will help us steal ether
+The main problem here is that a call to transfer ether is made **before** balance
+updated. This call is blocking, so we can expect user's default fallback function
+`function () payable` to be called. Inside we can recursively call `withdrawBalance()`
+and receive ether **twice**. Here is an example of smart-contract that exploit this
+vulerability
 
 ```
 pragma solidity ^0.4.15;
@@ -68,3 +53,5 @@ contract Pwn {
   }
 }
 ```
+
+[ructfe]: https://ructfe.org/index
