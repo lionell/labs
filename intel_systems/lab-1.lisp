@@ -19,6 +19,8 @@
        (not (used? x y :used used))))
 
 (defun find-path (x1 y1 x2 y2 &key used)
+  "(find-path 3 5 1 1)
+   => ((3 5) (3 4) (3 3) (2 3) (1 3) (1 2) (1 1))"
   (let ((new-used (cons (list x1 y1) used)))
     (or
      (when (and (= x1 x2) (= y1 y2)) (list (list x1 y1)))
