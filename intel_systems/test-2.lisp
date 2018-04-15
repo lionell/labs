@@ -11,7 +11,7 @@
   "($sorted? '(1 2 3 2)) = Nil"
   (if (< (length lst) 2) t
     (and (< (first lst) (second lst))
-        ($is-sorted (cdr lst)))))
+        ($sorted? (cdr lst)))))
 
 (defun $lcm (a b)
   "($lcm 6 9) = 18"
@@ -32,7 +32,7 @@
           :initial-value nil))
 
 (defun $gorner (p x)
-  "($gorner '(1 2 3) => x^2 + 2*x + 3) = 27"
+  "($gorner '(1 2 3) 2) => x^2 + 2*x + 3) = 27"
   (reduce #'(lambda (acc c) (+ c (* x acc)))
           p
           :initial-value 0))
@@ -120,5 +120,5 @@
   (if a
       (cons (car a)
             (cons (car b)
-                  (concat (cdr a) (cdr b))))
+                  ($snake-merge (cdr a) (cdr b))))
     nil))
