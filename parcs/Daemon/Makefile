@@ -1,2 +1,2 @@
 all:
-	java -jar Daemon.jar
+	@java -jar Daemon.jar

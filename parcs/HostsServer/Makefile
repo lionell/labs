@@ -1,5 +1,5 @@
 tcp:
-	java -jar TCPHostsServer.jar
+	@java -jar TCPHostsServer.jar
 
 udp:
-	java -jar UDPHostsServer.jar
+	@java -jar UDPHostsServer.jar
