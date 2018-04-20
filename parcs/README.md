@@ -2,18 +2,13 @@
 
 Consists of hosts-server (load balancer) and a bunch of daemons (slaves). One can submit task to hosts-server via sending corresponding `.jar` file.
 
-## Setting up Google Compute Engine
+## Creating GCE instances
 
-We'll create 2 instances for daemons, instance for hosts-server and instance to for an application.
+First of all let's set default project in `gcloud` tool by running `gcloud config set project "moggio-165703"`.
 
-First of set default project in `gcloud` tool. This saves us from constantly specifying project id.
+We'll create 2 instances for daemons, one for hosts-server and one to for an application.
 ```
-$ gcloud config set project "moggio-165703"
-```
-
-Now let's create new instances
-```
-$ gcloud compute instances create daemon-1 daemon-2 hosts-server app --zone us-central1-c
+$ gcloud compute instances create hosts-server daemon-1 daemon-2 app --zone us-central1-c
 
 Created [https://www.googleapis.com/compute/v1/projects/moggio-165703/zones/us-central1-c/instances/hosts-server].
 Created [https://www.googleapis.com/compute/v1/projects/moggio-165703/zones/us-central1-c/instances/daemon-1].
@@ -24,6 +19,21 @@ hosts-server  us-central1-c  n1-standard-1               10.128.0.2   35.192.221
 daemon-1      us-central1-c  n1-standard-1               10.128.0.5   35.188.57.169  RUNNING
 daemon-2      us-central1-c  n1-standard-1               10.128.0.4   35.192.8.28    RUNNING
 app           us-central1-c  n1-standard-1               10.128.0.3   35.192.150.94  RUNNING
+```
+
+## Setting up daemons
+
+Let's start with `daemon-1` and connect to it via `gcloud compute ssh daemon-1 --zone us-central1-c`.
+Now we need to install `java` like this `sudo apt-get update && sudo apt-get install -y openjdk-9-jdk`.
+After this we need to download pre-packed daemon `wget https://github.com/lionell/labs/raw/master/parcs/Daemon/Daemon.jar`.
+Finally we can run our daemon `java -jar Daemon.jar&`.
+
+To recap, here all the steps together
+```
+$ sudo apt-get update
+$ sudo apt-get install -y openjdk-9-jdk
+$ wget https://github.com/lionell/labs/raw/master/parcs/Daemon/Daemon.jar
+$ java -jar Daemon.jar&
 ```
 
 ## Cleaning up
