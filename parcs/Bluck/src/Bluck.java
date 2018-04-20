@@ -36,6 +36,6 @@ public class Bluck {
                 n.addDep(nodes.get(sc.nextInt() - 1));
             }
         }
-        return nodes.get(s);
+        return nodes.get(s - 1);
     }
 }
