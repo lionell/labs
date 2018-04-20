@@ -21,12 +21,14 @@ daemon-2      us-central1-c  n1-standard-1               10.128.0.4   35.192.8.2
 app           us-central1-c  n1-standard-1               10.128.0.3   35.192.150.94  RUNNING
 ```
 
+**Notice! You'll need internal ip of every instance later** 
+
 ## Setting up daemons
 
-Let's start with `daemon-1` and connect to it via `gcloud compute ssh daemon-1 --zone us-central1-c`.
+Let's start with `daemon-1` and connect to it via ssh `gcloud compute ssh daemon-1 --zone us-central1-c`.
 Now we need to install `java` like this `sudo apt-get update && sudo apt-get install -y openjdk-9-jdk`.
 After this we need to download pre-packed daemon `wget https://github.com/lionell/labs/raw/master/parcs/Daemon/Daemon.jar`.
-Finally we can run our daemon `java -jar Daemon.jar&`.
+Finally we can start our daemon `java -jar Daemon.jar&`.
 
 To recap, here all the steps together
 ```
@@ -35,6 +37,25 @@ $ sudo apt-get install -y openjdk-9-jdk
 $ wget https://github.com/lionell/labs/raw/master/parcs/Daemon/Daemon.jar
 $ java -jar Daemon.jar&
 ```
+
+## Starting hosts server
+
+As with daemons we need to connect to hosts server via ssh `gcloud compute ssh hosts-server --zone us-central1-c`.
+We also need to install `java` and download pre-packed hosts server
+```
+$ sudo apt-get update && sudo apt-get install -y openjdk-9-jdk
+$ wget https://github.com/lionell/labs/raw/master/parcs/HostsServer/TCPHostsServer.jar
+```
+
+Now we have to create `hosts.list` and put there internal ip of all the deamons. You can find internal ip in the
+GCP Console. In my case I have daemons on `10.128.0.4` and `10.128.0.5`.
+```
+$ touch hosts.list
+$ echo 10.128.0.4 >> hosts.list
+$ echo 10.128.0.5 >> hosts.list
+```
+
+Finally we can start our hosts server via `java -jar TCPHostsServer.jar&`
 
 ## Cleaning up
 
