@@ -12,5 +12,7 @@ def gen(d):
     return i - 1
 
 n = 10
-print((2**n) - 1)
+k = (2**n) - 1
+print(k)
+print(k)
 gen(n)
