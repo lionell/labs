@@ -24,6 +24,7 @@ public class Bluck {
     public static Node fromFile(String filename) throws Exception {
         Scanner sc = new Scanner(new File(filename));
         int m = sc.nextInt();
+        int s = sc.nextInt();
         List<Node> nodes = new ArrayList<>();
         for (int i = 0; i < m; i++) {
             nodes.add(new Node(i + 1));
@@ -35,6 +36,6 @@ public class Bluck {
                 n.addDep(nodes.get(sc.nextInt() - 1));
             }
         }
-        return nodes.get(0);
+        return nodes.get(s);
     }
 }
