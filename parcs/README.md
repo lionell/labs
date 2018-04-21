@@ -21,7 +21,7 @@ daemon-2      us-central1-c  n1-standard-1               10.128.0.4   35.192.8.2
 app           us-central1-c  n1-standard-1               10.128.0.3   35.192.150.94  RUNNING
 ```
 
-**Notice! You'll need internal ip of every instance later** 
+**Notice! You'll need internal ip of every instance later.**
 
 ## Setting up daemons
 
@@ -56,6 +56,14 @@ $ echo 10.128.0.5 >> hosts.list
 ```
 
 Finally we can start our hosts server via `java -jar TCPHostsServer.jar&`
+
+## Running application
+
+After connecting to our application instance `gcloud compute ssh app --zone us-central1-c` we have to install `java` and `git`
+```
+$ sudo apt-get update && sudo apt-get install -y openjdk-9-jdk git
+```
+Now let's clone
 
 ## Cleaning up
 
