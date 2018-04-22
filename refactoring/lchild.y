@@ -100,7 +100,7 @@
 
                 if(op != NULL) { if(main && finish) std::cout << std::endl; op->print(); }
             } else {
-                if(name == "FIELD") {
+                if(name == "LCHILD") {
                     std::cout << name << std::endl;
                     op->print();
 
@@ -137,13 +137,13 @@
     class pr : public ParserExpression {
         public:
         pr(ParserExpression* str, ParserExpression* o) {
-            name = "FIELD";
+            name = "LCHILD";
             expr = str;
             op = o;
             main = true;
         }
 
-        pr(ParserExpression* o) {name = "FIELD"; op = o; expr = NULL; main = true; }
+        pr(ParserExpression* o) {name = "LCHILD"; op = o; expr = NULL; main = true; }
     };
 
     class listPr : public ParserExpression {
@@ -207,12 +207,12 @@
 //for better debuging
 //%error-verbose
 
-%token NAME BYTES START TYPE FIELD PUNCHEDCARD
+%token NAME PTR PAIR TYPE LCHILD PUNCHEDCARD
 %token NUM ID
 
-%type<str> NUM ID FIELD PUNCHEDCARD
+%type<str> NUM ID LCHILD PUNCHEDCARD
 %type<oper> OPS TERM ARG LIST_OP OP
-%type<expr> NAME BYTES START TYPE 
+%type<expr> NAME PTR PAIR TYPE 
 %type<args> ARGS
 
 %%
@@ -220,7 +220,7 @@
 PROGRAM: OPS                            { tree = $1; }
 ;
 
-OPS:    FIELD LIST_OP                     { $$ = new pr($2); }
+OPS:    LCHILD LIST_OP                     { $$ = new pr($2); }
 ;
 
 
@@ -231,8 +231,8 @@ LIST_OP','OP { $$ = new listPr($1, $3); }
 
 
 OP: NAME'='TERM			{ $$ = new ParserExpression("NAME", NULL , $3 , true); }
-|	BYTES'='TERM		{ $$ = new ParserExpression("BYTES", $3, NULL, true); }
-|	START'='TERM		{ $$ = new ParserExpression("START", $3, NULL, true); }
+|	PTR'='TERM		{ $$ = new ParserExpression("PTR", $3, NULL, true); }
+|	PAIR'='TERM		{ $$ = new ParserExpression("PAIR", $3, NULL, true); }
 |	TYPE'='TERM		{ $$ = new ParserExpression("TYPE", $3, NULL, true); }
 ;
 

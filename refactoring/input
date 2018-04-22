@@ -1,1 +1,1 @@
-         FIELD NAME=(AMSNUM,SEQ,U),BYTES=15,START=1,TYPE=C              00001300
+         LCHILD NAME=(AMSNUMI,AMSDX),PTR=INDX                           00002600

@@ -22,12 +22,12 @@
 
 %%
 
-FIELD {
+LCHILD {
     offset += yyleng;
     if (offset > startOfPunchedCard) {
         BEGIN STR;
     }
-    return FIELD;
+    return LCHILD;
     }
 NAME {
     offset += yyleng;
@@ -36,19 +36,19 @@ NAME {
     }
    return NAME;
 }
-BYTES {
+PTR {
     offset += yyleng;
     if (offset > startOfPunchedCard) {
         BEGIN STR;
     }
-    return BYTES;
+    return PTR;
 }
-START {
+PAIR {
     offset += yyleng;
     if (offset > startOfPunchedCard) {
         BEGIN STR;
     }
-    return START;
+    return PAIR;
 }
 TYPE {
     offset += yyleng;
@@ -56,6 +56,20 @@ TYPE {
         BEGIN STR;
     }
     return TYPE;
+}
+INDEX {
+    offset += yyleng;
+    if (offset > startOfPunchedCard) {
+        BEGIN STR;
+    }
+    return INDEX;
+}
+RKSIZE {
+    offset += yyleng;
+    if (offset > startOfPunchedCard) {
+        BEGIN STR;
+    }
+    return RKSIZE;
 }
 PUNCHEDCARD {
     return PUNCHEDCARD;
