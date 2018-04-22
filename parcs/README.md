@@ -30,14 +30,14 @@ app           us-central1-c  n1-standard-1               10.128.0.3   35.192.150
 ## Setting up daemons
 
 Let's start with `daemon-1` and connect to it via ssh `gcloud compute ssh daemon-1`.
-Now we need to install `java` like this `sudo apt-get update && sudo apt-get install -y openjdk-9-jdk`.
+Now we need to install `java` like this `sudo apt-get update && sudo apt-get install -y openjdk-8-jdk`.
 After this we need to download pre-packed daemon `wget https://github.com/lionell/labs/raw/master/parcs/Daemon/Daemon.jar`.
 Finally we can start our daemon `java -jar Daemon.jar&`.
 
 To recap, here all the steps together
 ```
 $ sudo apt-get update
-$ sudo apt-get install -y openjdk-9-jdk
+$ sudo apt-get install -y openjdk-8-jdk
 $ wget https://github.com/lionell/labs/raw/master/parcs/Daemon/Daemon.jar
 $ java -jar Daemon.jar&
 ```
@@ -47,7 +47,7 @@ $ java -jar Daemon.jar&
 As with daemons we need to connect to hosts server via ssh `gcloud compute ssh hosts-server`.
 We also need to install `java` and download pre-packed hosts server
 ```
-$ sudo apt-get update && sudo apt-get install -y openjdk-9-jdk
+$ sudo apt-get update && sudo apt-get install -y openjdk-8-jdk
 $ wget https://github.com/lionell/labs/raw/master/parcs/HostsServer/TCPHostsServer.jar
 ```
 
@@ -65,7 +65,7 @@ Finally we can start our hosts server via `java -jar TCPHostsServer.jar&`
 
 After connecting to our application instance `gcloud compute ssh app` we have to install `java` and `git`
 ```
-$ sudo apt-get update && sudo apt-get install -y openjdk-9-jdk git make
+$ sudo apt-get update && sudo apt-get install -y openjdk-8-jdk git make
 ```
 
 Now let's clone our repository
