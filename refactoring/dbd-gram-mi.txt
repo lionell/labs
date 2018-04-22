@@ -1,0 +1,123 @@
+INHERITANCE.
+
+dbd-object:
+<dbd-unit; dbd; dataset-unit; dataset; segm-unit; segm;
+sfield: <field; lchild; xdfld>; key-value
+>.
+key-value:
+<key-value-symbol; key-value-symbol-slash; key-value-integer;
+key-value-real; key-value-string; key-value-string-x; key-value-string-c;
+key-value-star; key-value-list; key-value-empty
+>.
+
+SYNTAX.
+  	dbd-unit::= dbd-head => dbd     [datasets => dataset-unit] + "" ;
+      dbd::= [dbd-label-name:*label* => symbol]!  /*for symbols which come from flex*/
+               "DBD"  
+      
+		[ "NAME"     "="   dbd-name     => key-value
+		| "ACCESS"   "="   dbd-access   => key-value
+		| "RMNAME"   "="   dbd-rmname   => key-value
+		| "FRSPC"    "="   dbd-frspc    => key-value
+		| "PSNAME"   "="   dbd-psname   => key-value
+		| "PASSWD"   "="   dbd-passwd   => key-value
+		| "DATXEXIT" "="   dbd-datxexit => key-value
+		| "EXIT"     "="   dbd-exit     => key-value
+		| "VERSION"  "="   dbd-version  => key-value
+		| "," 
+		]+ "" 
+	dbd-eol:*eol*=>symbol ;  /*for symbols which come from flex*/
+      dataset-unit::= dataset-head => dataset [segments=> segm-unit] + ""
+
+    	dataset: [dataset-name:*label* => symbol!  
+			"DATASET" 
+
+		[ "DD1"    "="    dataset-dd1      => key-value  
+		| "DD2"    "="    dataset-dd2      => key-value  
+		| "OWFLW"  "="    dataset-owflw    => key-value        
+		| "BLOCK"  "="    dataset-block    => key-value
+		| "RECORD" "="    dataset-record   => key-value
+		| "SIZE"   "="    dataset-size     => key-value
+		| "RECFRM" "="    dataset-recfrm   => key-value
+		| "REL"    "="    dataset-rel      => key-value
+		| "SCAN"   "="    dataset-scan     => key-value
+		| "DEVICE" "="    dataset-device   => key-value
+		| "RMNAME" "="    dataset-rmname   => key-value
+		| "FRSPC"  "="    dataset-frspc    => key-value
+		| "SEGM"   "="    dataset-segm     => key-value
+		| "MINLEN" "="    dataset-minlen   => key-value
+		| "LOGICAL"   
+		| ","  
+		]+ ""
+           dataset-eline:*eol*=>symbol ;
+
+   	segm-unit::= segm-head =>  segm [sfields => sfield] * ""   
+
+   	segm::= "SEGM" 
+	
+		[ "NAME"    "="   segm-name     => key-value
+		| "PARENT"  "="   segm-parent   => key-value  
+		| "BYTES"   "="   segm-bytes    => key-value  
+		| "POINTER" "="   segm-pointer  => key-value
+		| "FREQ"    "="   segm-freq     => key-value  
+		| "RULES"   "="   segm-rules    => key-value  
+		| "EXIT"    "="   segm-exit     => key-value
+		| "DSGROUP" "="   segm-dsgroup  => key-value
+		| "SSPTR"   "="   segm-ssptr    => key-value
+		| "COMPRTN" "="   segm-comprtn  => key-value
+		| "SOURCE"  "="   segm-source   => key-value
+		| "RMNAME"  "="   segm-rmname   => key-value
+		| ","  
+		] + ""
+	     segm-eline:*eol* => symbol 
+
+	field::=  "FIELD"   
+
+			[ "NAME"  "="  field-name     => key-value
+			| "BYTES" "="  field-bytes    => key-value  
+			| "START" "="  field-start    => key-value
+			| "TYPE"  "="  field-type     => key-value
+			| ","  
+  			] + ""    field-eline:*eol* => symbol 
+
+	lchild::= "LCHILD"
+      
+			[ "NAME"    "="  lchild-name     => key-value
+			| "POINTER" "="  lchild-pointer  => key-value 
+			| "PAIR"    "="  lchild-pair     => key-value
+			| "RULES"   "="  lchild-rules    => key-value
+			| "INDEX"   "="  lchild-index    => key-value
+			| "RKSIZE"  "="  lchild-rksize   => key-value
+			| ","  
+ 			]+ ""  	lchild-eline:*eol* =>symbol
+
+	xdfld::=  "XDFLD"    
+
+			[ "NAME"    "="   xdfld-name     => key-value
+			| "SEGMENT" "="   xdfld-segment  => key-value
+			| "CONST"   "="   xdfld-const    => key-value
+			| "SRCH"    "="   xdfld-srch     => key-value
+			| "SUBSEQ"  "="   xdfld-subseq   => key-value
+			| "DDATA"   "="   xdfld-ddata    => key-value
+			| "NULLVAL" "="   xdfld-nullval  => key-value
+			| "EXTRN"   "="   xdfld-extrn    => key-value
+			| ","  
+        		] + ""		xdfld-eline:*eol* =>symbol
+
+
+	 key-value-symbol::=        key-id      => symbol                     % Identifier
+	 key-value-symbol-slash::=  "/" key-ids => symbol                     % /Identifier
+	 key-value-integer::=       key-integer => integer                    % 123
+	 key-value-real::=          key-real    => real                       % 1.23	
+	 key-value-string::=        key-string  => string                     % 'abc' 
+	 key-value-string-x::=      key-xstring:*xstring*  => string	     % x'f1f2'	
+	 key-value-string-c::=      key-cstring:*cstring*  => string	     % c'abc'
+	 key-value-star::=          "*"                                       % *
+	 key-value-list::=         "(" [key-items => key-value] + "," ")"     % (kv1,...,kwn)
+	 key-value-empty::=         key-empty:*empty* => integer              % EMPTY
+	
+
+
+кОМЕНТАРІ:
+Треба мати на увазі, що по типу ця мова  (dbd) належить до макроасемблерів, тобто суттєвим є розташування на рядку; одна макрокоманда займає один логічний рядок, але один логічний рядок може складатися з кількох фізичних. Визначається це символом переносу (будь-який символ, окрім space) у 72 позиції. На фізичному рядку макрокоманда починається з позиції => 8 і закінчується до 71 позиції або на наступному фізичному рядку, якщо був символ переносу. Мітки починаються на 1 позиції.   *eol* - це кінець логічного рядка, який треба визначити лексичним аналізатором та повернути відповідний код. Для кожного правила можливо доцільно мати свій атрибут для *eol* 
+xdfld-eline:*eol* =>symbol
