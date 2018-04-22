@@ -83,6 +83,10 @@ $ cat input
 Finally, we can run our parser
 ```
 $ cat input | ./parser
+Printing tree
+LCHILD
+NAME (AMSNUMI, AMSDX)
+PTR INDX
 ```
 
 It parses `input` file and writes generated AST to `example.txt`, then it reads this file and show AST to user.
