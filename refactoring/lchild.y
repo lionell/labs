@@ -207,12 +207,12 @@
 //for better debuging
 //%error-verbose
 
-%token NAME PTR PAIR TYPE LCHILD PUNCHEDCARD
+%token NAME PTR PAIR RULES LCHILD PUNCHEDCARD
 %token NUM ID
 
 %type<str> NUM ID LCHILD PUNCHEDCARD
 %type<oper> OPS TERM ARG LIST_OP OP
-%type<expr> NAME PTR PAIR TYPE 
+%type<expr> NAME PTR PAIR RULES 
 %type<args> ARGS
 
 %%
@@ -233,7 +233,7 @@ LIST_OP','OP { $$ = new listPr($1, $3); }
 OP: NAME'='TERM			{ $$ = new ParserExpression("NAME", NULL , $3 , true); }
 |	PTR'='TERM		{ $$ = new ParserExpression("PTR", $3, NULL, true); }
 |	PAIR'='TERM		{ $$ = new ParserExpression("PAIR", $3, NULL, true); }
-|	TYPE'='TERM		{ $$ = new ParserExpression("TYPE", $3, NULL, true); }
+|	RULES'='TERM		{ $$ = new ParserExpression("RULES", $3, NULL, true); }
 ;
 
 TERM:   NUM                             { $$ = new value($1); }

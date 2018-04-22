@@ -29,10 +29,10 @@ We are going to just replace all attributes from `FIELD` with ones from `LCHILD`
 
 You can do this using `sed` tool like this
 ```
-$ sed -i 's/FIELD/LCHILD/g' lchild.l lchild.y
-$ sed -i 's/BYTES/PTR/g' lchild.l lchild.y
-$ sed -i 's/START/PAIR/g' lchild.l lchild.y
-$ sed -i 's/TYPE/RULES/g' lchild.l lchild.y
+$ sed -i 's/\<FIELD\>/LCHILD/g' lchild.l lchild.y
+$ sed -i 's/\<BYTES\>/PTR/g' lchild.l lchild.y
+$ sed -i 's/\<START\>/PAIR/g' lchild.l lchild.y
+$ sed -i 's/\<TYPE\>/RULES/g' lchild.l lchild.y
 ```
 
 ## Add new attributes

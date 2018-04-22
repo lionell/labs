@@ -50,12 +50,12 @@ PAIR {
     }
     return PAIR;
 }
-TYPE {
+RULES {
     offset += yyleng;
     if (offset > startOfPunchedCard) {
         BEGIN STR;
     }
-    return TYPE;
+    return RULES;
 }
 INDEX {
     offset += yyleng;
