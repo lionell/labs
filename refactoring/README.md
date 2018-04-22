@@ -1,6 +1,6 @@
 # Tutorial
 
-How to get `LCHILD` parser from `FIELD` parser.
+How to get `LCHILD` parser from the `FIELD` parser.
 
 First of all let's make a copy of `field` project and rename everything
 ```
