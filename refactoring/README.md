@@ -4,16 +4,13 @@ How to get `LCHILD` parser from `FIELD` parser.
 
 First of all let's make a copy of `field` project and rename everything
 ```
-$ cp -r field lchild
-$ cd lchild
+$ cp field/* .
 $ mv field.l lchild.l
 $ mv field.y lchild.y
 $ sed -i 's/field/lchild/g' Makefile lchild.l
 ```
 
-From now we'll **work in the folder `lchild`**.
-
-Let's take a look at attribute grammar.
+Now let's take a look at the attribute grammar.
 ```
 field::=  "FIELD"
 
