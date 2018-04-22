@@ -89,4 +89,4 @@ NAME (AMSNUMI, AMSDX)
 PTR INDX
 ```
 
-It parses `input` file and writes generated AST to `example.txt`, then it reads this file and show AST to user.
+It parses `input` file and writes generated AST to `example.txt`, then it reads this file and shows AST to user.
