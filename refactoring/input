@@ -1,1 +1,4 @@
          LCHILD NAME=(AMSNUMI,AMSDX),PTR=INDX                           00002600
+         LCHILD NAME=(INDXDA,COMMANI2),PTR=INDX                         00630000
+         LCHILD NAME=(INDXARTI,COMMANI1),PTR=INDX                       00800000
+         LCHILD NAME=(TYP,AVAPPARI),PTR=INDX                            00010405

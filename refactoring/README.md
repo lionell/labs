@@ -65,3 +65,24 @@ Finally, we have to add new grammar rule for each attribute added. We can just c
 |	INDEX'='TERM		{ $$ = new ParserExpression("INDEX", $3, NULL, true); }
 |	RKSIZE'='TERM		{ $$ = new ParserExpression("RKSIZE", $3, NULL, true); }
 ```
+
+## Build & Test
+
+There is a prepared `Makefile` so building process is as simple as running `make`. This will generate binary called `parser`.
+
+To get some input data to parse we can scrape `AMS`, `AVAPPAR` and `COMMAND` files.
+```
+$ grep -rh 'LCHILD' data >> input
+$ cat input
+         LCHILD NAME=(AMSNUMI,AMSDX),PTR=INDX                           00002600
+         LCHILD NAME=(INDXDA,COMMANI2),PTR=INDX                         00630000
+         LCHILD NAME=(INDXARTI,COMMANI1),PTR=INDX                       00800000
+         LCHILD NAME=(TYP,AVAPPARI),PTR=INDX                            00010405
+```
+
+Finally, we can run our parser
+```
+$ cat input | ./parser
+```
+
+It parses `input` file and writes generated AST to `example.txt`, then it reads this file and show AST to user.
