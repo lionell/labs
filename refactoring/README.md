@@ -24,7 +24,7 @@ field::=  "FIELD"
 lchild::= "LCHILD"
 
                 [ "NAME"    "="  lchild-name     => key-value
-                | "POINTER" "="  lchild-pointer  => key-value
+                | "PTR"     "="  lchild-pointer  => key-value
                 | "PAIR"    "="  lchild-pair     => key-value
                 | "RULES"   "="  lchild-rules    => key-value
                 | "INDEX"   "="  lchild-index    => key-value
