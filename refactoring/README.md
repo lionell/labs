@@ -37,7 +37,7 @@ $ sed -i 's/\<TYPE\>/RULES/g' lchild.l lchild.y
 
 ## Add new attributes
 
-First of all let's add these to `lex`. This is fairly simple, just copy any rule like `TYPE` and rename it to what you need. In my case I added 2 rules
+First of all let's add these to `lex`. This is fairly simple, just copy any rule like `RULES` and rename it to what you need. In my case I added 2 rules right after `RULES` rule
 ```
 INDEX {
     offset += yyleng;
@@ -53,4 +53,15 @@ RKSIZE {
     }
     return RKSIZE;
 }
+```
+
+Now we have to make `yacc` aware of our new attributes. To do this we have to add them to token and type sections. We can replace old list with a new one like this
+```
+$ sed -i 's/NAME PTR PAIR RULES/NAME PTR PAIR RULES INDEX RKSIZE/g' lchild.y
+```
+
+Finally, we have to add new grammar rule for each attribute added. We can just copy any rule and rename it. For `LCHILD` I added 2 rules right after `RULES`
+```
+|	INDEX'='TERM		{ $$ = new ParserExpression("INDEX", $3, NULL, true); }
+|	RKSIZE'='TERM		{ $$ = new ParserExpression("RKSIZE", $3, NULL, true); }
 ```
