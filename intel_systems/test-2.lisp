@@ -95,7 +95,7 @@
 
 (defun $merge-sort (lst)
   "($merge-sort '(3 2 1)) = (1 2 3)"
-  (if (> (length lst) 1)
+  (if (sorted? lst)
       (multiple-value-bind (q _) (floor (length lst) 2)
         (merge 'list
           ($merge-sort (subseq lst 0 q))
