@@ -1,0 +1,10 @@
+[PropertyInfo]
+hostList,Collection,false,false, , ,true,<default>
+hserver,HostsServer,false,false, , ,false,<default>
+quit,boolean,false,false, , ,false,<default>
+ss,ServerSocket,false,false, , ,false,<default>
+[IconNames]
+
+
+
+

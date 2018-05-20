@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<library>
+  <!--JBuilder Library Definition File-->
+  <fullname>ParcsNet</fullname>
+  <class>
+    <path>Daemon</path>
+    <path>.</path>
+  </class>
+</library>

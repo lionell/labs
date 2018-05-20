@@ -1,0 +1,1 @@
+java -cp .;.. -Xbootclasspath/a:.. -jar Matrixes.jar %*

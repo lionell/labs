@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wc-entries
+   xmlns="svn:">
+<entry
+   committed-rev="8"
+   name=""
+   committed-date="2006-05-12T10:55:56.596367Z"
+   url="svn://localhost/parcs/Matrixes/META-INF"
+   last-author="nick"
+   kind="dir"
+   revision="8"/>
+<entry
+   committed-rev="8"
+   name="MANIFEST.MF"
+   text-time="2004-06-02T13:11:22.000000Z"
+   committed-date="2006-05-12T10:55:56.596367Z"
+   checksum="b2b34f43a3d146d8d30f59bde7152e07"
+   last-author="nick"
+   kind="file"/>
+</wc-entries>

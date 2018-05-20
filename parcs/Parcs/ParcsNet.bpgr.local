@@ -1,0 +1,10 @@
+active.project[0]=0
+build.menu1[0]=Make Project Group##com.borland.primetime.build.AbstractProjectGroupBuilder$GroupBuildAction;make##
+build.menu2[0]=Rebuild Project Group##com.borland.primetime.build.AbstractProjectGroupBuilder$GroupBuildAction;rebuild##
+project.expanded0[0]=1
+project.expanded1[0]=0
+project.expanded2[0]=1
+project.expanded3[0]=0
+project.expanded4[0]=0
+project.expanded5[0]=0
+project.expanded6[0]=0

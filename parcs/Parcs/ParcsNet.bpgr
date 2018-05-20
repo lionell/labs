@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--Project Group-->
+<projectgroup>
+  <project path="parcs/parcs.jpx"/>
+  <project path="HostsServer/HostsServer.jpx"/>
+  <project path="Daemon/Daemon.jpx"/>
+  <project path="GUIManager/GUIManager.jpx"/>
+  <project path="RMI/RMI.jpx"/>
+  <project path="Matrixes/Matrixes.jpx"/>
+  <project path="Fibon/Fibon.jpx"/>
+</projectgroup>

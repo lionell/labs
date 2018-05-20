@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--JBuilder XML Project-->
+<project>
+  <property category="debug.0" name="PauseAfterLaunch" value="1"/>
+  <property category="generalFormatting" name="continuationIndent" value="2"/>
+  <property category="generalFormatting" name="tabSize" value="2"/>
+  <property category="generalFormatting" name="useTabChar" value="1"/>
+  <property category="idl" name="ProcessIDL" value="false"/>
+  <property category="java" name="compiler" value="hostjavac"/>
+  <property category="javadoc" name="custom.tags.1" value="todo;a;To Do:"/>
+  <property category="personality" name="personality" value=""/>
+  <property category="runtime.0" name="BuildTargetOnRun" value="com.borland.jbuilder.build.ProjectBuilder$ProjectBuildAction;make"/>
+  <property category="runtime.0" name="ConfigurationName" value="Untitled Runtime Configuration1"/>
+  <property category="runtime.0" name="RunnableType" value="com.borland.jbuilder.runtime.ApplicationRunner"/>
+  <property category="serverservices" name="disabled.services" value="connector;jdatastore"/>
+  <property category="serverservices" name="single.server.name" value="Tomcat 4.0"/>
+  <property category="sys" name="AuthorLabel" value="@author"/>
+  <property category="sys" name="BackupPath" value="../bak"/>
+  <property category="sys" name="CheckStable" value="1"/>
+  <property category="sys" name="Company" value=""/>
+  <property category="sys" name="CompanyLabel" value="Company:"/>
+  <property category="sys" name="Copyright" value="Copyright (c) 2004"/>
+  <property category="sys" name="CopyrightLabel" value="Copyright:"/>
+  <property category="sys" name="DefaultPath" value="../"/>
+  <property category="sys" name="Description" value=""/>
+  <property category="sys" name="DescriptionLabel" value="Description:"/>
+  <property category="sys" name="DocPath" value="../doc"/>
+  <property category="sys" name="ExcludeClassEnabled" value="0"/>
+  <property category="sys" name="IncludeTestPath" value="1"/>
+  <property category="sys" name="InstanceVisibility" value="2"/>
+  <property category="sys" name="JDK" value="java version 1.5.0_11-b03"/>
+  <property category="sys" name="JvmVersion" value="1.4"/>
+  <property category="sys" name="LastTag" value="0"/>
+  <property category="sys" name="Libraries" value=""/>
+  <property category="sys" name="MakeStable" value="0"/>
+  <property category="sys" name="OutPath" value="../"/>
+  <property category="sys" name="SourcePath" value="../;../"/>
+  <property category="sys" name="TestPath" value="../"/>
+  <property category="sys" name="Title" value=""/>
+  <property category="sys" name="TitleLabel" value="Title:"/>
+  <property category="sys" name="Version" value="1.0"/>
+  <property category="sys" name="VersionLabel" value="@version"/>
+  <property category="sys" name="WorkingDirectory" value="../"/>
+  <property category="sys" name="enable.auto.packages" value="false"/>
+  <node name="Recovery" type="Folder">
+    <file path="EventTrace.java"/>
+    <file path="IRecovery.java"/>
+    <file path="Recover.java"/>
+    <file path="RecoveryFactory.java"/>
+    <file path="SafeRun.java"/>
+    <file path="TieRecoveries.java"/>
+  </node>
+  <file path="AM.java"/>
+  <file path="AMInfo.java"/>
+  <file path="channel.java"/>
+  <file path="Const.java"/>
+  <file path="Executor.java"/>
+  <file path="HostInfo.java"/>
+  <file path="JarClassLoader.java"/>
+  <file path="PerformFunction.java"/>
+  <file path="point.java"/>
+  <file path="ServerQuery.java"/>
+  <file path="task.java"/>
+  <file path="UDPQuery.java"/>
+</project>

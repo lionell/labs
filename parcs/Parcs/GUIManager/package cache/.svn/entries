@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wc-entries
+   xmlns="svn:">
+<entry
+   committed-rev="8"
+   name=""
+   committed-date="2006-05-12T10:55:56.596367Z"
+   url="svn://localhost/parcs/GUIManager/package%20cache"
+   last-author="nick"
+   kind="dir"
+   revision="8"/>
+<entry
+   committed-rev="8"
+   name="unnamed package.dep2"
+   text-time="2006-05-10T10:01:26.000000Z"
+   committed-date="2006-05-12T10:55:56.596367Z"
+   checksum="176343d195699b59a9b96c6a6fb38396"
+   last-author="nick"
+   kind="file"
+   prop-time="2006-05-12T10:55:10.000000Z"/>
+</wc-entries>

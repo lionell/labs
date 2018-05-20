@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wc-entries
+   xmlns="svn:">
+<entry
+   committed-rev="8"
+   name=""
+   committed-date="2006-05-12T10:55:56.596367Z"
+   url="svn://localhost/parcs/Fibon/package%20cache"
+   last-author="nick"
+   kind="dir"
+   revision="8"/>
+<entry
+   committed-rev="8"
+   name="unnamed package.dep2"
+   text-time="2006-05-10T10:01:32.000000Z"
+   committed-date="2006-05-12T10:55:56.596367Z"
+   checksum="979f83b68a47b0aee0422eaaedc91c2a"
+   last-author="nick"
+   kind="file"
+   prop-time="2006-05-12T10:55:10.000000Z"/>
+</wc-entries>

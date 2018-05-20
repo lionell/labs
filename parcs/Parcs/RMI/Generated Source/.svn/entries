@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wc-entries
+   xmlns="svn:">
+<entry
+   committed-rev="8"
+   name=""
+   committed-date="2006-05-12T10:55:56.596367Z"
+   url="svn://localhost/parcs/RMI/Generated%20Source"
+   last-author="nick"
+   kind="dir"
+   revision="8"/>
+<entry
+   committed-rev="8"
+   name="ParcsLauncherObj_Stub.java"
+   text-time="2006-05-10T10:01:30.000000Z"
+   committed-date="2006-05-12T10:55:56.596367Z"
+   checksum="3063e9c9d8452c32899521f6de0f3846"
+   last-author="nick"
+   kind="file"/>
+<entry
+   name="HostsServer"
+   kind="dir"/>
+<entry
+   name="parcs"
+   kind="dir"/>
+</wc-entries>

@@ -1,0 +1,10 @@
+[PropertyInfo]
+connected,boolean,false,false, , ,true,<default>
+ipAddress,InetAddress,false,false, , ,false,<default>
+name,String,false,false, , ,false,<default>
+socket,Socket,false,false, , ,false,<default>
+[IconNames]
+
+
+
+
