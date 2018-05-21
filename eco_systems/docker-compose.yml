@@ -1,0 +1,10 @@
+version: '3'
+services:
+  eco:
+    image: 'jupyter/scipy-notebook'
+    command: 'start.sh jupyter lab --NotebookApp.token=""'
+    volumes:
+      - .:/home/jovyan
+    ports:
+      - 8888:8888
+                
