@@ -1,7 +1,7 @@
 (function App () {
-    const width = window.innerWidth,
-        height = window.innerHeight,
-        depth = 200;
+    const width = window.innerWidth - 20,
+          height = window.innerHeight - 20,
+          depth = 200;
 
     const canvas = document.getElementById('canvas');
     const renderer = new THREE.WebGLRenderer({ canvas });
@@ -36,7 +36,7 @@
     const material = new THREE.MeshStandardMaterial({
         emissive: 0x708090,
         side: THREE.DoubleSide,
-        shading: THREE.FlatShading ,
+        flatShading: true,
     });
 
     const geometry = new THREE.Geometry();
