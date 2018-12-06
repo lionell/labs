@@ -8,6 +8,9 @@
 [submodule "it"]
 	path = it
 	url = git@github.com:lionell/pgapps.git
+[submodule "ai"]
+	path = ai
+	url = git@github.com:lionell/smart-pacmans.git
 [submodule "sys_prog/monkey-in-java"]
 	path = sys_prog/monkey-in-java
 	url = git@github.com:lionell/monkey-in-java.git
