@@ -12,21 +12,21 @@
 - [x] nslookup util
 - [x] hexdump util
 - [x] sort util
+- [x] md5sum util
+- [x] curl util
+- [x] factor util (multithreaded)
 - [x] mail util (via sendmail)
 - [x] ps util (external call)
 - [x] JSON pretty printer
 - [x] show pid, uid, gid
 - [x] Signal handling
 - [x] Recursively traverse directory
-- [x] File MD5 checksum
 - [x] Count files in parallel (multiprocess)
-- [x] Process communication via named pipe
+- [x] IPC via named pipe
 - [x] TCP multi-server
 - [x] TCP client
 - [x] Broadcast UDP diagram
 - [x] UNIX domain socket listener
 - [x] FTP client
 - [x] Archive to .tar.gz
-- [ ] Multithreaded computation
-- [ ] Send HTTP request
-- [ ] Random numbers
+- [x] Make HTTP POST request
