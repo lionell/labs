@@ -26,10 +26,8 @@
 
 use strict;
 use warnings;
-use v5.10;
 use JSON::MaybeXS;
 
-my $json = join '', <>;
 print JSON::MaybeXS
     ->new(pretty => 1, sort_by => 1)
-    ->encode(JSON::MaybeXS::decode_json $json);
+    ->encode(JSON::MaybeXS::decode_json join "", <>);

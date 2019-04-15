@@ -1,6 +1,8 @@
 #!/usr/bin/env perl
 
 # xargs util
+#
+# Usage:
 # $ cat file
 # Lorem ipsum.
 # Sit dolor.

@@ -1,6 +1,6 @@
 #!/usr/bin/env perl
 
-# Time util
+# time util
 #
 # Usage:
 # $ ./time.pl sleep 5
@@ -24,5 +24,5 @@ use warnings;
 use feature "say";
 
 my $start = time;
-system(join " ", @ARGV);
+system join " ", @ARGV;
 say "Execution took ", (time - $start), " seconds.";

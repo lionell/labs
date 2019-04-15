@@ -1,6 +1,6 @@
 #!/usr/bin/env perl
 
-# List directory
+# ls util
 #
 # Usage:
 # $ ./ls.pl

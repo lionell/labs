@@ -1,6 +1,6 @@
 #!/usr/bin/env perl
 
-# Date util
+# date util
 #
 # Usage:
 # $ ./date.pl

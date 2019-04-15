@@ -1,6 +1,6 @@
 #!/usr/bin/env perl
 
-# File MD5 checksum
+# md5sum util
 #
 # Usage:
 # $ ./md5sum.pl test.json
