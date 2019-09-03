@@ -1,0 +1,13 @@
+#include <bits/stdc++.h>
+
+using namespace std;
+
+int main() {
+	for (int i = 0; i < n; i++) {
+		cout << "Hello";
+	}
+	for (int t = 0; t < n; t++) {
+		cout << "Hello, world!";
+	}
+	return 0;
+}
